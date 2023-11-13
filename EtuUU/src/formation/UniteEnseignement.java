@@ -1,13 +1,9 @@
 package formation;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 // A DEFINIR
-public class UniteEnseignement {
-
-    private static final Set<UniteEnseignement> UniteEseignement = new HashSet<>();
+public class UniteEnseignement implements InterUniteEnseignement {
 
     private final String nomUE;
     private String nomEnseignant;
@@ -24,22 +20,27 @@ public class UniteEnseignement {
         this.nomEnseignant = nomEnseignant;
     }
 
+    @Override
     public String getNomUE() {
         return nomUE;
     }
 
+    @Override
     public String getNomEnseignant() {
         return nomEnseignant;
     }
 
+    @Override
     public void setNomEnseignant(String nomEnseignant) {
         this.nomEnseignant = nomEnseignant;
     }
 
+    @Override
     public int getNbPlaces() {
         return nbPlaces;
     }
 
+    @Override
     public void setNbPlaces(int nbPlaces) {
         this.nbPlaces = nbPlaces;
     }
@@ -62,13 +63,6 @@ public class UniteEnseignement {
             if (other.nomUE != null)
                 return false;
         } else if (!nomUE.equals(other.nomUE))
-            return false;
-        if (nomEnseignant == null) {
-            if (other.nomEnseignant != null)
-                return false;
-        } else if (!nomEnseignant.equals(other.nomEnseignant))
-            return false;
-        if (nbPlaces != other.nbPlaces)
             return false;
         return true;
     }
