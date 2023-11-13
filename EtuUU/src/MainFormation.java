@@ -4,12 +4,11 @@ public class MainFormation {
   
   public static void main(String[] args) {
     // TODO Auto-generated method stub
-    System.out.println("\nAppuyez sur Entrée pour terminer le programme ...");
+    System.out.println("\nAppuyez sur Entrï¿½e pour terminer le programme ...");
     try {
       System.in.read();
     } catch (IOException e) {
-      System.err.println("Vous avez réussi à casser le clavier : " + e);
+      System.err.println("Vous avez rï¿½ussi ï¿½ casser le clavier : " + e);
     }
   }
 }
-
