@@ -3,6 +3,7 @@ import formation.*;
 public class MainFormation {
 
   static void test1(GestionFormation e) {
+    GestionFormation ge=new GestionFormation();
     e.creerFormation("ki", "lo", "ju");
     e.creerFormation("ko", "li", "ja");
     e.creerFormation("ki", "lo", "ju");
@@ -12,6 +13,8 @@ public class MainFormation {
     e.definirNombreOptions(86);
     e.setTailleGroupeDirige(20);
     e.setTailleGroupePratique(26);
+    System.out.println("--------------------------------------------");
+    ge.ccc();
     System.out.println(e);
   }
 
