@@ -3,39 +3,39 @@ package formation;
 import java.util.Objects;
 
 /**
- * Description des informations personnelles d'un étudiant :
- * identité, age et adresse.
+ * Description des informations personnelles d'un ï¿½tudiant :
+ * identitï¿½, age et adresse.
  *
  * @author Eric Cariou
  */
 public final class InformationPersonnelle implements java.io.Serializable {
-  
+
   /**
-   * Identifiant de sérialisation.
+   * Identifiant de sï¿½rialisation.
    */
   private static final long serialVersionUID = 4026408353251835506L;
-  
+
   /**
-   * Le nom de la personne (ne peut pas être modifié).
+   * Le nom de la personne (ne peut pas ï¿½tre modifiï¿½).
    */
   private final String nom;
-  
+
   /**
-   * Le prénom de la personne (ne peut pas être modifié).
+   * Le prï¿½nom de la personne (ne peut pas ï¿½tre modifiï¿½).
    */
   private final String prenom;
-  
+
   /**
-   * L'âge de la personne (la valeur 0 correspond à un âge non défini).
+   * L'ï¿½ge de la personne (la valeur 0 correspond ï¿½ un ï¿½ge non dï¿½fini).
    */
   private int age;
-  
+
   /**
-   * L'adresse de la personne (une chaine vide "" correspond à une adresse non
-   * définie).
+   * L'adresse de la personne (une chaine vide "" correspond ï¿½ une adresse non
+   * dï¿½finie).
    */
   private String adresse;
-  
+
   /**
    * Renvoie le nom de la personne.
    *
@@ -44,36 +44,36 @@ public final class InformationPersonnelle implements java.io.Serializable {
   public String getNom() {
     return nom;
   }
-  
+
   /**
-   * Renvoie le prénom de la personne.
+   * Renvoie le prï¿½nom de la personne.
    *
-   * @return le prénom de la personne
+   * @return le prï¿½nom de la personne
    */
   public String getPrenom() {
     return prenom;
   }
-  
+
   /**
-   * Renvoie l'âge de la personne.
+   * Renvoie l'ï¿½ge de la personne.
    *
-   * @return l'âge de la personne
+   * @return l'ï¿½ge de la personne
    */
   public int getAge() {
     return age;
   }
-  
+
   /**
-   * Modifie l'âge de la personne.
+   * Modifie l'ï¿½ge de la personne.
    *
-   * @param age le nouvel age (doit être supérieur à 0)
+   * @param age le nouvel age (doit ï¿½tre supï¿½rieur ï¿½ 0)
    */
   public void setAge(int age) {
     if (age > 0) {
       this.age = age;
     }
   }
-  
+
   /**
    * Renvoie l'adresse de la personne.
    *
@@ -82,35 +82,35 @@ public final class InformationPersonnelle implements java.io.Serializable {
   public String getAdresse() {
     return adresse;
   }
-  
+
   /**
    * Modifie l'adresse de la personne.
    *
-   * @param adresse la nouvelle adresse (doit être différente de null)
+   * @param adresse la nouvelle adresse (doit ï¿½tre diffï¿½rente de null)
    */
   public void setAdresse(String adresse) {
     if (adresse != null) {
       this.adresse = adresse;
     }
   }
-  
+
   /**
-   * Crée une personne avec ses informations obligatoires.
+   * Crï¿½e une personne avec ses informations obligatoires.
    *
-   * @param nom le nom de la personne
-   * @param prenom le prénom de la personne
+   * @param nom    le nom de la personne
+   * @param prenom le prï¿½nom de la personne
    */
   public InformationPersonnelle(String nom, String prenom) {
     this(nom, prenom, "", 0);
   }
-  
+
   /**
-   * Crée une personne avec toutes ses informations.
+   * Crï¿½e une personne avec toutes ses informations.
    *
-   * @param nom le nom de la personne
-   * @param prenom le prénom de la personne
+   * @param nom     le nom de la personne
+   * @param prenom  le prï¿½nom de la personne
    * @param adresse l'adresse de la personne
-   * @param age l'age de la personne
+   * @param age     l'age de la personne
    */
   public InformationPersonnelle(String nom, String prenom, String adresse,
       int age) {
@@ -120,12 +120,12 @@ public final class InformationPersonnelle implements java.io.Serializable {
     this.adresse = adresse;
     this.age = age;
   }
-  
+
   @Override
   public int hashCode() {
     return Objects.hash(adresse, age, nom, prenom);
   }
-  
+
   @Override
   public boolean equals(final Object obj) {
     if (this == obj) {
@@ -142,7 +142,7 @@ public final class InformationPersonnelle implements java.io.Serializable {
         && Objects.equals(nom, other.nom)
         && Objects.equals(prenom, other.prenom);
   }
-  
+
   @Override
   public String toString() {
     return prenom + " " + nom + " d'age " + age + " ans, habite " + adresse;

@@ -1,14 +1,21 @@
-import java.io.IOException;
+import formation.*;
 
 public class MainFormation {
-  
+
+  static void test1(GestionFormation e) {
+    e.creerFormation("ki", "lo", "ju");
+    e.creerFormation("ko", "li", "ja");
+    e.creerFormation("ki", "lo", "ju");
+    e.ccc();
+    e.definirNombreOptions(9);
+    e.definirNombreOptions(15);
+    e.definirNombreOptions(86);
+    e.setTailleGroupeDirige(20);
+    e.setTailleGroupePratique(26);
+    System.out.println(e);
+  }
+
   public static void main(String[] args) {
-    // TODO Auto-generated method stub
-    System.out.println("\nAppuyez sur Entr�e pour terminer le programme ...");
-    try {
-      System.in.read();
-    } catch (IOException e) {
-      System.err.println("Vous avez r�ussi � casser le clavier : " + e);
-    }
+    test1(new GestionFormation("lol", "huk", "ju"));
   }
 }
