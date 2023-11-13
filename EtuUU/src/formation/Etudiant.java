@@ -148,3 +148,11 @@ public class Etudiant implements InterEtudiant {
 				&& Objects.equals(motDePasse, other.motDePasse) && numero == other.numero;
 	}
 }
+
+
+
+
+
+
+
+
