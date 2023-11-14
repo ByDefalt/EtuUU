@@ -25,7 +25,7 @@ public class Etudiant implements InterEtudiant {
 	private int numeroTp;
 	private int numeroTd;
 
-	private Etudiant(InformationPersonnelle informationPersonnelle, String motDePasse) {
+	public Etudiant(InformationPersonnelle informationPersonnelle, String motDePasse) {
 		this.informationPersonnelle = informationPersonnelle;
 		this.motDePasse = motDePasse;
 		nbEtudiant++;
@@ -33,7 +33,7 @@ public class Etudiant implements InterEtudiant {
 		this.etatConnexion = false;
 	}
 	
-	private Etudiant() {}
+	public Etudiant() {}
 	
 	/**
 	 * Crée le compte d'un étudiant à partir de ses informations personnelles et
