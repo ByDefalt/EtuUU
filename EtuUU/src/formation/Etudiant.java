@@ -12,7 +12,8 @@ public class Etudiant implements InterEtudiant {
 	private int numero;
 	private String motDePasse;
 	private static int nbEtudiant = 0;
-	boolean etatConnexion;
+	private boolean etatConnexion;
+	private GestionFormation gestionFormation;
 
 	private Etudiant(InformationPersonnelle informationPersonnelle, String motDePasse) {
 		this.informationPersonnelle = informationPersonnelle;
@@ -84,14 +85,14 @@ public class Etudiant implements InterEtudiant {
 	}
 	
 	/**
-	   * Connecte l'étudiant avec son numéro d'étudiant et son mot de passe.
-	   *
-	   * @param numero le numéro de l'étudiant
-	   * @param motDePasse le mot de passe de l'étudiant
-	   * @return <code>true</code> si le couple numéro/mot de passe est correct
-	   *         (l'étudiant est alors considéré comme connecté au système),
-	   *         <code>false</code> si le couple est incorrect
-	   */
+	 * Connecte l'étudiant avec son numéro d'étudiant et son mot de passe.
+	 *
+	 * @param numero le numéro de l'étudiant
+	 * @param motDePasse le mot de passe de l'étudiant
+	 * @return <code>true</code> si le couple numéro/mot de passe est correct
+	 *         (l'étudiant est alors considéré comme connecté au système),
+	 *         <code>false</code> si le couple est incorrect
+	 */
 	@Override
 	public boolean connexion(int numero, String motDePasse) {
 		if(this.numero == numero && motDePasse.equals(motDePasse)) {
@@ -101,6 +102,11 @@ public class Etudiant implements InterEtudiant {
 		return false;
 	}
 	
+	/**
+	 * Déconnecte l'étudiant actuellement connecté au système.
+	 *
+	 * @throws NonConnecteException si aucun étudiant n'était connecté
+	 */
 	public void deconnexion() throws NonConnecteException {
 		if(!this.etatConnexion) {
 			throw new NonConnecteException();
@@ -109,11 +115,18 @@ public class Etudiant implements InterEtudiant {
 		this.etatConnexion = false;	
 	}
 	
+	/**
+	 * L'ensemble des unités d'enseignement obligatoires de l'année de formation.
+	 *
+	 * @return l'ensemble des UE obligatoires
+	 */
 	public Set<UniteEnseignement> enseignementsObligatoires() {
-		GestionFormation form = new GestionFormation();
-		Set<UniteEnseignement> ue =  new HashSet<>();
-		
-		return;
+		Set<UniteEnseignement> uniteEnseignementsO = new HashSet<>();
+		for(UniteEnseignement ue : this.gestionFormation.getUniteEnseignements())
+			if(ue.getNbPlaces() == 0) {
+				uniteEnseignementsO.add(ue);
+			}
+		return uniteEnseignementsO;
 	}
 	
 	/**
@@ -121,7 +134,14 @@ public class Etudiant implements InterEtudiant {
      *
      * @return l'ensemble des UE optionnelles
      */
-	public Set<UniteEnseignement> enseignementsOptionnels();
+	public Set<UniteEnseignement> enseignementsOptionnels() {
+		Set<UniteEnseignement> uniteEnseignementsF = new HashSet<>();
+		for(UniteEnseignement ue : this.gestionFormation.getUniteEnseignements())
+			if(ue.getNbPlaces() > 0) {
+				uniteEnseignementsF.add(ue);
+			}
+		return uniteEnseignementsF;
+	}
 	
 	@Override
 	public String toString() {
@@ -146,5 +166,13 @@ public class Etudiant implements InterEtudiant {
 		return etatConnexion == other.etatConnexion
 				&& Objects.equals(informationPersonnelle, other.informationPersonnelle)
 				&& Objects.equals(motDePasse, other.motDePasse) && numero == other.numero;
+	}
+
+	public GestionFormation getGestionFormation() {
+		return gestionFormation;
+	}
+
+	public void setGestionFormation(GestionFormation gestionFormation) {
+		this.gestionFormation = gestionFormation;
 	}
 }
