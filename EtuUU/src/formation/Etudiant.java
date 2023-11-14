@@ -1,19 +1,30 @@
 package formation;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-// A DEFINIR
+/**
+ * Les fonctionnalités offertes à un étudiant.
+ *
+ * @author Eric Cariou
+ */
 public class Etudiant implements InterEtudiant {
-	private static final Set<Etudiant> etudiants = new HashSet<>();
+	// ******************************* ATTRIBUT STATIQUE
+    private static final Set<Etudiant> etudiants = new HashSet<>();
 	
+ // ******************************* ATTRIBUT D'INSTANCES
 	private InformationPersonnelle informationPersonnelle;
 	private int numero;
 	private String motDePasse;
 	private static int nbEtudiant = 0;
 	private boolean etatConnexion;
 	private GestionFormation gestionFormation;
+	private int numeroTp;
+	private int numeroTd;
 
 	private Etudiant(InformationPersonnelle informationPersonnelle, String motDePasse) {
 		this.informationPersonnelle = informationPersonnelle;
@@ -72,6 +83,7 @@ public class Etudiant implements InterEtudiant {
 	 *
 	 * @throws NonConnecteException si aucun étudiant n'était connecté
 	 */
+	@Override
 	public void deconnexion() throws NonConnecteException {
 		if(!this.etatConnexion) {
 			throw new NonConnecteException();
@@ -85,6 +97,7 @@ public class Etudiant implements InterEtudiant {
 	 *
 	 * @return l'ensemble des UE obligatoires
 	 */
+	@Override
 	public Set<UniteEnseignement> enseignementsObligatoires() {
 		Set<UniteEnseignement> uniteEnseignementsO = new HashSet<>();
 		for(UniteEnseignement ue : this.gestionFormation.getUniteEnseignements())
@@ -100,6 +113,7 @@ public class Etudiant implements InterEtudiant {
      *
      * @return l'ensemble des UE optionnelles
      */
+	@Override
 	public Set<UniteEnseignement> enseignementsOptionnels() {
 		Set<UniteEnseignement> uniteEnseignementsF = new HashSet<>();
 		for(UniteEnseignement ue : this.gestionFormation.getUniteEnseignements())
@@ -118,6 +132,7 @@ public class Etudiant implements InterEtudiant {
 	 * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
 	 *         n'est pas connecté
 	 */
+	@Override
 	public int nombreOptions() throws NonConnecteException {
 		if(!this.etatConnexion) {
 			throw new NonConnecteException();
@@ -136,6 +151,7 @@ public class Etudiant implements InterEtudiant {
 	 * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
 	 *         n'est pas connecté
 	 */
+	@Override
 	public boolean choisirOption(UniteEnseignement ue) throws NonConnecteException {
 		if(!this.etatConnexion) {
 			throw new NonConnecteException();
@@ -159,8 +175,9 @@ public class Etudiant implements InterEtudiant {
      * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
      *         n'est pas connecté
      */
+	@Override
     public int getNumeroGroupeTravauxDiriges() throws NonConnecteException {
-    	return 0;
+    	return this.getNumeroTd();
     }
   
     /**
@@ -171,10 +188,82 @@ public class Etudiant implements InterEtudiant {
      * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
      *         n'est pas connecté
      */
+	@Override
     public int getNumeroGroupeTravauxPratiques() throws NonConnecteException {
-    	return 0;
+		return this.getNumeroTp();
     }
 	
+	/**
+	 * Renvoie l'ensemble des enseignements suivis par l'étudiant : les UE
+	 * obligatoires ainsi que les UE optionnelles où il est inscrit.
+	 *
+	 * @return l'ensemble des UE suivies par l'étudiant
+	 * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
+	 *         n'est pas connecté
+	 */
+	@Override
+	public Set<UniteEnseignement> enseignementsSuivis() throws NonConnecteException {
+		Map<Etudiant, UniteEnseignement> gestionEtudiantUE = this.gestionFormation.getGestionEtudiantUE();
+		Set<UniteEnseignement> uniteEnseignement = new HashSet<>();
+		for(Etudiant etudiant : gestionEtudiantUE.keySet()) {
+			if(etudiant.equals(this)) {
+				uniteEnseignement.add(gestionEtudiantUE.get(etudiant));
+			}
+		}
+		
+		return uniteEnseignement;
+	}
+	
+	/**
+	 * Renvoie la liste de tous les messages reçus par l'étudiant (lus et non
+	 * lus), dans l'ordre où ils ont été reçus.
+	 *
+	 * @return tous les messages de l'étudiant
+	 * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
+	 *         n'est pas connecté
+	 */
+	@Override
+	public List<String> listeTousMessages() throws NonConnecteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * Renvoie la liste des messages non lus par l'étudiant, dans l'ordre où ils
+	 * ont été reçus.
+	 *
+	 * @return les messages non lus de l'étudiant
+	 * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
+	 *         n'est pas connecté
+	 */
+	@Override
+	public List<String> listeMessageNonLus() throws NonConnecteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * Indique si l'inscription de l'étudiant est finalisée, c'est-à-dire si
+	 * l'étudiant :
+	 * <ul>
+	 * <li>A été affecté à un groupe de TD</li>
+	 * <li>A été affecté à un groupe de TP</li>
+	 * <li>A choisi autant d'options que requis</li>
+	 * </ul>
+	 * Si au moins une des conditions n'est pas validée, l'étudiant n'a pas
+	 * finalisé son inscription.
+	 *
+	 * @return <code>true</code> si l'inscription de l'étudiant est finalisée,
+	 *         <code>false</code> sinon
+	 * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
+	 *         n'est pas connecté
+	 */
+	@Override
+	public boolean inscriptionFinalisee() throws NonConnecteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+		
 	@Override
 	public String toString() {
 		return "Etudiant [informationPersonnelle=" + informationPersonnelle + ", numero=" + numero + ", motDePasse="
@@ -199,4 +288,74 @@ public class Etudiant implements InterEtudiant {
 				&& Objects.equals(informationPersonnelle, other.informationPersonnelle)
 				&& Objects.equals(motDePasse, other.motDePasse) && numero == other.numero;
 	}
+
+	public InformationPersonnelle getInformationPersonnelle() {
+		return informationPersonnelle;
+	}
+
+	public void setInformationPersonnelle(InformationPersonnelle informationPersonnelle) {
+		this.informationPersonnelle = informationPersonnelle;
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
+	public String getMotDePasse() {
+		return motDePasse;
+	}
+
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
+	}
+
+	public static int getNbEtudiant() {
+		return nbEtudiant;
+	}
+
+	public static void setNbEtudiant(int nbEtudiant) {
+		Etudiant.nbEtudiant = nbEtudiant;
+	}
+
+	public boolean isEtatConnexion() {
+		return etatConnexion;
+	}
+
+	public void setEtatConnexion(boolean etatConnexion) {
+		this.etatConnexion = etatConnexion;
+	}
+
+	public GestionFormation getGestionFormation() {
+		return gestionFormation;
+	}
+
+	public void setGestionFormation(GestionFormation gestionFormation) {
+		this.gestionFormation = gestionFormation;
+	}
+
+	public int getNumeroTp() {
+		return numeroTp;
+	}
+
+	public void setNumeroTp(int numeroTp) {
+		this.numeroTp = numeroTp;
+	}
+
+	public int getNumeroTd() {
+		return numeroTd;
+	}
+
+	public void setNumeroTd(int numeroTd) {
+		this.numeroTd = numeroTd;
+	}
+
+	public static Set<Etudiant> getEtudiants() {
+		return etudiants;
+	}
+	
+	
 }
