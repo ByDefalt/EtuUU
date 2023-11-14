@@ -25,41 +25,6 @@ public class Etudiant implements InterEtudiant {
 	
 	private Etudiant() {}
 	
-	public InformationPersonnelle getInformationPersonnelle() {
-		return this.informationPersonnelle;
-	}
-
-	public void setInformationPersonnelle(InformationPersonnelle informationPersonnelle) {
-		this.informationPersonnelle = informationPersonnelle;
-	}
-
-	public int getNumero() {
-		return this.numero;
-	}
-
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
-
-	public String getMotDePasse() {
-		return this.motDePasse;
-	}
-
-	public void setMotDePasse(String motDePasse) {
-		this.motDePasse = motDePasse;
-	}
-	
-	public static int getNbEtudiant() {
-		return nbEtudiant;
-	}
-	public boolean isEtatConnexion() {
-		return etatConnexion;
-	}
-
-	public void setEtatConnexion(boolean etatConnexion) {
-		this.etatConnexion = etatConnexion;
-	}
-	
 	/**
 	 * Crée le compte d'un étudiant à partir de ses informations personnelles et
 	 * de son mot de passe puis retourne son numéro d'étudiant généré
@@ -126,6 +91,7 @@ public class Etudiant implements InterEtudiant {
 			if(ue.getNbPlaces() == 0) {
 				uniteEnseignementsO.add(ue);
 			}
+		
 		return uniteEnseignementsO;
 	}
 	
@@ -137,11 +103,77 @@ public class Etudiant implements InterEtudiant {
 	public Set<UniteEnseignement> enseignementsOptionnels() {
 		Set<UniteEnseignement> uniteEnseignementsF = new HashSet<>();
 		for(UniteEnseignement ue : this.gestionFormation.getUniteEnseignements())
-			if(ue.getNbPlaces() > 0) {
+			if(ue.getNbPlaces() > 1) {
 				uniteEnseignementsF.add(ue);
 			}
+		
 		return uniteEnseignementsF;
 	}
+	
+	/**
+	 * Retourne le nombre d'options que l'étudiant doit choisir au total.
+	 *
+	 * @return le nombre d'options que l'étudiant doit choisir ou -1 si ce nombre
+	 *         n'a pas été encore défini.
+	 * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
+	 *         n'est pas connecté
+	 */
+	public int nombreOptions() throws NonConnecteException {
+		if(!this.etatConnexion) {
+			throw new NonConnecteException();
+		}
+	
+		return this.gestionFormation.getOption().getValueOption() ;
+	}
+	
+	/**
+	 * Choix d'une UE optionnelle par l'étudiant.
+	 *
+	 * @param ue l'UE que l'étudiant veut choisir
+	 * @return <code>true</code> si l'étudiant a été inscrit à l'UE,
+	 *         <code>false</code> si l'inscription n'a pas pu se faire (manque de
+	 *         places dans l'UE ou l'UE n'est pas une option)
+	 * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
+	 *         n'est pas connecté
+	 */
+	public boolean choisirOption(UniteEnseignement ue) throws NonConnecteException {
+		if(!this.etatConnexion) {
+			throw new NonConnecteException();
+		}
+		
+		Set<UniteEnseignement> uniteEnseignementsF = new HashSet<>();
+		boolean result = false;
+		if(uniteEnseignementsF.contains(ue) && ue.getNbPlaces() > 1) {
+			result = true;
+			ue.setNbPlaces(ue.getNbPlaces() - 1);
+		}
+		
+		return result;
+	}
+	
+	/**
+     * Renvoie le numéro de groupe de TD de l'étudiant s'il a été défini.
+     *
+     * @return le numéro de groupe de TD s'il a été défini ou -1 si ça n'est pas
+     *         encore le cas
+     * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
+     *         n'est pas connecté
+     */
+    public int getNumeroGroupeTravauxDiriges() throws NonConnecteException {
+    	return 0;
+    }
+  
+    /**
+     * Renvoie le numéro de groupe de TP de l'étudiant s'il a été défini.
+     *
+     * @return le numéro de groupe de TP s'il a été défini ou -1 si ça n'est pas
+     *         encore le cas
+     * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
+     *         n'est pas connecté
+     */
+    public int getNumeroGroupeTravauxPratiques() throws NonConnecteException {
+    	return 0;
+    }
 	
 	@Override
 	public String toString() {
@@ -166,13 +198,5 @@ public class Etudiant implements InterEtudiant {
 		return etatConnexion == other.etatConnexion
 				&& Objects.equals(informationPersonnelle, other.informationPersonnelle)
 				&& Objects.equals(motDePasse, other.motDePasse) && numero == other.numero;
-	}
-
-	public GestionFormation getGestionFormation() {
-		return gestionFormation;
-	}
-
-	public void setGestionFormation(GestionFormation gestionFormation) {
-		this.gestionFormation = gestionFormation;
 	}
 }
