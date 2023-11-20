@@ -1,7 +1,9 @@
 package formation;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.ArrayList;
@@ -16,7 +18,9 @@ public class GestionFormation implements InterGestionFormation {
 
   // ******************************* ATTRIBUT STATIQUE
 
-  private static final Set<GestionFormation> GestionFormations = new HashSet<>();
+  private static final Map<Etudiant,UniteEnseignement> map = new HashMap<Etudiant,UniteEnseignement>();
+  private static final Map<Integer, Set<Etudiant>> tds = new HashMap<>();
+  private static final Map<Integer, Set<Etudiant>> tps = new HashMap<>();
 
   // ******************************* ATTRIBUT D'INSTANCES
 
@@ -204,6 +208,9 @@ public class GestionFormation implements InterGestionFormation {
       return String.valueOf(Option.option);
     }
   }
+public int getOption(){
+  return option.getOption();
+}
 
   public static class TailleGroupeDirige {
     private static int tailleGroupeDirige = 0;
