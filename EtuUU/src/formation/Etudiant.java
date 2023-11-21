@@ -308,4 +308,8 @@ public class Etudiant implements InterEtudiant {
 	public void setListeUE(Set<UniteEnseignement> listeUE) {
 		this.listeUE = listeUE;
 	}
+	
+	public Set<UniteEnseignement> getListeUEsuivies() {
+		return this.listeUEsuivies;
+	}
 }
