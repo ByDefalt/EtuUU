@@ -1,12 +1,9 @@
 package formation;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-import java.util.ArrayList;
 
 /**
  * Les services de gestion d'une ann�e de formation.
@@ -16,76 +13,34 @@ import java.util.ArrayList;
  */
 public class GestionFormation implements InterGestionFormation {
 
-  // ******************************* ATTRIBUT STATIQUE
-
-  private static final Map<Etudiant,UniteEnseignement> map = new HashMap<Etudiant,UniteEnseignement>();
-  private static final Map<Integer, Set<Etudiant>> tds = new HashMap<>();
-  private static final Map<Integer, Set<Etudiant>> tps = new HashMap<>();
-  private final Set<Etudiant> etudiants = new HashSet<>();
-
   // ******************************* ATTRIBUT D'INSTANCES
 
-  private final String nomFormation;
+  private String nomFormation;
   private String nomResponsable;
   private String email;
-  private TailleGroupeDirige tailleGroupeDirige = new TailleGroupeDirige();
-  private TailleGroupePratique tailleGroupePratique = new TailleGroupePratique();
-  private Option option = new Option();
-  private final Collection<UniteEnseignement> UniteEseignements = new ArrayList<>();
-
-  public GestionFormation(String nomFormation, String nomResponsable, String email) {
-    this.nomFormation = nomFormation;
-    this.nomResponsable = nomResponsable;
-    this.email = email;
-  }
+  private final Set<UniteEnseignement> UniteEseignements = new HashSet<>();
+  private final Map<Integer, Set<Etudiant>> tds = new HashMap<>();
+  private final Map<Integer, Set<Etudiant>> tps = new HashMap<>();
+  private final Set<Etudiant> listeEtudiants =new HashSet<>();
+  private int tailleGroupeDirige = -1;
+  private int tailleGroupePratique = -1;
+  private int NBoption = -1;
 
   public GestionFormation() {
-    this.nomFormation = null;
-  }
 
-  @Override
-  public String toString() {
-    return "GestionFormation [nomFormation=" + this.nomFormation + ", nomResponsable=" + this.nomResponsable
-        + ", email=" + this.email
-        + ", TailleGroupeDirige=" + this.tailleGroupeDirige + ", TailleGroupePratique=" + this.tailleGroupePratique
-        + ", option="
-        + this.option + "]";
   }
+  public void setnbOptionEtudiant(Etudiant etu){
+    
 
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    GestionFormation other = (GestionFormation) obj;
-    if (this.nomFormation == null) {
-      if (other.nomFormation != null)
-        return false;
-    } else if (!this.nomFormation.equals(other.nomFormation))
-      return false;
-    if (this.nomResponsable == null) {
-      if (other.nomResponsable != null)
-        return false;
-    } else if (!this.nomResponsable.equals(other.nomResponsable))
-      return false;
-    if (this.email == null) {
-      if (other.email != null)
-        return false;
-    } else if (!this.email.equals(other.email))
-      return false;
-    return true;
   }
-
-  /**
-   * Ce code génère un code de hachage pour l'objet GestionFormation en utilisant
-   * les attributs nomFormation, nomResponsable et email.
-   */
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.nomFormation, this.nomResponsable, this.email);
+  public Map<Integer, Set<Etudiant>> getTds() {
+    return tds;
+  }
+  public Map<Integer, Set<Etudiant>> getTps() {
+    return tps;
+  }
+  public Set<Etudiant> getlisteEtudiants(){
+    return listeEtudiants;
   }
 
   /**
@@ -99,18 +54,17 @@ public class GestionFormation implements InterGestionFormation {
    */
   @Override
   public void creerFormation(String nomFormation, String nomResponsable, String email) {
-    if (this.nomFormation == null || this.nomResponsable == null || this.email == null) {
-      GestionFormation form = new GestionFormation(nomFormation, nomResponsable, email);
-      if (!GestionFormations.contains(form)) {
-        GestionFormations.add(form);
-      }
-    }
+    this.nomFormation = nomFormation;
+    this.nomResponsable = nomResponsable;
+    this.email = email;
+    this.UniteEseignements.removeAll();
+    this.tds.clear();
+    this.tps.clear();
+    this.listeEtudiants.removeAll();
+    this.tailleGroupeDirige = -1;
+    this.tailleGroupePratique = -1;
+    this.NBoption = -1;
   }
-
-  public void ccc() {
-    System.out.println(GestionFormations);
-  }
-
   /**
    * Renvoie le nom du responsable de formation.
    * s
@@ -144,14 +98,6 @@ public class GestionFormation implements InterGestionFormation {
     return this.nomFormation;
   }
 
-  public boolean SetContien(String nomFormation, String nomResponsable, String email) {
-    GestionFormation ges = new GestionFormation(nomFormation, nomResponsable, email);
-    if (GestionFormations.contains(ges)) {
-      return true;
-    }
-    return false;
-  }
-
   /**
    * Rajoute une UE obligatoire � la formation. L'UE ne doit pas d�j� �tre dans
    * la liste des UE de la formation (ni en obligatoire, ni en optionnel).
@@ -162,7 +108,7 @@ public class GestionFormation implements InterGestionFormation {
    */
   @Override
   public boolean ajouterEnseignementObligatoire(UniteEnseignement ue) {
-    if ((!UniteEseignements.contains(ue) || !UniteEseignements.contains(ue)) && ue.getNbPlaces() == 1) {
+    if (!UniteEseignements.contains(ue) && ue.getNbPlaces() == 0) {
       UniteEseignements.add(ue);
       return true;
     }
@@ -181,80 +127,13 @@ public class GestionFormation implements InterGestionFormation {
    */
   @Override
   public boolean ajouterEnseignementOptionnel(UniteEnseignement ue, int nbPlaces) {
-    if ((!UniteEseignements.contains(ue) || !UniteEseignements.contains(ue)) && ue.getNbPlaces() > 1) {
+    if (!UniteEseignements.contains(ue) && ue.getNbPlaces() > 1) {
       ue.setNbPlaces(nbPlaces);
       UniteEseignements.add(ue);
       return true;
     }
     return false;
   }
-
-  public static class Option {
-    private static int option = 0;
-    private static boolean ismodif = false;
-
-    public int getOption() {
-      return Option.option;
-    }
-
-    public void setOption(int option) {
-      if (Option.ismodif == false) {
-        Option.ismodif = true;
-        Option.option = option;
-      }
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(Option.option);
-    }
-  }
-public int getOption(){
-  return option.getOption();
-}
-
-  public static class TailleGroupeDirige {
-    private static int tailleGroupeDirige = 0;
-    private static boolean ismodif = false;
-
-    public int getTailleGroupeDirige() {
-      return TailleGroupeDirige.tailleGroupeDirige;
-    }
-
-    public void setTailleGroupeDirige(int tailleGroupeDirige) {
-      if (TailleGroupeDirige.ismodif == false) {
-        TailleGroupeDirige.ismodif = true;
-        TailleGroupeDirige.tailleGroupeDirige = tailleGroupeDirige;
-      }
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(TailleGroupeDirige.tailleGroupeDirige);
-    }
-  }
-
-  public static class TailleGroupePratique {
-    private static int tailleGroupePratique = 0;
-    private static boolean ismodif = false;
-
-    public int getTailleGroupePratique() {
-      return TailleGroupePratique.tailleGroupePratique;
-    }
-
-    public void setTailleGroupePratique(int tailleGroupePratique) {
-      if (TailleGroupePratique.ismodif == false) {
-        TailleGroupePratique.ismodif = true;
-        TailleGroupePratique.tailleGroupePratique = tailleGroupePratique;
-      }
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(TailleGroupePratique.tailleGroupePratique);
-    }
-  }
-
   /**
    * D�finit le nombre d'options que doit choisir un �tudiant. Ne peut plus �tre
    * modifi� une fois d�fini.
@@ -264,7 +143,9 @@ public int getOption(){
    */
   @Override
   public void definirNombreOptions(int nombre) {
-    this.option.setOption(nombre);
+    if(this.NBoption == -1){
+      this.NBoption=nombre;
+    }
   }
 
   /**
@@ -276,8 +157,8 @@ public int getOption(){
    */
   @Override
   public void setTailleGroupeDirige(int taille) {
-    if (taille > 1) {
-      this.tailleGroupeDirige.setTailleGroupeDirige(taille);
+    if(this.tailleGroupeDirige == -1){
+      this.tailleGroupeDirige=nombre;
     }
   }
 
@@ -290,8 +171,8 @@ public int getOption(){
    */
   @Override
   public void setTailleGroupePratique(int taille) {
-    if (taille > 1) {
-      this.tailleGroupePratique.setTailleGroupePratique(taille);
+    if(this.tailleGroupePratique == -1){
+      this.tailleGroupePratique=nombre;
     }
   }
 
@@ -303,7 +184,7 @@ public int getOption(){
    */
   @Override
   public int getTailleGroupeDirige() {
-    return this.tailleGroupeDirige.getTailleGroupeDirige();
+    return this.tailleGroupeDirige;
   }
 
   /**
@@ -314,7 +195,7 @@ public int getOption(){
    */
   @Override
   public int getTailleGroupePratique() {
-    return this.tailleGroupePratique.getTailleGroupePratique();
+    return this.tailleGroupePratique;
   }
 
   /**
@@ -349,7 +230,8 @@ public int getOption(){
    */
   @Override
   public int changerGroupe(Etudiant etudiant, int groupeDirige, int groupePratique) {
-    return 1;
+    int res = -3;
+    return res;
   }
 
   /**
@@ -359,7 +241,7 @@ public int getOption(){
    */
   @Override
   public int nombreGroupesTravauxDiriges() {
-    return 1;
+    return tds.size();
   }
 
   /**
@@ -369,7 +251,7 @@ public int getOption(){
    */
   @Override
   public int nombreGroupesTravauxPratiques() {
-    return 1;
+    return tps.size();
   }
 
   /**
@@ -381,7 +263,7 @@ public int getOption(){
    */
   @Override
   public Set<Etudiant> listeEtudiantsGroupeDirige(int groupe) {
-    return null;
+    return tds.get(groupe);
   }
 
   /**
@@ -393,7 +275,7 @@ public int getOption(){
    */
   @Override
   public Set<Etudiant> listeEtudiantsGroupePratique(int groupe) {
-    return null;
+    return tps.get(groupe);
   }
 
   /**
@@ -405,6 +287,22 @@ public int getOption(){
    */
   @Override
   public Set<Etudiant> listeEtudiantsOption(UniteEnseignement option) {
-    return null;
+    Set<Etudiant> listeetu=new HashSet<>();
+    boolean estpassé=false;
+    for( Etudiant etu : listeEtudiants){
+      for( Set<UniteEnseignement> list : etu.getlisteUEsuivies()){
+        for( UniteEseignements ue : list){
+            if(ue.equals(option)){
+              listeetu.add(etu);
+              estpassé=true;
+            }
+        }
+      }
+    }
+    if(estpassé){
+      return listeetu;
+    }else{
+      return null;
+    }
   }
 }
