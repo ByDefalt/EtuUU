@@ -1,5 +1,6 @@
 package formation;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -22,9 +23,9 @@ public class Etudiant implements InterEtudiant {
 	private int numeroTp;
 	private int numeroTd;
 	private int nbOption;
-	private Map<Boolean, String> message;
-	private Set<UniteEnseignement> listeUE ;
-	private Set<UniteEnseignement> listeUEsuivies ;
+	private Map<Boolean, String> message = new HashMap<>();
+	private Set<UniteEnseignement> listeUE = new HashSet<>();
+	private Set<UniteEnseignement> listeUEsuivies = new HashSet<>();
 	
 
 	public Etudiant(InformationPersonnelle informationPersonnelle, String motDePasse) {
@@ -48,15 +49,15 @@ public class Etudiant implements InterEtudiant {
 	 * @return le num�ro unique de l'�tudiant ou -1 en cas de probl�me
 	 */
 	@Override
-	public int inscription(InformationPersonnelle infos, String motDePasse) {
-		if( motDePasse == null || infos == null) {
+	public int inscription(InformationPersonnelle informationPersonnelle, String motDePasse) {
+		if( motDePasse == null || informationPersonnelle == null) {
 			return -1;
 		}
-		Etudiant etudiant = new Etudiant(infos, motDePasse);
-		
-		if(etudiants.contains(etudiant)) {
-			etudiants.add(etudiant);
-		}
+		this.informationPersonnelle = informationPersonnelle;
+		this.motDePasse = motDePasse;
+		nbEtudiant++;
+		this.numero = nbEtudiant;
+		this.etatConnexion = false;
 		
 		return this.numero;
 	}
@@ -100,7 +101,13 @@ public class Etudiant implements InterEtudiant {
 	 */
 	@Override
 	public Set<UniteEnseignement> enseignementsObligatoires() {
-		return super.UniteEseignements;
+		Set<UniteEnseignement> uniteEnseignementsO = new HashSet<>();
+		for(UniteEnseignement ue : this.listeUE)
+			if(ue.getNbPlaces() == 0) {
+				uniteEnseignementsO.add(ue);
+			}
+		
+		return uniteEnseignementsO;
 	}
 	
 	/**
@@ -111,7 +118,7 @@ public class Etudiant implements InterEtudiant {
 	@Override
 	public Set<UniteEnseignement> enseignementsOptionnels() {
 		Set<UniteEnseignement> uniteEnseignementsF = new HashSet<>();
-		for(UniteEnseignement ue : this.gestionFormation.getUniteEnseignements())
+		for(UniteEnseignement ue : this.listeUE)
 			if(ue.getNbPlaces() > 1) {
 				uniteEnseignementsF.add(ue);
 			}
@@ -132,8 +139,12 @@ public class Etudiant implements InterEtudiant {
 		if(!this.etatConnexion) {
 			throw new NonConnecteException();
 		}
+		
+		if(this.nbOption == 0) {
+			return -1;
+		}
 	
-		return this.gestionFormation.getOption().getValueOption() ;
+		return this.nbOption;
 	}
 	
 	/**
@@ -151,15 +162,7 @@ public class Etudiant implements InterEtudiant {
 		if(!this.etatConnexion) {
 			throw new NonConnecteException();
 		}
-		
-		Set<UniteEnseignement> uniteEnseignementsF = new HashSet<>();
-		boolean result = false;
-		if(uniteEnseignementsF.contains(ue) && ue.getNbPlaces() > 1) {
-			result = true;
-			ue.setNbPlaces(ue.getNbPlaces() - 1);
-		}
-		
-		return result;
+		/* */
 	}
 	
 	/**
@@ -172,7 +175,7 @@ public class Etudiant implements InterEtudiant {
      */
 	@Override
     public int getNumeroGroupeTravauxDiriges() throws NonConnecteException {
-    	return this.getNumeroTd();
+    	return this.numeroTd;
     }
   
     /**
@@ -185,7 +188,7 @@ public class Etudiant implements InterEtudiant {
      */
 	@Override
     public int getNumeroGroupeTravauxPratiques() throws NonConnecteException {
-		return this.getNumeroTp();
+		return this.numeroTp;
     }
 	
 	/**
@@ -198,15 +201,11 @@ public class Etudiant implements InterEtudiant {
 	 */
 	@Override
 	public Set<UniteEnseignement> enseignementsSuivis() throws NonConnecteException {
-		Map<Etudiant, UniteEnseignement> gestionEtudiantUE = this.gestionFormation.getGestionEtudiantUE();
-		Set<UniteEnseignement> uniteEnseignement = new HashSet<>();
-		for(Etudiant etudiant : gestionEtudiantUE.keySet()) {
-			if(etudiant.equals(this)) {
-				uniteEnseignement.add(gestionEtudiantUE.get(etudiant));
-			}
+		if(!this.etatConnexion) {
+			throw new NonConnecteException();
 		}
 		
-		return uniteEnseignement;
+		return this.listeUEsuivies;
 	}
 	
 	/**
@@ -294,5 +293,9 @@ public class Etudiant implements InterEtudiant {
 	
 	public void setNbOption(int nbOption) {
 		this.nbOption = nbOption;
+	}
+	
+	public Set<UniteEnseignement> getListeUEsuivies() {
+		return this.listeUEsuivies;
 	}
 }
