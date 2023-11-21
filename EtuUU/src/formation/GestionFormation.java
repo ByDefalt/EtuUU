@@ -21,6 +21,7 @@ public class GestionFormation implements InterGestionFormation {
   private static final Map<Etudiant,UniteEnseignement> map = new HashMap<Etudiant,UniteEnseignement>();
   private static final Map<Integer, Set<Etudiant>> tds = new HashMap<>();
   private static final Map<Integer, Set<Etudiant>> tps = new HashMap<>();
+  private final Set<Etudiant> etudiants = new HashSet<>();
 
   // ******************************* ATTRIBUT D'INSTANCES
 
