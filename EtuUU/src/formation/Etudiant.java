@@ -21,8 +21,8 @@ public class Etudiant implements InterEtudiant {
 	private boolean etatConnexion;
 	private int numeroTp;
 	private int numeroTd;
-	private int NBoption;
-	private List<String> message;
+	private int nbOption;
+	private Map<Boolean, String> message;
 	private Set<UniteEnseignement> listeUE ;
 	private Set<UniteEnseignement> listeUEsuivies ;
 	
@@ -283,74 +283,16 @@ public class Etudiant implements InterEtudiant {
 				&& Objects.equals(informationPersonnelle, other.informationPersonnelle)
 				&& Objects.equals(motDePasse, other.motDePasse) && numero == other.numero;
 	}
-
-	public InformationPersonnelle getInformationPersonnelle() {
-		return informationPersonnelle;
-	}
-
-	public void setInformationPersonnelle(InformationPersonnelle informationPersonnelle) {
-		this.informationPersonnelle = informationPersonnelle;
-	}
-
-	public int getNumero() {
-		return numero;
-	}
-
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
-
-	public String getMotDePasse() {
-		return motDePasse;
-	}
-
-	public void setMotDePasse(String motDePasse) {
-		this.motDePasse = motDePasse;
-	}
-
-	public static int getNbEtudiant() {
-		return nbEtudiant;
-	}
-
-	public static void setNbEtudiant(int nbEtudiant) {
-		Etudiant.nbEtudiant = nbEtudiant;
-	}
-
-	public boolean isEtatConnexion() {
-		return etatConnexion;
-	}
-
-	public void setEtatConnexion(boolean etatConnexion) {
-		this.etatConnexion = etatConnexion;
-	}
-
-	public GestionFormation getGestionFormation() {
-		return gestionFormation;
-	}
-
-	public void setGestionFormation(GestionFormation gestionFormation) {
-		this.gestionFormation = gestionFormation;
-	}
-
-	public int getNumeroTp() {
-		return numeroTp;
-	}
-
+	
 	public void setNumeroTp(int numeroTp) {
 		this.numeroTp = numeroTp;
 	}
-
-	public int getNumeroTd() {
-		return numeroTd;
-	}
-
+	
 	public void setNumeroTd(int numeroTd) {
 		this.numeroTd = numeroTd;
 	}
-
-	public static Set<Etudiant> getEtudiants() {
-		return null;
+	
+	public void setNbOption(int nbOption) {
+		this.nbOption = nbOption;
 	}
-	
-	
 }
