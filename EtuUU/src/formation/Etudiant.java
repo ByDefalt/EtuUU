@@ -20,9 +20,9 @@ public class Etudiant implements InterEtudiant {
 	private String motDePasse;
 	private static int nbEtudiant = 0;
 	private boolean etatConnexion;
-	private int numeroTp;
-	private int numeroTd;
-	private int nbOption;
+	private int numeroTp = -1;
+	private int numeroTd = -1;
+	private int nbOption = -1;
 	private Map<Boolean, String> message = new HashMap<>();
 	private Set<UniteEnseignement> listeUE = new HashSet<>();
 	private Set<UniteEnseignement> listeUEsuivies = new HashSet<>();
@@ -103,7 +103,7 @@ public class Etudiant implements InterEtudiant {
 	public Set<UniteEnseignement> enseignementsObligatoires() {
 		Set<UniteEnseignement> uniteEnseignementsO = new HashSet<>();
 		for(UniteEnseignement ue : this.listeUE)
-			if(ue.getNbPlaces() == 0) {
+			if(ue.getNbPlacesMax() == 0) {
 				uniteEnseignementsO.add(ue);
 			}
 		
@@ -119,7 +119,7 @@ public class Etudiant implements InterEtudiant {
 	public Set<UniteEnseignement> enseignementsOptionnels() {
 		Set<UniteEnseignement> uniteEnseignementsF = new HashSet<>();
 		for(UniteEnseignement ue : this.listeUE)
-			if(ue.getNbPlaces() > 1) {
+			if(ue.getNbPlacesMax() > 1) {
 				uniteEnseignementsF.add(ue);
 			}
 		
@@ -138,10 +138,6 @@ public class Etudiant implements InterEtudiant {
 	public int nombreOptions() throws NonConnecteException {
 		if(!this.etatConnexion) {
 			throw new NonConnecteException();
-		}
-		
-		if(this.nbOption == 0) {
-			return -1;
 		}
 	
 		return this.nbOption;
@@ -162,7 +158,13 @@ public class Etudiant implements InterEtudiant {
 		if(!this.etatConnexion) {
 			throw new NonConnecteException();
 		}
-		/* */
+		
+		if(ue.getNbPlaces() < ue.getNbPlacesMax()) {
+			this.listeUEsuivies.add(ue);
+			ue.setNbPlaces();
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -175,6 +177,10 @@ public class Etudiant implements InterEtudiant {
      */
 	@Override
     public int getNumeroGroupeTravauxDiriges() throws NonConnecteException {
+		if(!this.etatConnexion) {
+			throw new NonConnecteException();
+		}
+		
     	return this.numeroTd;
     }
   
@@ -188,6 +194,10 @@ public class Etudiant implements InterEtudiant {
      */
 	@Override
     public int getNumeroGroupeTravauxPratiques() throws NonConnecteException {
+		if(!this.etatConnexion) {
+			throw new NonConnecteException();
+		}
+	
 		return this.numeroTp;
     }
 	
@@ -295,7 +305,7 @@ public class Etudiant implements InterEtudiant {
 		this.nbOption = nbOption;
 	}
 	
-	public Set<UniteEnseignement> getListeUEsuivies() {
-		return this.listeUEsuivies;
+	public void setListeUE(Set<UniteEnseignement> listeUE) {
+		this.listeUE = listeUE;
 	}
 }

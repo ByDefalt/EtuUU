@@ -7,12 +7,13 @@ public class UniteEnseignement implements InterUniteEnseignement {
 
     private final String nomUE;
     private String nomEnseignant;
-    private int nbPlaces;
+    private int nbPlaces = 0;
+    private int nbPlacesMax = 0;
 
     public UniteEnseignement(String nomUE, String nomEnseignant, int nbPlaces) {
         this.nomUE = nomUE;
         this.nomEnseignant = nomEnseignant;
-        this.nbPlaces = nbPlaces;
+        this.nbPlacesMax = nbPlaces;
     }
 
     public UniteEnseignement(String nomUE, String nomEnseignant) {
@@ -26,6 +27,15 @@ public class UniteEnseignement implements InterUniteEnseignement {
     }
 
     @Override
+    public int getNbPlacesMax() {
+		return nbPlacesMax;
+	}
+
+	public void setNbPlacesMax(int nbPlacesMax) {
+		this.nbPlacesMax = nbPlacesMax;
+	}
+
+	@Override
     public String getNomEnseignant() {
         return nomEnseignant;
     }
@@ -41,8 +51,8 @@ public class UniteEnseignement implements InterUniteEnseignement {
     }
 
     @Override
-    public void setNbPlaces(int nbPlaces) {
-        this.nbPlaces = nbPlaces;
+    public void setNbPlaces() {
+        this.nbPlaces += 1;
     }
 
     @Override
