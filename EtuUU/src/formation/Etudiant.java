@@ -26,8 +26,14 @@ public class Etudiant implements InterEtudiant {
 	private Map<Boolean, String> message = new HashMap<>();
 	private Set<UniteEnseignement> listeUE = new HashSet<>();
 	private Set<UniteEnseignement> listeUEsuivies = new HashSet<>();
-	
 
+
+	/**
+	 * Constructeur de la classe Etudiant.
+	 *
+	 * @param informationPersonnelle Les informations personnelles de l'étudiant.
+	 * @param motDePasse Le mot de passe de l'étudiant pour se connecter (la chaine doit être non vide).
+	 */
 	public Etudiant(InformationPersonnelle informationPersonnelle, String motDePasse) {
 		this.informationPersonnelle = informationPersonnelle;
 		this.motDePasse = motDePasse;
@@ -35,8 +41,65 @@ public class Etudiant implements InterEtudiant {
 		this.numero = nbEtudiant;
 		this.etatConnexion = false;
 	}
-	
+
+	/**
+	 * Constructeur vide de la classe Etudiant.
+	 */
 	public Etudiant() {}
+
+	/**
+	 * Définit le numéro de TP de l'étudiant.
+	 *
+	 * @param numeroTp Le numéro de TP à attribuer à l'étudiant.
+	 */
+	public void setNumeroTp(int numeroTp) {
+		this.numeroTp = numeroTp;
+	}
+
+	/**
+	 * Définit le numéro de TD de l'étudiant.
+	 *
+	 * @param numeroTd Le numéro de TD à attribuer à l'étudiant.
+	 */
+	public void setNumeroTd(int numeroTd) {
+		this.numeroTd = numeroTd;
+	}
+
+	/**
+	 * Définit le nombre d'options de l'étudiant.
+	 *
+	 * @param nbOption Le nombre d'options à attribuer à l'étudiant.
+	 */
+	public void setNbOption(int nbOption) {
+		this.nbOption = nbOption;
+	}
+
+	/**
+	 * Définit la liste des unités d'enseignement de l'étudiant.
+	 *
+	 * @param listeUE La liste des unités d'enseignement à attribuer à l'étudiant.
+	 */
+	public void setListeUE(Set<UniteEnseignement> listeUE) {
+		this.listeUE = listeUE;
+	}
+
+	/**
+	 * Renvoie la liste des unités d'enseignement suivies par l'étudiant.
+	 *
+	 * @return La liste des unités d'enseignement suivies par l'étudiant.
+	 */
+	public Set<UniteEnseignement> getListeUEsuivies() {
+		return this.listeUEsuivies;
+	}
+
+	/**
+	 * Renvoie le tableau associatif des messages reçus par l'étudiant.
+	 *
+	 * @return le tableau associatif des messages reçus par l'étudiant.
+	 */
+	public Map<Boolean, String> getMessage() {
+		return this.message;
+	}
 	
 	/**
 	 * Cr�e le compte d'un �tudiant � partir de ses informations personnelles et
@@ -228,8 +291,11 @@ public class Etudiant implements InterEtudiant {
 	 */
 	@Override
 	public List<String> listeTousMessages() throws NonConnecteException {
-		// TODO Auto-generated method stub
-		return null;
+		if (!this.etatConnexion) {
+			throw new NonConnecteException();
+		}
+
+		return new ArrayList<>(this.message.values());
 	}
 	
 	/**
@@ -242,8 +308,16 @@ public class Etudiant implements InterEtudiant {
 	 */
 	@Override
 	public List<String> listeMessageNonLus() throws NonConnecteException {
-		// TODO Auto-generated method stub
-		return null;
+		if (!this.etatConnexion) {
+			throw new NonConnecteException();
+		}
+
+		List<String> messageNonLus = new ArrayList<String>();
+		for(Boolean key : message.keySet()) {
+			if(key == false)
+				messageNonLus.add(message.get(key));
+		}
+		return messageNonLus;
 	}
 	
 	/**
@@ -264,21 +338,40 @@ public class Etudiant implements InterEtudiant {
 	 */
 	@Override
 	public boolean inscriptionFinalisee() throws NonConnecteException {
-		// TODO Auto-generated method stub
-		return false;
+		if (!this.etatConnexion) {
+			throw new NonConnecteException();
+		}
+
+		return this.numeroTp != -1 && this.numeroTd != -1 && nbOption == enseignementsOptionnels().length();
 	}
-		
+
+	/**
+	 * Renvoie une représentation textuelle de l'objet.
+	 *
+	 * @return Une chaîne représentant l'objet.
+	 */
 	@Override
 	public String toString() {
 		return "Etudiant [informationPersonnelle=" + informationPersonnelle + ", numero=" + numero + ", motDePasse="
 				+ motDePasse + ", etatConnexion=" + etatConnexion + "]";
 	}
 
+	/**
+	 * Renvoie le code de hachage de l'objet.
+	 *
+	 * @return Le code de hachage de l'objet.
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(etatConnexion, informationPersonnelle, motDePasse, numero);
 	}
 
+	/**
+	 * Indique si un autre objet est égal à cet étudiant.
+	 *
+	 * @param obj L'objet à comparer.
+	 * @return true si les objets sont égaux, false sinon.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -291,25 +384,5 @@ public class Etudiant implements InterEtudiant {
 		return etatConnexion == other.etatConnexion
 				&& Objects.equals(informationPersonnelle, other.informationPersonnelle)
 				&& Objects.equals(motDePasse, other.motDePasse) && numero == other.numero;
-	}
-	
-	public void setNumeroTp(int numeroTp) {
-		this.numeroTp = numeroTp;
-	}
-	
-	public void setNumeroTd(int numeroTd) {
-		this.numeroTd = numeroTd;
-	}
-	
-	public void setNbOption(int nbOption) {
-		this.nbOption = nbOption;
-	}
-	
-	public void setListeUE(Set<UniteEnseignement> listeUE) {
-		this.listeUE = listeUE;
-	}
-	
-	public Set<UniteEnseignement> getListeUEsuivies() {
-		return this.listeUEsuivies;
 	}
 }
