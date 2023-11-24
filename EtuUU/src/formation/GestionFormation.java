@@ -2,6 +2,7 @@ package formation;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,9 +34,11 @@ public class GestionFormation implements InterGestionFormation {
     public void setnbOptionEtudiant(Etudiant etu) {
         etu.setNbOption(this.NBoption);
     }
-    public void setlisteUEEtudiant(Etudiant etu){
+
+    public void setlisteUEEtudiant(Etudiant etu) {
         etu.setListeUE(UniteEseignements);
     }
+
     public Map<Integer, Set<Etudiant>> getTds() {
         return tds;
     }
@@ -214,6 +217,42 @@ public class GestionFormation implements InterGestionFormation {
      */
     @Override
     public void attribuerAutomatiquementGroupes() {
+        
+        tds.clear();
+        int nombreDeListeTd = listeEtudiants.size() / tailleGroupeDirige + 1;
+        int nombresRepartirTd = (int) Math.ceil((double) listeEtudiants.size() / (double) nombreDeListeTd);
+        Iterator<Etudiant> iterator = listeEtudiants.iterator();
+        Etudiant etu;
+        for (int j = 1; j <= nombreDeListeTd; j++) {
+            Set<Etudiant> listetu = new HashSet<>();
+            for (int i = 1; i <= nombresRepartirTd; i++) {
+                if (iterator.hasNext()) {
+                    etu=iterator.next();
+                    if(etu.getNumeroGroupeTravauxDirigesResponsable()!=j){
+                        envoyermessage("changement de groupe");
+                    }
+                    changerGroupe(etu, j, 0);
+                }
+            }
+            tds.put(j, listetu);
+        }
+        tps.clear();
+        int nombreDeListeTp = listeEtudiants.size() / tailleGroupePratique + 1;
+        int nombresRepartirTp = (int) Math.ceil((double) listeEtudiants.size() / (double) nombreDeListeTp);
+        iterator = listeEtudiants.iterator();
+        for (int j = 1; j <= nombreDeListeTp; j++) {
+            Set<Etudiant> listetu = new HashSet<>();
+            for (int i = 1; i <= nombresRepartirTp; i++) {
+                if (iterator.hasNext()) {
+                    etu=iterator.next();
+                    if(etu.getNumeroGroupeTravauxPratiquesResponsable()!=j){
+                        envoyermessage("changement de groupe");
+                    }
+                    changerGroupe(etu, 0, j);
+                }
+            }
+            tps.put(j, listetu);
+        }
 
     }
 
@@ -237,7 +276,49 @@ public class GestionFormation implements InterGestionFormation {
      */
     @Override
     public int changerGroupe(Etudiant etudiant, int groupeDirige, int groupePratique) {
-        int res = -3;
+        int res = 0;
+        int numgroupetd = -1;
+        int numgroupetp = -1;
+        for (Map.Entry<Integer, Set<Etudiant>> entry : tds.entrySet()) {
+            int key = entry.getKey();
+            Set<Etudiant> value = entry.getValue();
+            if (value.contains(etudiant)) {
+                numgroupetd = key;
+            }
+        }
+        for (Map.Entry<Integer, Set<Etudiant>> entry : tps.entrySet()) {
+            int key = entry.getKey();
+            Set<Etudiant> value = entry.getValue();
+            if (value.contains(etudiant)) {
+                numgroupetp = key;
+            }
+        }
+        if (groupeDirige > 0) {
+            if (listeEtudiantsGroupeDirige(groupeDirige).size() < this.tailleGroupeDirige) {
+                tds.get(groupeDirige).add(etudiant);
+                etudiant.setNumeroTd(groupeDirige);
+                if (numgroupetd != -1) {
+                    tds.get(numgroupetd).remove(etudiant);
+                }
+            } else {
+                res = -1;
+            }
+        }
+        if (groupePratique > 0) {
+            if (listeEtudiantsGroupePratique(groupePratique).size() < this.tailleGroupePratique) {
+                tps.get(groupePratique).add(etudiant);
+                etudiant.setNumeroTp(groupePratique);
+                if (numgroupetp != -1) {
+                    tps.get(numgroupetp).remove(etudiant);
+                }
+            } else {
+                if (res == -1) {
+                    res = -3;
+                } else {
+                    res = -2;
+                }
+            }
+        }
         return res;
     }
 
