@@ -2,7 +2,6 @@ package formation;
 
 import java.util.Objects;
 
-// A DEFINIR
 public class UniteEnseignement implements InterUniteEnseignement {
 
     private final String nomUE;

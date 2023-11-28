@@ -1,5 +1,6 @@
 package formation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -342,7 +343,7 @@ public class Etudiant implements InterEtudiant {
 			throw new NonConnecteException();
 		}
 
-		return this.numeroTp != -1 && this.numeroTd != -1 && nbOption == enseignementsOptionnels().length();
+		return this.numeroTp != -1 && this.numeroTd != -1 && nbOption == enseignementsOptionnels().size();
 	}
 
 	/**

@@ -27,26 +27,45 @@ public class GestionFormation implements InterGestionFormation {
     private int tailleGroupePratique = -1;
     private int NBoption = -1;
 
+    public int getNBoption() {
+        return NBoption;
+    }
+
     public GestionFormation() {
 
     }
 
+    /**
+     * @param etu
+     */
     public void setnbOptionEtudiant(Etudiant etu) {
         etu.setNbOption(this.NBoption);
     }
 
+    /**
+     * @param etu
+     */
     public void setlisteUEEtudiant(Etudiant etu) {
         etu.setListeUE(UniteEseignements);
     }
 
+    /**
+     * @return
+     */
     public Map<Integer, Set<Etudiant>> getTds() {
         return tds;
     }
 
+    /**
+     * @return
+     */
     public Map<Integer, Set<Etudiant>> getTps() {
         return tps;
     }
 
+    /**
+     * @return
+     */
     public Set<Etudiant> getlisteEtudiants() {
         return listeEtudiants;
     }
@@ -117,7 +136,7 @@ public class GestionFormation implements InterGestionFormation {
      */
     @Override
     public boolean ajouterEnseignementObligatoire(UniteEnseignement ue) {
-        if (!UniteEseignements.contains(ue) && ue.getNbPlacesMax() == 0) {
+        if (!UniteEseignements.contains(ue) && ue.getNbPlacesMax() == 0 && ue.getNomUE()!=null && ue.getNomEnseignant()!=null) {
             UniteEseignements.add(ue);
             return true;
         }
@@ -136,7 +155,7 @@ public class GestionFormation implements InterGestionFormation {
      */
     @Override
     public boolean ajouterEnseignementOptionnel(UniteEnseignement ue, int nbPlaces) {
-        if (!UniteEseignements.contains(ue) && ue.getNbPlacesMax() > 1) {
+        if (!UniteEseignements.contains(ue) && nbPlaces > 0) {
             ue.setNbPlacesMax(nbPlaces);
             UniteEseignements.add(ue);
             return true;
@@ -217,43 +236,64 @@ public class GestionFormation implements InterGestionFormation {
      */
     @Override
     public void attribuerAutomatiquementGroupes() {
-        
-        tds.clear();
-        int nombreDeListeTd = listeEtudiants.size() / tailleGroupeDirige + 1;
-        int nombresRepartirTd = (int) Math.ceil((double) listeEtudiants.size() / (double) nombreDeListeTd);
-        Iterator<Etudiant> iterator = listeEtudiants.iterator();
-        Etudiant etu;
-        for (int j = 1; j <= nombreDeListeTd; j++) {
-            Set<Etudiant> listetu = new HashSet<>();
-            for (int i = 1; i <= nombresRepartirTd; i++) {
-                if (iterator.hasNext()) {
-                    etu=iterator.next();
-                    if(etu.getNumeroGroupeTravauxDirigesResponsable()!=j){
-                        envoyermessage("changement de groupe");
-                    }
-                    changerGroupe(etu, j, 0);
+        int nombreGroupesTravauxDiriges = listeEtudiants.size() / tailleGroupeDirige + 1;
+        Set<Etudiant> listevide = new HashSet<>();
+        boolean estpresent = false;
+        while (nombreGroupesTravauxDiriges != this.tds.size()) {
+            tds.put(this.nombreGroupesTravauxDiriges() + 1, listevide);
+        }
+        int numeroGroupeTailleMin = 1;
+        for (Etudiant etu : listeEtudiants) {
+            for (Map.Entry<Integer, Set<Etudiant>> entry : tds.entrySet()) {
+                int key = entry.getKey();
+                Set<Etudiant> value = entry.getValue();
+                if (value.size() < numeroGroupeTailleMin) {
+                    numeroGroupeTailleMin = key;
                 }
             }
-            tds.put(j, listetu);
-        }
-        tps.clear();
-        int nombreDeListeTp = listeEtudiants.size() / tailleGroupePratique + 1;
-        int nombresRepartirTp = (int) Math.ceil((double) listeEtudiants.size() / (double) nombreDeListeTp);
-        iterator = listeEtudiants.iterator();
-        for (int j = 1; j <= nombreDeListeTp; j++) {
-            Set<Etudiant> listetu = new HashSet<>();
-            for (int i = 1; i <= nombresRepartirTp; i++) {
-                if (iterator.hasNext()) {
-                    etu=iterator.next();
-                    if(etu.getNumeroGroupeTravauxPratiquesResponsable()!=j){
-                        envoyermessage("changement de groupe");
-                    }
-                    changerGroupe(etu, 0, j);
+            estpresent = false;
+            for (Map.Entry<Integer, Set<Etudiant>> entry : tds.entrySet()) {
+                Set<Etudiant> value = entry.getValue();
+                if (value.contains(etu)) {
+                    estpresent = true;
                 }
             }
-            tps.put(j, listetu);
+            if (!estpresent) {
+                changerGroupe(etu, numeroGroupeTailleMin, 0);
+            }
         }
+        this.homogenisation();
+    }
 
+    public void homogenisation() {
+        double nombreEtudiantParGroupeTd = listeEtudiants.size() / this.nombreGroupesTravauxDiriges();
+        int numeroGroupeTailleMin = 1;
+        int numeroGroupeTailleMax = 1;
+        while (interval(nombreEtudiantParGroupeTd, this.tds)) {
+            for (Map.Entry<Integer, Set<Etudiant>> entry : tds.entrySet()) {
+                int key = entry.getKey();
+                Set<Etudiant> value = entry.getValue();
+                if (value.size() < numeroGroupeTailleMin) {
+                    numeroGroupeTailleMin = key;
+                }
+                if (value.size() > numeroGroupeTailleMax) {
+                    numeroGroupeTailleMax = key;
+                }
+            }
+            Iterator<Etudiant> it = tds.get(numeroGroupeTailleMax).iterator();
+            changerGroupe(it.next(), numeroGroupeTailleMin, 0);
+        }
+    }
+
+    public boolean interval(double valeur, Map<Integer, Set<Etudiant>> mamap) {
+        boolean res = true;
+        for (Map.Entry<Integer, Set<Etudiant>> entry : mamap.entrySet()) {
+            Set<Etudiant> value = entry.getValue();
+            if (value.size() > valeur + 1 || value.size() < valeur - 1) {
+                res = false;
+            }
+        }
+        return res;
     }
 
     /**
@@ -310,6 +350,9 @@ public class GestionFormation implements InterGestionFormation {
                 etudiant.setNumeroTp(groupePratique);
                 if (numgroupetp != -1) {
                     tps.get(numgroupetp).remove(etudiant);
+                    envoyermessage(etudiant, "nouveaux groupe");
+                } else {
+                    envoyermessage(etudiant, "changement de groupe");
                 }
             } else {
                 if (res == -1) {
@@ -320,6 +363,10 @@ public class GestionFormation implements InterGestionFormation {
             }
         }
         return res;
+    }
+
+    public void envoyermessage(Etudiant etu, String message) {
+        etu.getMessage().put(false, message);
     }
 
     /**
@@ -375,20 +422,17 @@ public class GestionFormation implements InterGestionFormation {
      */
     @Override
     public Set<Etudiant> listeEtudiantsOption(UniteEnseignement option) {
+        if (UniteEseignements.contains(option)) {
+            return null;
+        }
         Set<Etudiant> listeetu = new HashSet<>();
-        boolean estpassé = false;
         for (Etudiant etu : listeEtudiants) {
             for (UniteEnseignement ue : etu.getListeUEsuivies()) {
                 if (ue.equals(option)) {
                     listeetu.add(etu);
-                    estpassé = true;
                 }
             }
         }
-        if (estpassé) {
-            return listeetu;
-        } else {
-            return null;
-        }
+        return listeetu;
     }
 }

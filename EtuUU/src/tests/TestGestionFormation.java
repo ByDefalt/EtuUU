@@ -3,12 +3,10 @@ package tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import formation.GestionFormation;
-
+import formation.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 /**
  * Tests JUnit de la classe {@link formation.GestionFormation
  * GestionFormation}.
@@ -17,38 +15,41 @@ import org.junit.jupiter.api.Test;
  * @see formation.GestionFormation
  */
 class TestGestionFormation {
-    private GestionFormation gesform1;
-    private GestionFormation gesform2;
+    private GestionFormation ges;
 
     @BeforeEach
     void setUp() throws Exception {
-        gesform1=new GestionFormation("ki","lo","ol");
-        gesform2=new GestionFormation();
+        ges=new GestionFormation();
+        ges.creerFormation("L3IFA","jsp","jsp@gmail.com");
     }
 
     @AfterEach
     void tearDown() throws Exception {
     }
-
     @Test
-    void testajoutformation() {
-        gesform2.creerFormation("ki", "lo", "ju");
-        assertTrue(gesform2.SetContien("ki", "lo", "ju"));
+    void ajoutUEObligatoire(){
+        UniteEnseignement ue=new UniteEnseignement("l", "l");
+        assertTrue(ges.ajouterEnseignementObligatoire(ue));
     }
     @Test
-    void setoption() {
-        gesform1.definirNombreOptions(9);
-        String str="GestionFormation [nomFormation=ki, nomResponsable=lo, email=ol, TailleGroupeDirige=16, TailleGroupePratique=15, option=9]";
-        assertEquals(gesform1.toString(), str);
+    void ajoutUEOptionel(){
+        UniteEnseignement ue=new UniteEnseignement("l", "l");
+        assertTrue(ges.ajouterEnseignementOptionnel(ue,12));
     }
     @Test
-    void setTailleGroupeDirige() {
-        gesform1.setTailleGroupeDirige(16);
-        assertEquals(gesform1.getTailleGroupeDirige(), 16);
+    void definirNombreOptions(){
+        ges.definirNombreOptions(5);
+        assertEquals(ges.getNBoption(), 5);
     }
     @Test
-    void setTailleGroupePratique() {
-        gesform1.setTailleGroupePratique(15);
-        assertEquals(gesform1.getTailleGroupePratique(), 15);
+    void setTailleGroupeDirige(){
+        ges.setTailleGroupeDirige(5);
+        assertEquals(ges.getTailleGroupeDirige(), 5);
     }
+    @Test
+    void setTailleGroupePratique(){
+        ges.setTailleGroupePratique(5);
+        assertEquals(ges.getTailleGroupePratique(), 5);
+    }
+    
 }
