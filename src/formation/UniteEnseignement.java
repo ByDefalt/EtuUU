@@ -86,5 +86,4 @@ public class UniteEnseignement implements InterUniteEnseignement {
             return false;
         return true;
     }
-
 }
