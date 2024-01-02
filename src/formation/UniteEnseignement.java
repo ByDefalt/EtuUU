@@ -14,13 +14,13 @@ public class UniteEnseignement implements InterUniteEnseignement {
         this.nomUE = nomUE;
         this.nomEnseignant = nomEnseignant;
         this.nbPlacesMax = nbPlaces;
-        this.estOpstionel=true;
+        this.estOpstionel = true;
     }
 
     public UniteEnseignement(String nomUE, String nomEnseignant) {
         this.nomUE = nomUE;
         this.nomEnseignant = nomEnseignant;
-        this.estOpstionel=false;
+        this.estOpstionel = false;
     }
 
     public boolean isEstOpstionel() {
@@ -30,6 +30,7 @@ public class UniteEnseignement implements InterUniteEnseignement {
     public void setEstOpstionel(boolean estOpstionel) {
         this.estOpstionel = estOpstionel;
     }
+
     @Override
     public String getNomUE() {
         return nomUE;
@@ -37,14 +38,16 @@ public class UniteEnseignement implements InterUniteEnseignement {
 
     @Override
     public int getNbPlacesMax() {
-		return nbPlacesMax;
-	}
+        return nbPlacesMax;
+    }
 
-	public void setNbPlacesMax(int nbPlacesMax) {
-		this.nbPlacesMax = nbPlacesMax;
-	}
+    public void setNbPlacesMax(int nbPlacesMax) {
+        if (this.estOpstionel) {
+            this.nbPlacesMax = nbPlacesMax;
+        }
+    }
 
-	@Override
+    @Override
     public String getNomEnseignant() {
         return nomEnseignant;
     }
@@ -61,7 +64,9 @@ public class UniteEnseignement implements InterUniteEnseignement {
 
     @Override
     public void setNbPlaces() {
-        this.nbPlaces += 1;
+        if (this.estOpstionel) {
+            this.nbPlaces += 1;
+        }
     }
 
     @Override
