@@ -1,12 +1,14 @@
-#.classpath
+# Fichiers générés par Eclipse
 .classpath
-#.project
 .project
-# Compiled class file
-bin
-# la doc html/css/js
-doc
-#.vscode et autre settings
-.vscode
-.settings
-.metadata
+
+# Répertoire des classes compilées
+bin/
+
+# Documentation générée
+doc/
+
+# Fichiers et répertoires liés à Visual Studio Code
+.vscode/
+.settings/
+.metadata/
