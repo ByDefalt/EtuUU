@@ -1,8 +1,12 @@
-#suprésion du classpath
+#.classpath
 .classpath
+#.project
 .project
+# Compiled class file
 bin
+# la doc html/css/js
 doc
+#.vscode et autre settings
 .vscode
 .settings
 .metadata
