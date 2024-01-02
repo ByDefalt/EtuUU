@@ -8,18 +8,28 @@ public class UniteEnseignement implements InterUniteEnseignement {
     private String nomEnseignant;
     private int nbPlaces = 0;
     private int nbPlacesMax = 0;
+    private boolean estOpstionel;
 
     public UniteEnseignement(String nomUE, String nomEnseignant, int nbPlaces) {
         this.nomUE = nomUE;
         this.nomEnseignant = nomEnseignant;
         this.nbPlacesMax = nbPlaces;
+        this.estOpstionel=true;
     }
 
     public UniteEnseignement(String nomUE, String nomEnseignant) {
         this.nomUE = nomUE;
         this.nomEnseignant = nomEnseignant;
+        this.estOpstionel=false;
     }
 
+    public boolean isEstOpstionel() {
+        return estOpstionel;
+    }
+
+    public void setEstOpstionel(boolean estOpstionel) {
+        this.estOpstionel = estOpstionel;
+    }
     @Override
     public String getNomUE() {
         return nomUE;
