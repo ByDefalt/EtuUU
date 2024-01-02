@@ -23,18 +23,22 @@ public class GestionFormation implements InterGestionFormation {
     private final Map<Integer, Set<Etudiant>> tds = new HashMap<>();
     private final Map<Integer, Set<Etudiant>> tps = new HashMap<>();
     private final Set<Etudiant> listeEtudiants = new HashSet<>();
+
+    public Set<Etudiant> getListeEtudiants() {
+        return listeEtudiants;
+    }
+
     private int tailleGroupeDirige = -1;
     private int tailleGroupePratique = -1;
     private int NBoption = -1;
 
     /**
-     *  Instancie la Formation
+     * Instancie la Formation
      */
     public GestionFormation() {
 
     }
-    
-    
+
     /**
      * Renvoi le nombre d'options
      * 
@@ -257,30 +261,37 @@ public class GestionFormation implements InterGestionFormation {
      */
     @Override
     public void attribuerAutomatiquementGroupes() {
-        int nombreGroupesTravauxDiriges = listeEtudiants.size() / tailleGroupeDirige + 1;
-        Set<Etudiant> listevide = new HashSet<>();
-        boolean estpresent = false;
+        int a = listeEtudiants.size() / this.tailleGroupeDirige;
+        int nombreGroupesTravauxDiriges = ((a * this.tailleGroupeDirige == this.listeEtudiants.size()) ? a : a + 1);
         while (nombreGroupesTravauxDiriges != this.tds.size()) {
-            tds.put(this.nombreGroupesTravauxDiriges() + 1, listevide);
+            tds.put(this.nombreGroupesTravauxDiriges() + 1, new HashSet<>());
+        }
+        a = listeEtudiants.size() / this.tailleGroupePratique;
+        int nombreGroupesTravauxPratiques = ((a * this.tailleGroupePratique == this.listeEtudiants.size()) ? a : a + 1);
+        while (nombreGroupesTravauxPratiques != this.tps.size()) {
+            this.tps.put(this.nombreGroupesTravauxPratiques() + 1, new HashSet<>());
         }
         int numeroGroupeTailleMin = 1;
         for (Etudiant etu : listeEtudiants) {
-            for (Map.Entry<Integer, Set<Etudiant>> entry : tds.entrySet()) {
-                int key = entry.getKey();
-                Set<Etudiant> value = entry.getValue();
-                if (value.size() < numeroGroupeTailleMin) {
-                    numeroGroupeTailleMin = key;
+            if (etu.getNumeroTd() == -1) {
+                for (Map.Entry<Integer, Set<Etudiant>> entry : this.tds.entrySet()) {
+                    int key = entry.getKey();
+                    Set<Etudiant> value = entry.getValue();
+                    if (value.size() < this.tds.get(numeroGroupeTailleMin).size()) {
+                        numeroGroupeTailleMin = key;
+                    }
                 }
-            }
-            estpresent = false;
-            for (Map.Entry<Integer, Set<Etudiant>> entry : tds.entrySet()) {
-                Set<Etudiant> value = entry.getValue();
-                if (value.contains(etu)) {
-                    estpresent = true;
-                }
-            }
-            if (!estpresent) {
                 changerGroupe(etu, numeroGroupeTailleMin, 0);
+            }
+            if (etu.getNumeroTp() == -1) {
+                for (Map.Entry<Integer, Set<Etudiant>> entry : this.tps.entrySet()) {
+                    int key = entry.getKey();
+                    Set<Etudiant> value = entry.getValue();
+                    if (value.size() < this.tps.get(numeroGroupeTailleMin).size()) {
+                        numeroGroupeTailleMin = key;
+                    }
+                }
+                changerGroupe(etu, 0, numeroGroupeTailleMin);
             }
         }
         this.homogenisation();
@@ -290,22 +301,37 @@ public class GestionFormation implements InterGestionFormation {
      * Permet d'harmoniser les groupe en fonction du nombre d'élève dans les groupes
      */
     public void homogenisation() {
-        double nombreEtudiantParGroupeTd = listeEtudiants.size() / this.nombreGroupesTravauxDiriges();
+        double nombreEtudiantParGroupeTd = (double) listeEtudiants.size() / this.nombreGroupesTravauxDiriges();
+        double nombreEtudiantParGroupeTp = (double) listeEtudiants.size() / this.nombreGroupesTravauxPratiques();
         int numeroGroupeTailleMin = 1;
         int numeroGroupeTailleMax = 1;
-        while (interval(nombreEtudiantParGroupeTd, this.tds)) {
-            for (Map.Entry<Integer, Set<Etudiant>> entry : tds.entrySet()) {
+        while (!interval(nombreEtudiantParGroupeTd, this.tds)) {
+            for (Map.Entry<Integer, Set<Etudiant>> entry : this.tds.entrySet()) {
                 int key = entry.getKey();
                 Set<Etudiant> value = entry.getValue();
-                if (value.size() < numeroGroupeTailleMin) {
+                if (value.size() <= this.tds.get(numeroGroupeTailleMin).size()) {
                     numeroGroupeTailleMin = key;
                 }
-                if (value.size() > numeroGroupeTailleMax) {
+                if (value.size() >= this.tds.get(numeroGroupeTailleMax).size()) {
                     numeroGroupeTailleMax = key;
                 }
             }
-            Iterator<Etudiant> it = tds.get(numeroGroupeTailleMax).iterator();
+            Iterator<Etudiant> it = this.tds.get(numeroGroupeTailleMax).iterator();
             changerGroupe(it.next(), numeroGroupeTailleMin, 0);
+        }
+        while (!interval(nombreEtudiantParGroupeTp, this.tps)) {
+            for (Map.Entry<Integer, Set<Etudiant>> entry : this.tps.entrySet()) {
+                int key = entry.getKey();
+                Set<Etudiant> value = entry.getValue();
+                if (value.size() <= this.tps.get(numeroGroupeTailleMin).size()) {
+                    numeroGroupeTailleMin = key;
+                }
+                if (value.size() >= this.tps.get(numeroGroupeTailleMax).size()) {
+                    numeroGroupeTailleMax = key;
+                }
+            }
+            Iterator<Etudiant> it = this.tps.get(numeroGroupeTailleMax).iterator();
+            changerGroupe(it.next(), 0, numeroGroupeTailleMin);
         }
     }
 
@@ -313,10 +339,11 @@ public class GestionFormation implements InterGestionFormation {
      * Permet de savoir si les groupe sont harmoniser
      * 
      * @param valeur Le nombre de perssone par groupe pour avoir un equilibre
-     * @param mamap la map de TD ou TP
-     * @return 
+     * @param mamap  la map de TD ou TP
+     * @return
      *         <ul>
-     *         <li>True si le nombre d'étudiant de chaque groupe est compris dans un interval de +1/-1 du parametre valeur </li>
+     *         <li>True si le nombre d'étudiant de chaque groupe est compris dans un
+     *         interval de +1/-1 du parametre valeur</li>
      *         <li>False sinon</li>
      *         </ul>
      */
@@ -326,6 +353,7 @@ public class GestionFormation implements InterGestionFormation {
             Set<Etudiant> value = entry.getValue();
             if (value.size() > valeur + 1 || value.size() < valeur - 1) {
                 res = false;
+                break;
             }
         }
         return res;
@@ -352,24 +380,10 @@ public class GestionFormation implements InterGestionFormation {
     @Override
     public int changerGroupe(Etudiant etudiant, int groupeDirige, int groupePratique) {
         int res = 0;
-        int numgroupetd = -1;
-        int numgroupetp = -1;
-        for (Map.Entry<Integer, Set<Etudiant>> entry : tds.entrySet()) {
-            int key = entry.getKey();
-            Set<Etudiant> value = entry.getValue();
-            if (value.contains(etudiant)) {
-                numgroupetd = key;
-            }
-        }
-        for (Map.Entry<Integer, Set<Etudiant>> entry : tps.entrySet()) {
-            int key = entry.getKey();
-            Set<Etudiant> value = entry.getValue();
-            if (value.contains(etudiant)) {
-                numgroupetp = key;
-            }
-        }
+        int numgroupetp = etudiant.getNumeroTp();
+        int numgroupetd = etudiant.getNumeroTd();
         if (groupeDirige > 0) {
-            if (listeEtudiantsGroupeDirige(groupeDirige).size() < this.tailleGroupeDirige) {
+            if (this.listeEtudiantsGroupeDirige(groupeDirige).size() < this.tailleGroupeDirige) {
                 tds.get(groupeDirige).add(etudiant);
                 etudiant.setNumeroTd(groupeDirige);
                 if (numgroupetd != -1) {
@@ -380,14 +394,15 @@ public class GestionFormation implements InterGestionFormation {
             }
         }
         if (groupePratique > 0) {
-            if (listeEtudiantsGroupePratique(groupePratique).size() < this.tailleGroupePratique) {
-                tps.get(groupePratique).add(etudiant);
+            if (this.listeEtudiantsGroupePratique(groupePratique).size() < this.tailleGroupePratique) {
+                this.tps.get(groupePratique).add(etudiant);
                 etudiant.setNumeroTp(groupePratique);
                 if (numgroupetp != -1) {
-                    tps.get(numgroupetp).remove(etudiant);
-                    envoyermessage(etudiant, "nouveaux groupe");
+                    this.tps.get(numgroupetp).remove(etudiant);
+                    this.envoyermessage(etudiant, "nouveaux groupe :" + numgroupetp);
                 } else {
-                    envoyermessage(etudiant, "changement de groupe");
+                    this.envoyermessage(etudiant,
+                            "changement de groupe :" + numgroupetp + " ----> " + etudiant.getNumeroTp());
                 }
             } else {
                 if (res == -1) {
@@ -403,11 +418,11 @@ public class GestionFormation implements InterGestionFormation {
     /**
      * Envoie un message à un etudiant
      * 
-     * @param etu L'Étudiant à qui envoyer le message
+     * @param etu     L'Étudiant à qui envoyer le message
      * @param message Le message à envoyer
      */
     public void envoyermessage(Etudiant etu, String message) {
-        etu.getMessage().put(false, message);
+
     }
 
     /**
