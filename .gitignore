@@ -12,3 +12,6 @@ doc/
 # Fichiers et répertoires liés à Visual Studio Code
 .vscode/
 .settings/
+
+# Formateur
+formateur.xml
