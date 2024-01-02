@@ -2,11 +2,11 @@ package formation;
 
 import java.util.Objects;
 
-public class UniteEnseignement implements InterUniteEnseignement {
+public class UniteEnseignement {
 
     private final String nomUE;
     private String nomEnseignant;
-    private int nbPlaces = 0;
+    private int nbParticipant = 0;
     private int nbPlacesMax = 0;
     private final boolean Optionnel;
 
@@ -27,12 +27,10 @@ public class UniteEnseignement implements InterUniteEnseignement {
         return Optionnel;
     }
 
-    @Override
     public String getNomUE() {
         return nomUE;
     }
 
-    @Override
     public int getNbPlacesMax() {
         return nbPlacesMax;
     }
@@ -43,34 +41,28 @@ public class UniteEnseignement implements InterUniteEnseignement {
         }
     }
 
-    @Override
     public String getNomEnseignant() {
         return nomEnseignant;
     }
 
-    @Override
     public void setNomEnseignant(String nomEnseignant) {
         this.nomEnseignant = nomEnseignant;
     }
 
-    @Override
     public int getNbPlaces() {
-        return nbPlaces;
+        return nbParticipant;
     }
 
-    @Override
     public void setNbPlaces() {
         if (this.Optionnel) {
-            this.nbPlaces += 1;
+            this.nbParticipant += 1;
         }
     }
 
-    @Override
     public int hashCode() {
-        return Objects.hash(this.nomUE, this.nomEnseignant, this.nbPlaces);
+        return Objects.hash(this.nomUE, this.nomEnseignant, this.nbParticipant);
     }
 
-    @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;

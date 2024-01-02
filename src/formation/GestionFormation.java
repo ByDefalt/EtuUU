@@ -174,7 +174,7 @@ public class GestionFormation implements InterGestionFormation {
      */
     @Override
     public boolean ajouterEnseignementOptionnel(UniteEnseignement ue, int nbPlaces) {
-        if (!UniteEseignements.contains(ue) && nbPlaces > 0) {
+        if (!UniteEseignements.contains(ue) && ue.getNbPlacesMax() > 0) {
             ue.setNbPlacesMax(nbPlaces);
             UniteEseignements.add(ue);
             return true;
