@@ -8,23 +8,21 @@ public class UniteEnseignement {
     private String nomEnseignant;
     private int nbParticipant = 0;
     private int nbPlacesMax = 0;
-    private final boolean Optionnel;
-
-    public UniteEnseignement(String nomUE, String nomEnseignant, int nbPlaces) {
-        this.nomUE = nomUE;
-        this.nomEnseignant = nomEnseignant;
-        this.nbPlacesMax = nbPlaces;
-        this.Optionnel = true;
-    }
+    private boolean Optionnel;
 
     public UniteEnseignement(String nomUE, String nomEnseignant) {
+        if(nomUE==null || nomEnseignant==null){
+            throw new IllegalArgumentException("argument non valide");
+        }
         this.nomUE = nomUE;
         this.nomEnseignant = nomEnseignant;
-        this.Optionnel = false;
     }
 
     public boolean getOptionnel() {
         return Optionnel;
+    }
+    public void setOptionnel(boolean Optionnel) {
+        this.Optionnel=Optionnel;
     }
 
     public String getNomUE() {
@@ -49,11 +47,11 @@ public class UniteEnseignement {
         this.nomEnseignant = nomEnseignant;
     }
 
-    public int getNbPlaces() {
+    public int getnbParticipant() {
         return nbParticipant;
     }
 
-    public void setNbPlaces() {
+    public void setnbParticipant() {
         if (this.Optionnel) {
             this.nbParticipant += 1;
         }

@@ -155,7 +155,8 @@ public class GestionFormation implements InterGestionFormation {
      */
     @Override
     public boolean ajouterEnseignementObligatoire(UniteEnseignement ue) {
-        if (!UniteEseignements.contains(ue) && ue.getNbPlacesMax() == 0 && ue.getNomUE()!=null && ue.getNomEnseignant()!=null) {
+        if (!UniteEseignements.contains(ue)) {
+            ue.setOptionnel(false);
             UniteEseignements.add(ue);
             return true;
         }
@@ -174,9 +175,10 @@ public class GestionFormation implements InterGestionFormation {
      */
     @Override
     public boolean ajouterEnseignementOptionnel(UniteEnseignement ue, int nbPlaces) {
-        if (!UniteEseignements.contains(ue) && ue.getNbPlacesMax() > 0) {
+        if (!UniteEseignements.contains(ue)) {
+            ue.setOptionnel(true);
             ue.setNbPlacesMax(nbPlaces);
-            UniteEseignements.add(ue);
+            this.UniteEseignements.add(ue);
             return true;
         }
         return false;
