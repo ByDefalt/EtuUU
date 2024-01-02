@@ -1,8 +1,8 @@
 #suprésion du classpath
 .classpath
 .project
-/bin
-/doc
-/.vscode
-/.settings
-/.metadata
+bin
+doc
+.vscode
+.settings
+.metadata
