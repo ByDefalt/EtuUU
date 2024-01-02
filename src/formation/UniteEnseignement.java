@@ -8,27 +8,23 @@ public class UniteEnseignement implements InterUniteEnseignement {
     private String nomEnseignant;
     private int nbPlaces = 0;
     private int nbPlacesMax = 0;
-    private boolean estOpstionel;
+    private final boolean Optionnel;
 
     public UniteEnseignement(String nomUE, String nomEnseignant, int nbPlaces) {
         this.nomUE = nomUE;
         this.nomEnseignant = nomEnseignant;
         this.nbPlacesMax = nbPlaces;
-        this.estOpstionel = true;
+        this.Optionnel = true;
     }
 
     public UniteEnseignement(String nomUE, String nomEnseignant) {
         this.nomUE = nomUE;
         this.nomEnseignant = nomEnseignant;
-        this.estOpstionel = false;
+        this.Optionnel = false;
     }
 
-    public boolean isEstOpstionel() {
-        return estOpstionel;
-    }
-
-    public void setEstOpstionel(boolean estOpstionel) {
-        this.estOpstionel = estOpstionel;
+    public boolean getOptionnel() {
+        return Optionnel;
     }
 
     @Override
@@ -42,7 +38,7 @@ public class UniteEnseignement implements InterUniteEnseignement {
     }
 
     public void setNbPlacesMax(int nbPlacesMax) {
-        if (this.estOpstionel) {
+        if (this.Optionnel) {
             this.nbPlacesMax = nbPlacesMax;
         }
     }
@@ -64,7 +60,7 @@ public class UniteEnseignement implements InterUniteEnseignement {
 
     @Override
     public void setNbPlaces() {
-        if (this.estOpstionel) {
+        if (this.Optionnel) {
             this.nbPlaces += 1;
         }
     }
