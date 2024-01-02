@@ -237,9 +237,9 @@ public class Etudiant implements InterEtudiant {
 			throw new NonConnecteException();
 		}
 
-		if (ue.getNbPlaces() < ue.getNbPlacesMax()) {
+		if (ue.getnbParticipant() < ue.getNbPlacesMax()) {
 			this.listeUEsuivies.add(ue);
-			ue.setNbPlaces();
+			ue.setnbParticipant();
 			return true;
 		}
 		return false;
