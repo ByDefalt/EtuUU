@@ -14,7 +14,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 
 /**
- * Le contrôleur associé à la fenêtre définie dans formation.fxml.
+ * Le contrï¿½leur associï¿½ ï¿½ la fenï¿½tre dï¿½finie dans formation.fxml.
  *
  * @author Eric Cariou
  */
@@ -25,9 +25,6 @@ public class FormationControleur {
   
   @FXML
   private URL location;
-  
-  @FXML
-  private Button actionBoutonCreerNouvelleUE;
   
   @FXML
   private CheckBox checkInscriptionFinalisee;
@@ -188,7 +185,10 @@ public class FormationControleur {
   void actionSelectionUEOptionnelle(MouseEvent event) {
     
   }
-  
+  @FXML
+  void actionBoutonCreerNouvelleUE(ActionEvent event) {
+    
+  }
   @FXML
   void initialize() {
     
