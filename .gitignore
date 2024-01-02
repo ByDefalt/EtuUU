@@ -1,4 +1,4 @@
 #suprésion du classpath
 .classpath
 .project
-*.class
+/bin
