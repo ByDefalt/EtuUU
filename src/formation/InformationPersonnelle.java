@@ -3,39 +3,39 @@ package formation;
 import java.util.Objects;
 
 /**
- * Description des informations personnelles d'un �tudiant :
- * identit�, age et adresse.
+ * Description des informations personnelles d'un �tudiant : identit�, age et
+ * adresse.
  *
  * @author Eric Cariou
  */
 public final class InformationPersonnelle implements java.io.Serializable {
-
+  
   /**
    * Identifiant de s�rialisation.
    */
   private static final long serialVersionUID = 4026408353251835506L;
-
+  
   /**
    * Le nom de la personne (ne peut pas �tre modifi�).
    */
   private final String nom;
-
+  
   /**
    * Le pr�nom de la personne (ne peut pas �tre modifi�).
    */
   private final String prenom;
-
+  
   /**
    * L'�ge de la personne (la valeur 0 correspond � un �ge non d�fini).
    */
   private int age;
-
+  
   /**
    * L'adresse de la personne (une chaine vide "" correspond � une adresse non
    * d�finie).
    */
   private String adresse;
-
+  
   /**
    * Renvoie le nom de la personne.
    *
@@ -44,7 +44,7 @@ public final class InformationPersonnelle implements java.io.Serializable {
   public String getNom() {
     return nom;
   }
-
+  
   /**
    * Renvoie le pr�nom de la personne.
    *
@@ -53,7 +53,7 @@ public final class InformationPersonnelle implements java.io.Serializable {
   public String getPrenom() {
     return prenom;
   }
-
+  
   /**
    * Renvoie l'�ge de la personne.
    *
@@ -62,7 +62,7 @@ public final class InformationPersonnelle implements java.io.Serializable {
   public int getAge() {
     return age;
   }
-
+  
   /**
    * Modifie l'�ge de la personne.
    *
@@ -73,7 +73,7 @@ public final class InformationPersonnelle implements java.io.Serializable {
       this.age = age;
     }
   }
-
+  
   /**
    * Renvoie l'adresse de la personne.
    *
@@ -82,7 +82,7 @@ public final class InformationPersonnelle implements java.io.Serializable {
   public String getAdresse() {
     return adresse;
   }
-
+  
   /**
    * Modifie l'adresse de la personne.
    *
@@ -93,24 +93,24 @@ public final class InformationPersonnelle implements java.io.Serializable {
       this.adresse = adresse;
     }
   }
-
+  
   /**
    * Cr�e une personne avec ses informations obligatoires.
    *
-   * @param nom    le nom de la personne
+   * @param nom le nom de la personne
    * @param prenom le pr�nom de la personne
    */
   public InformationPersonnelle(String nom, String prenom) {
     this(nom, prenom, "", 0);
   }
-
+  
   /**
    * Cr�e une personne avec toutes ses informations.
    *
-   * @param nom     le nom de la personne
-   * @param prenom  le pr�nom de la personne
+   * @param nom le nom de la personne
+   * @param prenom le pr�nom de la personne
    * @param adresse l'adresse de la personne
-   * @param age     l'age de la personne
+   * @param age l'age de la personne
    */
   public InformationPersonnelle(String nom, String prenom, String adresse,
       int age) {
@@ -120,12 +120,12 @@ public final class InformationPersonnelle implements java.io.Serializable {
     this.adresse = adresse;
     this.age = age;
   }
-
+  
   @Override
   public int hashCode() {
     return Objects.hash(adresse, age, nom, prenom);
   }
-
+  
   @Override
   public boolean equals(final Object obj) {
     if (this == obj) {
@@ -142,7 +142,7 @@ public final class InformationPersonnelle implements java.io.Serializable {
         && Objects.equals(nom, other.nom)
         && Objects.equals(prenom, other.prenom);
   }
-
+  
   @Override
   public String toString() {
     return prenom + " " + nom + " d'age " + age + " ans, habite " + adresse;
