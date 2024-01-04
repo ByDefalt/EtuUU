@@ -15,30 +15,29 @@ import java.util.Set;
  */
 
 public class GestionFormation implements InterGestionFormation {
-  
+
   private String nomFormation;
   private String nomResponsable;
   private String email;
-  private final Set<UniteEnseignement> UniteEseignements = new HashSet<>();
   private final Map<Integer, Set<Etudiant>> tds = new HashMap<>();
   private final Map<Integer, Set<Etudiant>> tps = new HashMap<>();
-  private final Set<Etudiant> listeEtudiants = new HashSet<>();
-  
+  private GestionEtudiant gestionEtudiant = new GestionEtudiant();
+
   public Set<Etudiant> getListeEtudiants() {
-    return listeEtudiants;
+    return this.gestionEtudiant.getListeEtudiants();
   }
-  
+
   private int tailleGroupeDirige = -1;
   private int tailleGroupePratique = -1;
   private int NBoption = -1;
-  
+
   /**
    * Instancie la Formation
    */
   public GestionFormation() {
-    
+
   }
-  
+
   /**
    * Renvoi le nombre d'options
    * 
@@ -47,7 +46,7 @@ public class GestionFormation implements InterGestionFormation {
   public int getNBoption() {
     return NBoption;
   }
-  
+
   /**
    * Permet de définir le nombre d'option d'un étudiant
    * 
@@ -56,16 +55,20 @@ public class GestionFormation implements InterGestionFormation {
   public void setnbOptionEtudiant(Etudiant etu) {
     etu.setNbOption(this.NBoption);
   }
-  
+
   /**
    * Permet de définir la liste des UE
    * 
    * @param etu
    */
   public void setlisteUEEtudiant(Etudiant etu) {
-    etu.addUE(UniteEseignements);
+    for (UniteEnseignement ue : gestionEtudiant.getListeUE()) {
+      if (etu.getListeUEsuivies().contains(ue)) {
+        etu.getListeUEsuivies().add(ue);
+      }
+    }
   }
-  
+
   /**
    * Renvoi la map des groupe de TD
    * 
@@ -74,7 +77,7 @@ public class GestionFormation implements InterGestionFormation {
   public Map<Integer, Set<Etudiant>> getTds() {
     return tds;
   }
-  
+
   /**
    * Renvoi la map des groupe de TP
    * 
@@ -83,24 +86,24 @@ public class GestionFormation implements InterGestionFormation {
   public Map<Integer, Set<Etudiant>> getTps() {
     return tps;
   }
-  
+
   /**
    * Renvoi la liste des étuduant
    * 
    * @return la liste des étuduant
    */
   public Set<Etudiant> getlisteEtudiants() {
-    return listeEtudiants;
+    return gestionEtudiant.getListeEtudiants();
   }
-  
+
   /**
    * Cr�e une (ann�e de) formation avec son nom et celui du responsable. Si une
    * formation existait d�j� dans le syst�me, la nouvelle la remplace et efface
    * la pr�c�dente.
    *
-   * @param nomFormation le nom de la formation (chaine non vide)
+   * @param nomFormation   le nom de la formation (chaine non vide)
    * @param nomResponsable le nom et pr�nom du responsable (chaine non vide)
-   * @param email l'email du responsable (adresse email valide)
+   * @param email          l'email du responsable (adresse email valide)
    */
   @Override
   public void creerFormation(String nomFormation, String nomResponsable,
@@ -108,15 +111,14 @@ public class GestionFormation implements InterGestionFormation {
     this.nomFormation = nomFormation;
     this.nomResponsable = nomResponsable;
     this.email = email;
-    this.UniteEseignements.clear();
     this.tds.clear();
     this.tps.clear();
-    this.listeEtudiants.clear();
+    this.gestionEtudiant=new GestionEtudiant();
     this.tailleGroupeDirige = -1;
     this.tailleGroupePratique = -1;
     this.NBoption = -1;
   }
-  
+
   /**
    * Renvoie le nom du responsable de formation. s
    * 
@@ -127,7 +129,7 @@ public class GestionFormation implements InterGestionFormation {
   public String getNomResponsableFormation() {
     return this.nomResponsable;
   }
-  
+
   /**
    * Renvoie l'adresse email du responsable de formation.
    *
@@ -138,7 +140,7 @@ public class GestionFormation implements InterGestionFormation {
   public String getEmailResponsableFormation() {
     return this.email;
   }
-  
+
   /**
    * Renvoie le nom de la formation.
    *
@@ -148,7 +150,7 @@ public class GestionFormation implements InterGestionFormation {
   public String getNomFormation() {
     return this.nomFormation;
   }
-  
+
   /**
    * Rajoute une UE obligatoire � la formation. L'UE ne doit pas d�j� �tre dans
    * la liste des UE de la formation (ni en obligatoire, ni en optionnel).
@@ -159,42 +161,42 @@ public class GestionFormation implements InterGestionFormation {
    */
   @Override
   public boolean ajouterEnseignementObligatoire(UniteEnseignement ue) {
-    if (!UniteEseignements.contains(ue)) {
+    if (!this.gestionEtudiant.getListeUE().contains(ue)) {
       ue.setOptionnel(false);
-      UniteEseignements.add(ue);
+      this.gestionEtudiant.getListeUE().add(ue);
       return true;
     }
     return false;
   }
-  
+
   /**
    * Rajoute une UE optionnelle � la formation. L'UE ne doit pas d�j� �tre dans
    * la liste des UE de la formation (ni en obligatoire, ni en optionnel).
    *
-   * @param ue l'UE � rajouter
+   * @param ue       l'UE � rajouter
    * @param nbPlaces le nombre de places maximum dans l'option (nombre sup�rieur
-   *        � 1) ou 0 pour pr�ciser qu'il n'y a pas de limite de places
+   *                 � 1) ou 0 pour pr�ciser qu'il n'y a pas de limite de places
    * @return <code>true</code> si l'ajout a �t� fait, <code>false</code> en cas
    *         de probl�me
    */
   @Override
   public boolean ajouterEnseignementOptionnel(UniteEnseignement ue,
       int nbPlaces) {
-    if (!UniteEseignements.contains(ue)) {
+    if (!this.gestionEtudiant.getListeUE().contains(ue)) {
       ue.setOptionnel(true);
       ue.setNbPlacesMax(nbPlaces);
-      this.UniteEseignements.add(ue);
+      this.gestionEtudiant.getListeUE().add(ue);
       return true;
     }
     return false;
   }
-  
+
   /**
    * D�finit le nombre d'options que doit choisir un �tudiant. Ne peut plus �tre
    * modifi� une fois d�fini.
    *
    * @param nombre le nombre d'options � choisir pour un �tudiant (nombre
-   *        sup�rieur ou �gal � 1)
+   *               sup�rieur ou �gal � 1)
    */
   @Override
   public void definirNombreOptions(int nombre) {
@@ -202,13 +204,13 @@ public class GestionFormation implements InterGestionFormation {
       this.NBoption = nombre;
     }
   }
-  
+
   /**
    * D�finit le nombre de places dans un groupe de TD. Ne peut plus �tre modifi�
    * une fois d�fini.
    *
    * @param taille le nombre de place dans un groupe de TD (nombre sup�rieur �
-   *        1)
+   *               1)
    */
   @Override
   public void setTailleGroupeDirige(int taille) {
@@ -216,13 +218,13 @@ public class GestionFormation implements InterGestionFormation {
       this.tailleGroupeDirige = taille;
     }
   }
-  
+
   /**
    * D�finit le nombre de places dans un groupe de TP. Ne peut plus �tre modifi�
    * une fois d�fini.
    *
    * @param taille le nombre de place dans un groupe de TP (nombre sup�rieur �
-   *        1)
+   *               1)
    */
   @Override
   public void setTailleGroupePratique(int taille) {
@@ -230,7 +232,7 @@ public class GestionFormation implements InterGestionFormation {
       this.tailleGroupePratique = taille;
     }
   }
-  
+
   /**
    * Renvoie le nombre de places dans un groupe de TD.
    *
@@ -241,7 +243,7 @@ public class GestionFormation implements InterGestionFormation {
   public int getTailleGroupeDirige() {
     return this.tailleGroupeDirige;
   }
-  
+
   /**
    * Renvoie le nombre de places dans un groupe de TP.
    *
@@ -252,7 +254,7 @@ public class GestionFormation implements InterGestionFormation {
   public int getTailleGroupePratique() {
     return this.tailleGroupePratique;
   }
-  
+
   /**
    * Attribue automatiquement les �tudiants non encore affect�s � des groupes de
    * TD et de TP. Au besoin, cr�e de nouveaux groupes de TD ou de TP. Pour
@@ -262,22 +264,20 @@ public class GestionFormation implements InterGestionFormation {
    */
   @Override
   public void attribuerAutomatiquementGroupes() {
-    int a = listeEtudiants.size() / this.tailleGroupeDirige;
-    int nombreGroupesTravauxDiriges =
-        ((a * this.tailleGroupeDirige == this.listeEtudiants.size()) ? a
-            : a + 1);
+    int a = this.gestionEtudiant.getListeEtudiants().size() / this.tailleGroupeDirige;
+    int nombreGroupesTravauxDiriges = ((a * this.tailleGroupeDirige == this.gestionEtudiant.getListeEtudiants().size()) ? a
+        : a + 1);
     while (nombreGroupesTravauxDiriges != this.tds.size()) {
       tds.put(this.nombreGroupesTravauxDiriges() + 1, new HashSet<>());
     }
-    a = listeEtudiants.size() / this.tailleGroupePratique;
-    int nombreGroupesTravauxPratiques =
-        ((a * this.tailleGroupePratique == this.listeEtudiants.size()) ? a
-            : a + 1);
+    a = this.gestionEtudiant.getListeEtudiants().size() / this.tailleGroupePratique;
+    int nombreGroupesTravauxPratiques = ((a * this.tailleGroupePratique == this.gestionEtudiant.getListeEtudiants().size()) ? a
+        : a + 1);
     while (nombreGroupesTravauxPratiques != this.tps.size()) {
       this.tps.put(this.nombreGroupesTravauxPratiques() + 1, new HashSet<>());
     }
     int numeroGroupeTailleMin = 1;
-    for (Etudiant etu : listeEtudiants) {
+    for (Etudiant etu : this.gestionEtudiant.getListeEtudiants()) {
       if (etu.getNumeroTd() == -1) {
         for (Map.Entry<Integer, Set<Etudiant>> entry : this.tds.entrySet()) {
           int key = entry.getKey();
@@ -301,16 +301,14 @@ public class GestionFormation implements InterGestionFormation {
     }
     this.homogenisation();
   }
-  
+
   /**
    * Permet d'harmoniser les groupe en fonction du nombre d'élève dans les
    * groupes
    */
   public void homogenisation() {
-    double nombreEtudiantParGroupeTd =
-        (double) listeEtudiants.size() / this.nombreGroupesTravauxDiriges();
-    double nombreEtudiantParGroupeTp =
-        (double) listeEtudiants.size() / this.nombreGroupesTravauxPratiques();
+    double nombreEtudiantParGroupeTd = (double) this.gestionEtudiant.getListeEtudiants().size() / this.nombreGroupesTravauxDiriges();
+    double nombreEtudiantParGroupeTp = (double) this.gestionEtudiant.getListeEtudiants().size() / this.nombreGroupesTravauxPratiques();
     int numeroGroupeTailleMin = 1;
     int numeroGroupeTailleMax = 1;
     while (!interval(nombreEtudiantParGroupeTd, this.tds)) {
@@ -342,12 +340,12 @@ public class GestionFormation implements InterGestionFormation {
       changerGroupe(it.next(), 0, numeroGroupeTailleMin);
     }
   }
-  
+
   /**
    * Permet de savoir si les groupe sont harmoniser
    * 
    * @param valeur Le nombre de perssone par groupe pour avoir un equilibre
-   * @param mamap la map de TD ou TP
+   * @param mamap  la map de TD ou TP
    * @return
    *         <ul>
    *         <li>True si le nombre d'étudiant de chaque groupe est compris dans
@@ -366,16 +364,16 @@ public class GestionFormation implements InterGestionFormation {
     }
     return res;
   }
-  
+
   /**
    * D�place � la main un �tudiant d'un groupe de TD/TP. L'op�ration peut
    * �chouer si les groupes sont d�j� pleins.
    *
-   * @param etudiant l'�tudiant � d�placer
-   * @param groupeDirige le nouveau groupe de TD (ou 0 si on ne change pas de
-   *        groupe de TD)
+   * @param etudiant       l'�tudiant � d�placer
+   * @param groupeDirige   le nouveau groupe de TD (ou 0 si on ne change pas de
+   *                       groupe de TD)
    * @param groupePratique le nouveau groupe de TP (ou 0 si on ne change de
-   *        groupe de TP)
+   *                       groupe de TP)
    * @return
    *         <ul>
    *         <li>0 si le ou les d�placements ont �t� r�alis�s correctement</li>
@@ -425,17 +423,17 @@ public class GestionFormation implements InterGestionFormation {
     }
     return res;
   }
-  
+
   /**
    * Envoie un message à un etudiant
    * 
-   * @param etu L'Étudiant à qui envoyer le message
+   * @param etu     L'Étudiant à qui envoyer le message
    * @param message Le message à envoyer
    */
   public void envoyermessage(Etudiant etu, String message) {
-    
+
   }
-  
+
   /**
    * Renvoie le nombre de groupes de TD actuellement d�finis dans la formation.
    *
@@ -445,7 +443,7 @@ public class GestionFormation implements InterGestionFormation {
   public int nombreGroupesTravauxDiriges() {
     return tds.size();
   }
-  
+
   /**
    * Renvoie le nombre de groupes de TP actuellement d�finis dans la formation.
    *
@@ -455,7 +453,7 @@ public class GestionFormation implements InterGestionFormation {
   public int nombreGroupesTravauxPratiques() {
     return tps.size();
   }
-  
+
   /**
    * Les �tudiants affect�s � un certain groupe de TD.
    *
@@ -467,7 +465,7 @@ public class GestionFormation implements InterGestionFormation {
   public Set<Etudiant> listeEtudiantsGroupeDirige(int groupe) {
     return tds.get(groupe);
   }
-  
+
   /**
    * Les �tudiants affect�s � un certain groupe de TP.
    *
@@ -479,7 +477,7 @@ public class GestionFormation implements InterGestionFormation {
   public Set<Etudiant> listeEtudiantsGroupePratique(int groupe) {
     return tps.get(groupe);
   }
-  
+
   /**
    * Les �tudiants inscrits � une certaine option.
    *
@@ -489,11 +487,11 @@ public class GestionFormation implements InterGestionFormation {
    */
   @Override
   public Set<Etudiant> listeEtudiantsOption(UniteEnseignement option) {
-    if (UniteEseignements.contains(option)) {
+    if (this.gestionEtudiant.getListeUE().contains(option)) {
       return null;
     }
     Set<Etudiant> listeetu = new HashSet<>();
-    for (Etudiant etu : listeEtudiants) {
+    for (Etudiant etu : this.gestionEtudiant.getListeEtudiants()) {
       for (UniteEnseignement ue : etu.getListeUEsuivies()) {
         if (ue.equals(option)) {
           listeetu.add(etu);

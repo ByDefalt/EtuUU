@@ -16,7 +16,15 @@ public class GestionEtudiant implements InterEtudiant {
     // ******************************* ATTRIBUT D'INSTANCES
     private int nbEtudiant = 0;
     private final Set<Etudiant> listeEtudiants = new HashSet<>();
+    public Set<Etudiant> getListeEtudiants() {
+        return listeEtudiants;
+    }
+
     private Set<UniteEnseignement> listeUE = new HashSet<>();
+    public Set<UniteEnseignement> getListeUE() {
+        return listeUE;
+    }
+
     private Etudiant etudiantConnecte = null;
 
     /**
