@@ -2,6 +2,8 @@ package ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import formation.GestionFormation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -133,7 +135,8 @@ public class FormationControleur {
   
   @FXML
   void actionBoutonCreerFormation(ActionEvent event) {
-    
+    GestionFormation ges=new GestionFormation();
+    ges.creerFormation(entreeNomFormation.getText(), entreeNomResponsableFormation.getText(), entreeEmailResponsableFormation.getText());
   }
   
   @FXML
