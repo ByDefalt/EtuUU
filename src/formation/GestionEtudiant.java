@@ -101,7 +101,7 @@ public class GestionEtudiant implements InterEtudiant {
     public Set<UniteEnseignement> enseignementsObligatoires() {
         Set<UniteEnseignement> uniteEnseignementsO = new HashSet<>();
         for (UniteEnseignement ue : this.listeUE)
-            if (ue.getOptionnel() == false) {
+            if (!ue.getOptionnel()) {
                 uniteEnseignementsO.add(ue);
             }
 
@@ -117,7 +117,7 @@ public class GestionEtudiant implements InterEtudiant {
     public Set<UniteEnseignement> enseignementsOptionnels() {
         Set<UniteEnseignement> uniteEnseignementsF = new HashSet<>();
         for (UniteEnseignement ue : this.listeUE)
-            if (ue.getOptionnel() == true) {
+            if (ue.getOptionnel()) {
                 uniteEnseignementsF.add(ue);
             }
 
@@ -295,7 +295,7 @@ public class GestionEtudiant implements InterEtudiant {
         }
 
         List<String> contenus = new ArrayList<>();
-        for (Etudiant.Message message : this.etudiantConnecte.getMessages()) {
+        for (Message message : this.etudiantConnecte.getMessages()) {
             contenus.add(message.getContenu());
         }
         return contenus;
@@ -316,7 +316,7 @@ public class GestionEtudiant implements InterEtudiant {
         }
 
         List<String> contenus = new ArrayList<>();
-        for (Etudiant.Message message : this.etudiantConnecte.getMessages()) {
+        for (Message message : this.etudiantConnecte.getMessages()) {
             if (message.estLu()) {
                 contenus.add(message.getContenu());
             }

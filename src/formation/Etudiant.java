@@ -9,21 +9,6 @@ import java.util.*;
  * @author ROUSVAL Romain
  */
 public class Etudiant {
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Etudiant other = (Etudiant) obj;
-		if (numero != other.numero)
-			return false;
-		return true;
-	}
-
 	// ******************************* ATTRIBUT D'INSTANCES
 	private InformationPersonnelle informationPersonnelle;
 	private final String motDePasse;
@@ -153,46 +138,17 @@ public class Etudiant {
 		return messages;
 	}
 
-	/**
-	 * Représente un message envoyé à l'étudiant.
-	 */
-	static public class Message {
-		private final String contenu;
-		private boolean lu;
-
-		/**
-		 * Constructeur de la classe Message.
-		 *
-		 * @param contenu Le contenu du message.
-		 */
-		public Message(String contenu) {
-			this.contenu = contenu;
-			this.lu = false;
-		}
-
-		/**
-		 * Obtient le contenu du message.
-		 *
-		 * @return Le contenu du message.
-		 */
-		public String getContenu() {
-			return contenu;
-		}
-
-		/**
-		 * Vérifie si le message a été lu.
-		 *
-		 * @return true si le message a été lu, false sinon.
-		 */
-		public boolean estLu() {
-			return lu;
-		}
-
-		/**
-		 * Marque le message comme lu.
-		 */
-		public void setLu() {
-			this.lu = true;
-		}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Etudiant other = (Etudiant) obj;
+		if (numero != other.numero)
+			return false;
+		return true;
 	}
 }

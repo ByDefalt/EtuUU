@@ -2,6 +2,7 @@ package tests;
 
 import formation.Etudiant;
 import formation.InformationPersonnelle;
+import formation.Message;
 import formation.UniteEnseignement;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,8 +13,8 @@ import java.util.List;
 class TestEtudiant {
 
   private Etudiant etudiant;
-  private Etudiant.Message message1;
-  private Etudiant.Message message2;
+  private Message message1;
+  private Message message2;
   private UniteEnseignement ue1;
   private UniteEnseignement ue2;
 
@@ -25,8 +26,8 @@ class TestEtudiant {
     this.ue1 = new UniteEnseignement("UE1", "Enseignant1", 30);
     this.ue2 = new UniteEnseignement("UE2", "Enseignant2", 25);
 
-    this.message1 = new Etudiant.Message("Message1");
-    this.message2 = new Etudiant.Message("Message2");
+    this.message1 = new Message("Message1");
+    this.message2 = new Message("Message2");
 
     this.etudiant.addUE(ue1);
     this.etudiant.addUE(ue2);
@@ -71,7 +72,7 @@ class TestEtudiant {
 
   @Test
   void testGetMessages() {
-    List<Etudiant.Message> messages = etudiant.getMessages();
+    List<Message> messages = etudiant.getMessages();
     assertEquals(2, messages.size());
     assertTrue(messages.contains(message1));
     assertTrue(messages.contains(message2));
