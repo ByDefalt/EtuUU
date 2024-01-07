@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+
 /**
  * Les services de gestion d'une ann�e de formation.
  *
@@ -35,17 +36,23 @@ public class GestionFormation implements InterGestionFormation {
   public GestionFormation() {
 
   }
+
   public boolean isValidEmail(String email) {
     Matcher matcher = pattern.matcher(email);
     return matcher.matches();
   }
+
+  public GestionEtudiant getGestionEtudiant() {
+    return this.gestionEtudiant;
+  }
+
   /**
    * Renvoi le nombre d'options
    * 
    * @return le nombre d'options
    */
   public int getNBoption() {
-    return NBoption;
+    return this.NBoption;
   }
 
   /**
@@ -53,21 +60,8 @@ public class GestionFormation implements InterGestionFormation {
    * 
    * @param etu
    */
-  public void setnbOptionEtudiant(Etudiant etu) {
+  public void setNbOptionEtudiant(Etudiant etu) {
     etu.setNbOption(this.NBoption);
-  }
-
-  /**
-   * Permet de définir la liste des UE
-   * 
-   * @param etu
-   */
-  public void setlisteUEEtudiant(Etudiant etu) {
-    for (UniteEnseignement ue : gestionEtudiant.getListeUE()) {
-      if (etu.getListeUEsuivies().contains(ue)) {
-        etu.getListeUEsuivies().add(ue);
-      }
-    }
   }
 
   /**
@@ -76,7 +70,7 @@ public class GestionFormation implements InterGestionFormation {
    * @return map des groupe de TD
    */
   public Map<Integer, Set<Etudiant>> getTds() {
-    return tds;
+    return this.tds;
   }
 
   /**
@@ -85,16 +79,7 @@ public class GestionFormation implements InterGestionFormation {
    * @return map des groupe de TP
    */
   public Map<Integer, Set<Etudiant>> getTps() {
-    return tps;
-  }
-
-  /**
-   * Renvoi la liste des étuduant
-   * 
-   * @return la liste des étuduant
-   */
-  public Set<Etudiant> getListeEtudiants() {
-    return this.gestionEtudiant.getListeEtudiants();
+    return this.tps;
   }
 
   /**
@@ -273,7 +258,7 @@ public class GestionFormation implements InterGestionFormation {
         ? a
         : a + 1);
     while (nombreGroupesTravauxDiriges != this.tds.size()) {
-      tds.put(this.nombreGroupesTravauxDiriges() + 1, new HashSet<>());
+      this.tds.put(this.nombreGroupesTravauxDiriges() + 1, new HashSet<>());
     }
     a = this.gestionEtudiant.getListeEtudiants().size() / this.tailleGroupePratique;
     int nombreGroupesTravauxPratiques = ((a * this.tailleGroupePratique == this.gestionEtudiant.getListeEtudiants()
@@ -284,6 +269,7 @@ public class GestionFormation implements InterGestionFormation {
     }
     int numeroGroupeTailleMin = 1;
     for (Etudiant etu : this.gestionEtudiant.getListeEtudiants()) {
+      numeroGroupeTailleMin = 1;
       if (etu.getNumeroTd() == -1) {
         for (Map.Entry<Integer, Set<Etudiant>> entry : this.tds.entrySet()) {
           int key = entry.getKey();
@@ -292,8 +278,9 @@ public class GestionFormation implements InterGestionFormation {
             numeroGroupeTailleMin = key;
           }
         }
-        changerGroupe(etu, numeroGroupeTailleMin, 0);
+        this.changerGroupe(etu, numeroGroupeTailleMin, 0);
       }
+      numeroGroupeTailleMin = 1;
       if (etu.getNumeroTp() == -1) {
         for (Map.Entry<Integer, Set<Etudiant>> entry : this.tps.entrySet()) {
           int key = entry.getKey();
@@ -400,11 +387,11 @@ public class GestionFormation implements InterGestionFormation {
     if (groupeDirige > 0) {
       if (this.listeEtudiantsGroupeDirige(groupeDirige)
           .size() < this.tailleGroupeDirige) {
-        tds.get(groupeDirige).add(etudiant);
-        etudiant.setNumeroTd(groupeDirige);
         if (numgroupetd != -1) {
-          tds.get(numgroupetd).remove(etudiant);
+          this.listeEtudiantsGroupeDirige(numgroupetd).remove(etudiant);
         }
+        this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
+        etudiant.setNumeroTd(groupeDirige);
       } else {
         res = -1;
       }

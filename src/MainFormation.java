@@ -1,5 +1,7 @@
-import java.util.HashSet;
-import java.util.Map;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 import java.util.Map.Entry;
 
@@ -17,22 +19,15 @@ public class MainFormation {
     UniteEnseignement ue = new UniteEnseignement("lkj", "kuin");
     res = ges1.ajouterEnseignementObligatoire(ue);
     res = ges1.ajouterEnseignementOptionnel(ue, 0);
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 101; i++) {
       InformationPersonnelle inf = new InformationPersonnelle(i + "", i + "");
-      Etudiant etu = new Etudiant(inf, i + "");
-      ges1.getListeEtudiants().add(etu);
+      ges1.getGestionEtudiant().inscription(inf, i+"");
     }
     ges1.setTailleGroupeDirige(10);
     ges1.setTailleGroupePratique(10);
     ges1.attribuerAutomatiquementGroupes();
-    InformationPersonnelle inf = new InformationPersonnelle("l", "l");
-    Etudiant etu = new Etudiant(inf, "l");
-    ges1.getListeEtudiants().add(etu);
-    ges1.attribuerAutomatiquementGroupes();
+    //ges1.changerGroupe(ges1.listeEtudiantsGroupeDirige(1).iterator().next(), 9, 0);
     for (Entry<Integer, Set<Etudiant>> entry : ges1.getTds().entrySet()) {
-      System.out.println("Clé : " + entry.getKey() +" ,nb element : "+entry.getValue().size()+ ", Valeur : " + entry.getValue());
-    }
-    for (Entry<Integer, Set<Etudiant>> entry : ges1.getTps().entrySet()) {
       System.out.println("Clé : " + entry.getKey() +" ,nb element : "+entry.getValue().size()+ ", Valeur : " + entry.getValue());
     }
   }

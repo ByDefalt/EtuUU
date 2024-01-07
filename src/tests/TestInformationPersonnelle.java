@@ -102,7 +102,7 @@ class TestInformationPersonnelle {
    */
   @Test
   void testConstructeur() {
-    InformationPersonnelle inf =new InformationPersonnelle("Vador", "Dark", null, -30);
+    InformationPersonnelle inf =new InformationPersonnelle("Vador", "Dark", "", 30);
     assertEquals(inf.getNom(), "Vador");
     assertEquals(inf.getPrenom(), "Dark");
     assertTrue(inf.getAdresse() != null);
