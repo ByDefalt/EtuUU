@@ -58,7 +58,7 @@ public class UniteEnseignement {
     }
 
     public int hashCode() {
-        return Objects.hash(this.nomUE, this.nomEnseignant, this.nbParticipant);
+        return Objects.hash(this.nomUE);
     }
 
     public boolean equals(Object obj) {

@@ -483,7 +483,7 @@ public class GestionFormation implements InterGestionFormation {
    */
   @Override
   public Set<Etudiant> listeEtudiantsOption(UniteEnseignement option) {
-    if (this.gestionEtudiant.getListeUE().contains(option)) {
+    if (!this.gestionEtudiant.getListeUE().contains(option)) {
       return null;
     }
     Set<Etudiant> listeetu = new HashSet<>();

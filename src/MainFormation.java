@@ -8,28 +8,41 @@ import java.util.Map.Entry;
 import formation.Etudiant;
 import formation.GestionFormation;
 import formation.InformationPersonnelle;
+import formation.NonConnecteException;
 import formation.UniteEnseignement;
 
 public class MainFormation {
 
   static void test1() {
-    GestionFormation ges1 = new GestionFormation();
-    ges1.creerFormation("jsp1", "mpl", "mlp@gmail.com");
-    boolean res;
-    UniteEnseignement ue = new UniteEnseignement("lkj", "kuin");
-    res = ges1.ajouterEnseignementObligatoire(ue);
-    res = ges1.ajouterEnseignementOptionnel(ue, 0);
+    GestionFormation ges = new GestionFormation();
+    ges.creerFormation("jsp1", "mpl", "mlp@gmail.com");
     for (int i = 0; i < 101; i++) {
       InformationPersonnelle inf = new InformationPersonnelle(i + "", i + "");
-      ges1.getGestionEtudiant().inscription(inf, i+"");
+      ;
+      ges.getGestionEtudiant().inscription(inf, i + "");
     }
-    ges1.setTailleGroupeDirige(10);
-    ges1.setTailleGroupePratique(10);
-    ges1.attribuerAutomatiquementGroupes();
-    //ges1.changerGroupe(ges1.listeEtudiantsGroupeDirige(1).iterator().next(), 9, 0);
-    for (Entry<Integer, Set<Etudiant>> entry : ges1.getTds().entrySet()) {
-      System.out.println("Clé : " + entry.getKey() +" ,nb element : "+entry.getValue().size()+ ", Valeur : " + entry.getValue());
+    ges.setTailleGroupeDirige(10);
+    ges.setTailleGroupePratique(10);
+    ges.attribuerAutomatiquementGroupes();
+    ges.definirNombreOptions(5);
+    UniteEnseignement ue = new UniteEnseignement("l", "l");
+    assertTrue(ges.ajouterEnseignementOptionnel(ue, 60));
+    UniteEnseignement ue2 = new UniteEnseignement("m", "m");
+    assertTrue(ges.ajouterEnseignementOptionnel(ue2, 12));
+    for (int i = 0; i < 50; i++) {
+      ges.getGestionEtudiant().connexion(i, i + "");
+      try {
+        ges.getGestionEtudiant().choisirOption(ue);
+      } catch (NonConnecteException e) {
+        e.printStackTrace();
+      }
+      try {
+        ges.getGestionEtudiant().deconnexion();
+      } catch (NonConnecteException e) {
+        e.printStackTrace();
+      }
     }
+    System.out.println(ges.listeEtudiantsOption(ue));
   }
 
   public static void main(String[] args) {

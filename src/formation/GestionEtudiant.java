@@ -178,8 +178,7 @@ public class GestionEtudiant implements InterEtudiant {
         if (this.etudiantConnecte == null) {
             throw new NonConnecteException();
         }
-
-        if (ue.getnbParticipant() < ue.getNbPlacesMax() && this.enseignementsOptionnels().contains(ue)) {
+        if (ue.getnbParticipant() < ue.getNbPlacesMax() && ue.getOptionnel()) {
             this.etudiantConnecte.addUE(ue);
             ue.setnbParticipant();
             return true;
