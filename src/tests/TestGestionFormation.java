@@ -1,5 +1,6 @@
 package tests;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -34,6 +35,11 @@ class TestGestionFormation {
         assertTrue(ges2.getNomFormation()=="L3IFA");
         assertTrue(ges2.getNomResponsableFormation()=="jsp");
         assertTrue(ges2.getEmailResponsableFormation()=="jsp@gmail.com");
+    }
+    @Test
+    void TestisValidEmail() {
+        assertFalse(ges.isValidEmail("hgf@"));
+        assertTrue(ges.isValidEmail("hgf@gfegf.vge"));
     }
     @Test
     void testajoutUEObligatoire() {
