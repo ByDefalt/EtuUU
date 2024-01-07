@@ -22,11 +22,6 @@ public class GestionFormation implements InterGestionFormation {
   private final Map<Integer, Set<Etudiant>> tds = new HashMap<>();
   private final Map<Integer, Set<Etudiant>> tps = new HashMap<>();
   private GestionEtudiant gestionEtudiant = new GestionEtudiant();
-
-  public Set<Etudiant> getListeEtudiants() {
-    return this.gestionEtudiant.getListeEtudiants();
-  }
-
   private int tailleGroupeDirige = -1;
   private int tailleGroupePratique = -1;
   private int NBoption = -1;
@@ -92,8 +87,8 @@ public class GestionFormation implements InterGestionFormation {
    * 
    * @return la liste des étuduant
    */
-  public Set<Etudiant> getlisteEtudiants() {
-    return gestionEtudiant.getListeEtudiants();
+  public Set<Etudiant> getListeEtudiants() {
+    return this.gestionEtudiant.getListeEtudiants();
   }
 
   /**
