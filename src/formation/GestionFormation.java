@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 /**
  * Les services de gestion d'une ann�e de formation.
  *
@@ -16,6 +17,8 @@ import java.util.Set;
 
 public class GestionFormation implements InterGestionFormation {
 
+  private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+  private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
   private String nomFormation;
   private String nomResponsable;
   private String email;
@@ -32,7 +35,10 @@ public class GestionFormation implements InterGestionFormation {
   public GestionFormation() {
 
   }
-
+  public boolean isValidEmail(String email) {
+    Matcher matcher = pattern.matcher(email);
+    return matcher.matches();
+  }
   /**
    * Renvoi le nombre d'options
    * 
@@ -103,15 +109,18 @@ public class GestionFormation implements InterGestionFormation {
   @Override
   public void creerFormation(String nomFormation, String nomResponsable,
       String email) {
-    this.nomFormation = nomFormation;
-    this.nomResponsable = nomResponsable;
-    this.email = email;
-    this.tds.clear();
-    this.tps.clear();
-    this.gestionEtudiant=new GestionEtudiant();
-    this.tailleGroupeDirige = -1;
-    this.tailleGroupePratique = -1;
-    this.NBoption = -1;
+    if (nomFormation != null && !nomFormation.isEmpty() && nomResponsable != null && !nomResponsable.isEmpty()
+        && email != null && this.isValidEmail(email)) {
+      this.nomFormation = nomFormation;
+      this.nomResponsable = nomResponsable;
+      this.email = email;
+      this.tds.clear();
+      this.tps.clear();
+      this.gestionEtudiant = new GestionEtudiant();
+      this.tailleGroupeDirige = -1;
+      this.tailleGroupePratique = -1;
+      this.NBoption = -1;
+    }
   }
 
   /**
@@ -260,14 +269,16 @@ public class GestionFormation implements InterGestionFormation {
   @Override
   public void attribuerAutomatiquementGroupes() {
     int a = this.gestionEtudiant.getListeEtudiants().size() / this.tailleGroupeDirige;
-    int nombreGroupesTravauxDiriges = ((a * this.tailleGroupeDirige == this.gestionEtudiant.getListeEtudiants().size()) ? a
+    int nombreGroupesTravauxDiriges = ((a * this.tailleGroupeDirige == this.gestionEtudiant.getListeEtudiants().size())
+        ? a
         : a + 1);
     while (nombreGroupesTravauxDiriges != this.tds.size()) {
       tds.put(this.nombreGroupesTravauxDiriges() + 1, new HashSet<>());
     }
     a = this.gestionEtudiant.getListeEtudiants().size() / this.tailleGroupePratique;
-    int nombreGroupesTravauxPratiques = ((a * this.tailleGroupePratique == this.gestionEtudiant.getListeEtudiants().size()) ? a
-        : a + 1);
+    int nombreGroupesTravauxPratiques = ((a * this.tailleGroupePratique == this.gestionEtudiant.getListeEtudiants()
+        .size()) ? a
+            : a + 1);
     while (nombreGroupesTravauxPratiques != this.tps.size()) {
       this.tps.put(this.nombreGroupesTravauxPratiques() + 1, new HashSet<>());
     }
@@ -302,8 +313,10 @@ public class GestionFormation implements InterGestionFormation {
    * groupes
    */
   public void homogenisation() {
-    double nombreEtudiantParGroupeTd = (double) this.gestionEtudiant.getListeEtudiants().size() / this.nombreGroupesTravauxDiriges();
-    double nombreEtudiantParGroupeTp = (double) this.gestionEtudiant.getListeEtudiants().size() / this.nombreGroupesTravauxPratiques();
+    double nombreEtudiantParGroupeTd = (double) this.gestionEtudiant.getListeEtudiants().size()
+        / this.nombreGroupesTravauxDiriges();
+    double nombreEtudiantParGroupeTp = (double) this.gestionEtudiant.getListeEtudiants().size()
+        / this.nombreGroupesTravauxPratiques();
     int numeroGroupeTailleMin = 1;
     int numeroGroupeTailleMax = 1;
     while (!interval(nombreEtudiantParGroupeTd, this.tds)) {
@@ -426,7 +439,7 @@ public class GestionFormation implements InterGestionFormation {
    * @param message Le message à envoyer
    */
   public void envoyermessage(Etudiant etu, String message) {
-    Message mes=new Message(message);
+    Message mes = new Message(message);
     etu.getMessages().add(mes);
   }
 
