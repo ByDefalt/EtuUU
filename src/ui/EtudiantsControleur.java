@@ -2,6 +2,9 @@ package ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import formation.GestionEtudiant;
+import formation.InformationPersonnelle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -27,10 +30,10 @@ public class EtudiantsControleur {
   private CheckBox checkInscriptionFinalisee;
   
   @FXML
-  private TextField entreeAdresseEtudiant;
+  private java.awt.TextField entreeAdresseEtudiant;
   
   @FXML
-  private TextField entreeAgeEtudiant;
+  private java.awt.TextField entreeAgeEtudiant;
   
   @FXML
   private TextField entreeGroupeTD;
@@ -39,19 +42,19 @@ public class EtudiantsControleur {
   private TextField entreeGroupeTP;
   
   @FXML
-  private TextField entreeMotDePasseEtudiant;
+  private java.awt.TextField entreeMotDePasseEtudiant;
   
   @FXML
-  private TextField entreeNomEtudiant;
+  private java.awt.TextField entreeNomEtudiant;
   
   @FXML
   private TextField entreeNombreOptions;
   
   @FXML
-  private TextField entreeNumeroEtudiant;
+  private java.awt.TextField entreeNumeroEtudiant;
   
   @FXML
-  private TextField entreePrenomEtudiant;
+  private java.awt.TextField entreePrenomEtudiant;
   
   @FXML
   private ListView<String> listeMessagesNonLus;
@@ -68,24 +71,27 @@ public class EtudiantsControleur {
   @FXML
   private TextArea zoneTexteContenuMessage;
   
+  GestionEtudiant gesEtudiant = new GestionEtudiant();
+  
   @FXML
   void actionBoutonChoisirOption(ActionEvent event) {
-    
+	  this.gesEtudiant.choisirOption(null);
   }
   
   @FXML
   void actionBoutonConnexion(ActionEvent event) {
-    
+    this.gesEtudiant.connexion(Integer.parseInt(entreeNumeroEtudiant.getText()), entreeMotDePasseEtudiant.getText());
   }
   
   @FXML
   void actionBoutonDeconnexion(ActionEvent event) {
-    
+    this.gesEtudiant.deconnexion();
   }
   
   @FXML
   void actionBoutonInscription(ActionEvent event) {
-    
+	  InformationPersonnelle info = new InformationPersonnelle(entreeNomEtudiant.getText(), entreePrenomEtudiant.getText(), entreeAdresseEtudiant.getText(), Integer.parseInt(entreeAgeEtudiant.getText()));
+	  this.gesEtudiant.inscription(info, entreeMotDePasseEtudiant.getText());
   }
   
   @FXML
@@ -106,4 +112,4 @@ public class EtudiantsControleur {
   @FXML
   void initialize() {}
   
-}
+  }
