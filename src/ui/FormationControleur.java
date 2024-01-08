@@ -2,10 +2,8 @@ package ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-import formation.Etudiant;
 import formation.GestionFormation;
 import formation.UniteEnseignement;
 import javafx.collections.FXCollections;
@@ -109,7 +107,7 @@ public class FormationControleur {
   private RadioButton radioBoutonOptionnelle;
 
   GestionFormation ges = new GestionFormation();
-
+  
   @FXML
   void actionBoutonAffectationAutomatique(ActionEvent event) {
 
@@ -204,12 +202,12 @@ public class FormationControleur {
 
   @FXML
   void actionSelectionUEObligatoire(MouseEvent event) {
-
+    System.out.println("bonjour1");
   }
 
   @FXML
   void actionSelectionUEOptionnelle(MouseEvent event) {
-
+    System.out.println("bonjour2");
   }
 
   @FXML
