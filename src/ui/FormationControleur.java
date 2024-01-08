@@ -150,6 +150,24 @@ public class FormationControleur {
   void actionBoutonCreerFormation(ActionEvent event) {
     ges.creerFormation(entreeNomFormation.getText(), entreeNomResponsableFormation.getText(),
         entreeEmailResponsableFormation.getText());
+        labelNbGroupesTD.setText("...");
+        labelNbGroupesTP.setText("...");
+        entreeTailleGroupeTD.setText("");
+        entreeTailleGroupeTP.setText("");
+        entreeNombreChoixOptions.setText("");
+        entreeNomResponsableUE.setText("");
+        entreeCapaciteAccueil.setText("");
+        entreeNomUE.setText("");
+        listeUEObligatoires.getItems().clear();
+        listeEtudiants.getItems().clear();
+        listeUEOptionnelles.getItems().clear();
+        entreeNomEtudiant.setText("");
+        entreePrenomEtudiant.setText("");
+        entreeAdresseEtudiant.setText("");
+        entreeAgeEtudiant.setText("");
+        entreeGroupeTDEtudiant.setText("");
+        entreeGroupeTPEtudiant.setText("");
+        checkInscriptionFinalisee.setSelected(false);
   }
 
   @FXML
