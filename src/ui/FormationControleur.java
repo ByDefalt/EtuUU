@@ -3,7 +3,10 @@ package ui;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+
+import formation.Etudiant;
 import formation.GestionFormation;
+import formation.InformationPersonnelle;
 import formation.UniteEnseignement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,9 +27,11 @@ import javafx.scene.input.MouseEvent;
  */
 public class FormationControleur {
   private GestionFormation ges;
+
   public void setGes(GestionFormation ges) {
     this.ges = ges;
   }
+
   @FXML
   private ResourceBundle resources;
 
@@ -138,36 +143,43 @@ public class FormationControleur {
               .orElse(null))
           .stream().map(etudiant -> Integer.toString(etudiant.getNumero())).collect(Collectors.toSet()));
       listeEtudiants.setItems(observableEtudiants);
+      labelListeEtudiants
+          .setText("Les étudiants inscrits à " + listeUEOptionnelles.getSelectionModel().getSelectedItem());
     }
   }
 
   @FXML
   void actionBoutonAfficherTousEtudiants(ActionEvent event) {
-
+    ObservableList<String> observableEtudiants = FXCollections
+        .observableArrayList(ges.getGestionEtudiant().getListeEtudiants().stream()
+            .map(etudiant -> Integer.toString(etudiant.getNumero()))
+            .collect(Collectors.toList()));
+    listeEtudiants.setItems(observableEtudiants);
+    labelListeEtudiants.setText("Tous les étudiants de la formation");
   }
 
   @FXML
   void actionBoutonCreerFormation(ActionEvent event) {
     ges.creerFormation(entreeNomFormation.getText(), entreeNomResponsableFormation.getText(),
         entreeEmailResponsableFormation.getText());
-        labelNbGroupesTD.setText("...");
-        labelNbGroupesTP.setText("...");
-        entreeTailleGroupeTD.setText("");
-        entreeTailleGroupeTP.setText("");
-        entreeNombreChoixOptions.setText("");
-        entreeNomResponsableUE.setText("");
-        entreeCapaciteAccueil.setText("");
-        entreeNomUE.setText("");
-        listeUEObligatoires.getItems().clear();
-        listeEtudiants.getItems().clear();
-        listeUEOptionnelles.getItems().clear();
-        entreeNomEtudiant.setText("");
-        entreePrenomEtudiant.setText("");
-        entreeAdresseEtudiant.setText("");
-        entreeAgeEtudiant.setText("");
-        entreeGroupeTDEtudiant.setText("");
-        entreeGroupeTPEtudiant.setText("");
-        checkInscriptionFinalisee.setSelected(false);
+    labelNbGroupesTD.setText("...");
+    labelNbGroupesTP.setText("...");
+    entreeTailleGroupeTD.setText("");
+    entreeTailleGroupeTP.setText("");
+    entreeNombreChoixOptions.setText("");
+    entreeNomResponsableUE.setText("");
+    entreeCapaciteAccueil.setText("");
+    entreeNomUE.setText("");
+    listeUEObligatoires.getItems().clear();
+    listeEtudiants.getItems().clear();
+    listeUEOptionnelles.getItems().clear();
+    entreeNomEtudiant.setText("");
+    entreePrenomEtudiant.setText("");
+    entreeAdresseEtudiant.setText("");
+    entreeAgeEtudiant.setText("");
+    entreeGroupeTDEtudiant.setText("");
+    entreeGroupeTPEtudiant.setText("");
+    checkInscriptionFinalisee.setSelected(false);
   }
 
   @FXML
@@ -208,19 +220,36 @@ public class FormationControleur {
 
   @FXML
   void actionMenuSauvegarder(ActionEvent event) {
-    
+
   }
 
   @FXML
   void actionSelectionEtudiant(MouseEvent event) {
-
+    Etudiant etu = ges.getGestionEtudiant().getListeEtudiants().stream()
+        .filter(etudiant -> Integer.toString(etudiant.getNumero())
+            .equals(listeEtudiants.getSelectionModel().getSelectedItem()))
+        .findFirst()
+        .orElse(null);
+    if (etu != null) {
+      InformationPersonnelle info = etu.getInformationPersonnelle();
+      entreeNomEtudiant.setText(info.getNom());
+      entreePrenomEtudiant.setText(info.getPrenom());
+      entreeAdresseEtudiant.setText(info.getAdresse());
+      entreeAgeEtudiant.setText(Integer.toString(info.getAge()));
+      if (etu.getNumeroTd() != -1) {
+        entreeGroupeTDEtudiant.setText(Integer.toString(etu.getNumeroTd()));
+      }
+      if (etu.getNumeroTp() != -1) {
+        entreeGroupeTPEtudiant.setText(Integer.toString(etu.getNumeroTp()));
+      }
+    }
   }
 
   @FXML
   void actionSelectionUEObligatoire(MouseEvent event) {
     if (ges.getNomFormation() != null) {
       UniteEnseignement ue2 = ges.getGestionEtudiant().getListeUE().stream()
-          .filter(ue -> ue.getNomUE().equals(listeUEOptionnelles.getSelectionModel().getSelectedItem()))
+          .filter(ue -> ue.getNomUE().equals(listeUEObligatoires.getSelectionModel().getSelectedItem()))
           .findFirst()
           .orElse(null);
       if (ue2 != null) {
@@ -264,6 +293,9 @@ public class FormationControleur {
       } catch (NumberFormatException e) {
         System.err.println("Erreur : La capacité d'accueil doit être un entier.");
       }
+      entreeNomResponsableUE.setText("");
+      entreeCapaciteAccueil.setText("");
+      entreeNomUE.setText("");
     }
   }
 

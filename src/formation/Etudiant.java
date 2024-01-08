@@ -11,6 +11,10 @@ import java.util.*;
 public class Etudiant {
     // ******************************* ATTRIBUT D'INSTANCES
     private final InformationPersonnelle informationPersonnelle;
+    public InformationPersonnelle getInformationPersonnelle() {
+        return informationPersonnelle;
+    }
+
     private final String motDePasse;
     private int numero;
     private int nbOption = -1;
