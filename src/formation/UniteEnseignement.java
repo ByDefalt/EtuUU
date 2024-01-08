@@ -57,24 +57,17 @@ public class UniteEnseignement {
         }
     }
 
+    @Override
     public int hashCode() {
-        return Objects.hash(this.nomUE);
+        return Objects.hash(nomUE);
     }
 
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        UniteEnseignement other = (UniteEnseignement) obj;
-        if (nomUE == null) {
-            if (other.nomUE != null)
-                return false;
-        } else if (!nomUE.equals(other.nomUE))
-            return false;
-        return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UniteEnseignement that = (UniteEnseignement) o;
+        return Objects.equals(nomUE, that.nomUE);
     }
 
 }

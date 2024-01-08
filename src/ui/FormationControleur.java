@@ -2,7 +2,10 @@ package ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import formation.Etudiant;
 import formation.GestionFormation;
 import formation.UniteEnseignement;
 import javafx.collections.FXCollections;
@@ -89,15 +92,12 @@ public class FormationControleur {
 
   @FXML
   private ListView<String> listeEtudiants;
-  ObservableList<String> listeEtudiantsObservableList = FXCollections.observableArrayList();
 
   @FXML
   private ListView<String> listeUEObligatoires;
-  ObservableList<String> listeUEObligatoiresObservableList = FXCollections.observableArrayList();
 
   @FXML
   private ListView<String> listeUEOptionnelles;
-  ObservableList<String> listeUEOptionnellesObservableList = FXCollections.observableArrayList();
 
   @FXML
   private ToggleGroup obligation;
@@ -133,7 +133,13 @@ public class FormationControleur {
   @FXML
   void actionBoutonAfficherEtudiantsUEOptionnelle(ActionEvent event) {
     if (ges.getNomFormation() != null) {
-      ges.listeEtudiantsOption();
+      ObservableList<String> observableEtudiants = FXCollections.observableArrayList(ges
+          .listeEtudiantsOption(ges.getGestionEtudiant().getListeUE().stream()
+              .filter(ue -> ue.getNomUE().equals(listeUEOptionnelles.getSelectionModel().getSelectedItem()))
+              .findFirst()
+              .orElse(null))
+          .stream().map(etudiant -> Integer.toString(etudiant.getNumero())).collect(Collectors.toSet()));
+      listeEtudiants.setItems(observableEtudiants);
     }
   }
 
@@ -213,30 +219,22 @@ public class FormationControleur {
       try {
         if (radioBoutonObligatoire.isSelected()) {
           if (ges.ajouterEnseignementObligatoire(ue)) {
-            listeUEObligatoiresObservableList.add(ue.getNomUE());
+            listeUEObligatoires.getItems().add(ue.getNomUE());
           }
         } else if (radioBoutonOptionnelle.isSelected()) {
-          // Tentative de conversion de la capacité d'accueil en entier
           int capaciteAccueil = Integer.parseInt(entreeCapaciteAccueil.getText());
-
-          // Si la conversion réussit, ajouter l'enseignement optionnel
           if (ges.ajouterEnseignementOptionnel(ue, capaciteAccueil)) {
-            listeUEOptionnellesObservableList.add(ue.getNomUE());
+            listeUEOptionnelles.getItems().add(ue.getNomUE());
           }
         }
       } catch (NumberFormatException e) {
-        // Gérer le cas où la conversion en entier échoue
         System.err.println("Erreur : La capacité d'accueil doit être un entier.");
-        // Ajouter d'autres actions si nécessaire, comme afficher un message à
-        // l'utilisateur.
       }
     }
   }
 
   @FXML
   void initialize() {
-    listeUEObligatoires.setItems(listeUEObligatoiresObservableList);
-    listeEtudiants.setItems(listeEtudiantsObservableList);
-    listeUEOptionnelles.setItems(listeUEOptionnellesObservableList);
+
   }
 }
