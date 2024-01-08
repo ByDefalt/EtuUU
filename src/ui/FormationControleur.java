@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 
 import formation.GestionFormation;
 import formation.UniteEnseignement;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -87,12 +89,15 @@ public class FormationControleur {
 
   @FXML
   private ListView<String> listeEtudiants;
+  ObservableList<String> listeEtudiantsObservableList = FXCollections.observableArrayList();
 
   @FXML
   private ListView<String> listeUEObligatoires;
+  ObservableList<String> listeUEObligatoiresObservableList = FXCollections.observableArrayList();
 
   @FXML
   private ListView<String> listeUEOptionnelles;
+  ObservableList<String> listeUEOptionnellesObservableList = FXCollections.observableArrayList();
 
   @FXML
   private ToggleGroup obligation;
@@ -127,7 +132,9 @@ public class FormationControleur {
 
   @FXML
   void actionBoutonAfficherEtudiantsUEOptionnelle(ActionEvent event) {
-
+    if (ges.getNomFormation() != null) {
+      ges.listeEtudiantsOption();
+    }
   }
 
   @FXML
@@ -143,19 +150,25 @@ public class FormationControleur {
 
   @FXML
   void actionBoutonNombreChoixOptions(ActionEvent event) {
-    ges.definirNombreOptions(Integer.parseInt(entreeNombreChoixOptions.getText()));
+    if (ges.getNomFormation() != null) {
+      ges.definirNombreOptions(Integer.parseInt(entreeNombreChoixOptions.getText()));
+    }
   }
 
   @FXML
   void actionBoutonSetTailleGroupeTD(ActionEvent event) {
-    ges.setTailleGroupeDirige(Integer.parseInt(entreeTailleGroupeTD.getText()));
-    labelNbGroupesTD.setText(ges.getTailleGroupeDirige() + "");
+    if (ges.getNomFormation() != null) {
+      ges.setTailleGroupeDirige(Integer.parseInt(entreeTailleGroupeTD.getText()));
+      labelNbGroupesTD.setText(ges.getTailleGroupeDirige() + "");
+    }
   }
 
   @FXML
   void actionBoutonSetTailleGroupeTP(ActionEvent event) {
-    ges.setTailleGroupePratique(Integer.parseInt(entreeTailleGroupeTP.getText()));
-    labelNbGroupesTP.setText(ges.getTailleGroupePratique() + "");
+    if (ges.getNomFormation() != null) {
+      ges.setTailleGroupePratique(Integer.parseInt(entreeTailleGroupeTP.getText()));
+      labelNbGroupesTP.setText(ges.getTailleGroupePratique() + "");
+    }
   }
 
   @FXML
@@ -195,15 +208,35 @@ public class FormationControleur {
 
   @FXML
   void actionBoutonCreerNouvelleUE(ActionEvent event) {
-    if (radioBoutonObligatoire.isSelected()) {
-      ges.ajouterEnseignementObligatoire(new UniteEnseignement(entreeNomUE.getText(), entreeNomResponsableUE.getText()));
-    } else if (radioBoutonOptionnelle.isSelected()) {
-      ges.ajouterEnseignementOptionnel(new UniteEnseignement(entreeNomUE.getText(), entreeNomResponsableUE.getText()),Integer.parseInt(entreeCapaciteAccueil.getText()));
+    if (ges.getNomFormation() != null) {
+      UniteEnseignement ue = new UniteEnseignement(entreeNomUE.getText(), entreeNomResponsableUE.getText());
+      try {
+        if (radioBoutonObligatoire.isSelected()) {
+          if (ges.ajouterEnseignementObligatoire(ue)) {
+            listeUEObligatoiresObservableList.add(ue.getNomUE());
+          }
+        } else if (radioBoutonOptionnelle.isSelected()) {
+          // Tentative de conversion de la capacité d'accueil en entier
+          int capaciteAccueil = Integer.parseInt(entreeCapaciteAccueil.getText());
+
+          // Si la conversion réussit, ajouter l'enseignement optionnel
+          if (ges.ajouterEnseignementOptionnel(ue, capaciteAccueil)) {
+            listeUEOptionnellesObservableList.add(ue.getNomUE());
+          }
+        }
+      } catch (NumberFormatException e) {
+        // Gérer le cas où la conversion en entier échoue
+        System.err.println("Erreur : La capacité d'accueil doit être un entier.");
+        // Ajouter d'autres actions si nécessaire, comme afficher un message à
+        // l'utilisateur.
+      }
     }
   }
 
   @FXML
   void initialize() {
-
+    listeUEObligatoires.setItems(listeUEObligatoiresObservableList);
+    listeEtudiants.setItems(listeEtudiantsObservableList);
+    listeUEOptionnelles.setItems(listeUEOptionnellesObservableList);
   }
 }
