@@ -17,7 +17,7 @@ import javafx.scene.input.MouseEvent;
  * @author Eric Cariou
  */
 public class EtudiantsControleur {
-    GestionFormation ges;
+    private GestionFormation ges;
 
     public void setGes(GestionFormation ges) {
         this.ges = ges;
@@ -91,7 +91,7 @@ public class EtudiantsControleur {
         InformationPersonnelle info = new InformationPersonnelle(entreeNomEtudiant.getText(),
                 entreePrenomEtudiant.getText(), entreeAdresseEtudiant.getText(),
                 Integer.parseInt(entreeAgeEtudiant.getText()));
-        this.gesEtudiant.inscription(info, entreeMotDePasseEtudiant.getText());
+        this.ges.getGestionEtudiant().inscription(info, entreeMotDePasseEtudiant.getText());
     }
 
     @FXML
