@@ -33,9 +33,10 @@ class TestGestionEtudiant {
         this.infoPerso1 = new InformationPersonnelle("Skywalker", "Luke");
         this.infoPerso2 = new InformationPersonnelle("Skywalker", "Luke", "Planète Tatooine", 20);
 
-        this.ue1 = new UniteEnseignement("UE1", "Enseignant1", 30);
-        this.ue2 = new UniteEnseignement("UE2", "Enseignant2", 25);
-        this.ue3 = new UniteEnseignement("UE3", "Enseignant3");
+        this.ue1 = new UniteEnseignement("UE1", "Enseignant1");
+        this.ue1.setNbPlacesMax(30);
+        this.ue2 = new UniteEnseignement("UE2", "Enseignant2");
+        this.ue2.setNbPlacesMax(25);
 
         this.listeUE.add(this.ue1);
         this.listeUE.add(this.ue2);

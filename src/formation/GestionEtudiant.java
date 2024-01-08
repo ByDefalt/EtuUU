@@ -10,21 +10,12 @@ import java.util.Set;
  *
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
- *
  */
 public class GestionEtudiant implements InterEtudiant {
     // ******************************* ATTRIBUT D'INSTANCES
     private int nbEtudiant = 0;
     private final Set<Etudiant> listeEtudiants = new HashSet<>();
-    public Set<Etudiant> getListeEtudiants() {
-        return listeEtudiants;
-    }
-
     private Set<UniteEnseignement> listeUE = new HashSet<>();
-    public Set<UniteEnseignement> getListeUE() {
-        return listeUE;
-    }
-
     private Etudiant etudiantConnecte = null;
 
     /**
@@ -64,8 +55,8 @@ public class GestionEtudiant implements InterEtudiant {
      * @param numero     le num�ro de l'�tudiant
      * @param motDePasse le mot de passe de l'�tudiant
      * @return <code>true</code> si le couple num�ro/mot de passe est correct
-     *         (l'�tudiant est alors consid�r� comme connect� au syst�me),
-     *         <code>false</code> si le couple est incorrect
+     * (l'�tudiant est alors consid�r� comme connect� au syst�me),
+     * <code>false</code> si le couple est incorrect
      */
     @Override
     public boolean connexion(int numero, String motDePasse) {
@@ -90,6 +81,15 @@ public class GestionEtudiant implements InterEtudiant {
         }
 
         this.etudiantConnecte = null;
+    }
+
+    /**
+     * L'ensemble des étudiants de l'ann�e de formation.
+     *
+     * @return l'ensemble des étudiants
+     */
+    public Set<Etudiant> getListeEtudiants() {
+        return listeEtudiants;
     }
 
     /**
@@ -125,6 +125,15 @@ public class GestionEtudiant implements InterEtudiant {
     }
 
     /**
+     * L'ensemble des unit�s d'enseignement l'ann�e de formation.
+     *
+     * @return l'ensemble des UE
+     */
+    public Set<UniteEnseignement> getListeUE() {
+        return listeUE;
+    }
+
+    /**
      * Définit la liste des unités d'enseignement possible pour un étudiant.
      *
      * @param listeUE La liste des unités d'enseignement à attribuer à
@@ -138,7 +147,7 @@ public class GestionEtudiant implements InterEtudiant {
      * Retourne le nombre d'options que l'�tudiant doit choisir au total.
      *
      * @return le nombre d'options que l'�tudiant doit choisir ou -1 si ce nombre
-     *         n'a pas �t� encore d�fini.
+     * n'a pas �t� encore d�fini.
      * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
      *                              n'est pas connect�
      */
@@ -168,8 +177,8 @@ public class GestionEtudiant implements InterEtudiant {
      *
      * @param ue l'UE que l'�tudiant veut choisir
      * @return <code>true</code> si l'�tudiant a �t� inscrit � l'UE,
-     *         <code>false</code> si l'inscription n'a pas pu se faire (manque de
-     *         places dans l'UE ou l'UE n'est pas une option)
+     * <code>false</code> si l'inscription n'a pas pu se faire (manque de
+     * places dans l'UE ou l'UE n'est pas une option)
      * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
      *                              n'est pas connect�
      */
@@ -208,7 +217,7 @@ public class GestionEtudiant implements InterEtudiant {
      * Renvoie le num�ro de groupe de TD de l'�tudiant s'il a �t� d�fini.
      *
      * @return le num�ro de groupe de TD s'il a �t� d�fini ou -1 si �a n'est pas
-     *         encore le cas
+     * encore le cas
      * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
      *                              n'est pas connect�
      */
@@ -237,7 +246,7 @@ public class GestionEtudiant implements InterEtudiant {
      * Renvoie le num�ro de groupe de TP de l'�tudiant s'il a �t� d�fini.
      *
      * @return le num�ro de groupe de TP s'il a �t� d�fini ou -1 si �a n'est pas
-     *         encore le cas
+     * encore le cas
      * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
      *                              n'est pas connect�
      */
@@ -335,7 +344,7 @@ public class GestionEtudiant implements InterEtudiant {
      * finalis� son inscription.
      *
      * @return <code>true</code> si l'inscription de l'�tudiant est finalis�e,
-     *         <code>false</code> sinon
+     * <code>false</code> sinon
      * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
      *                              n'est pas connect�
      */
