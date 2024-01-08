@@ -34,9 +34,13 @@ class TestGestionEtudiant {
         this.infoPerso2 = new InformationPersonnelle("Skywalker", "Luke", "Planète Tatooine", 20);
 
         this.ue1 = new UniteEnseignement("UE1", "Enseignant1");
+        this.ue1.setOptionnel(true);
         this.ue1.setNbPlacesMax(30);
         this.ue2 = new UniteEnseignement("UE2", "Enseignant2");
+        this.ue2.setOptionnel(true);
         this.ue2.setNbPlacesMax(25);
+        this.ue3 = new UniteEnseignement("UE3", "Enseignant3"); 
+        this.ue3.setOptionnel(false);
 
         this.listeUE.add(this.ue1);
         this.listeUE.add(this.ue2);
@@ -197,14 +201,13 @@ class TestGestionEtudiant {
     void testEnseignementsSuivisBasique() {
         try {
             this.gestionEtudiant.connexion(1, "azerty");
-            List<UniteEnseignement> ueRes = new ArrayList<>();
+            Set<UniteEnseignement> ueRes = new HashSet<>();
             ueRes.add(this.ue1);
             ueRes.add(this.ue2);
 
             this.gestionEtudiant.choisirOption(this.ue1);
             this.gestionEtudiant.choisirOption(this.ue2);
-            List<UniteEnseignement> ue = new ArrayList<>(this.gestionEtudiant.enseignementsSuivis());
-            assertEquals(ueRes, ue);
+            assertEquals(ueRes, this.gestionEtudiant.enseignementsSuivis());
         } catch (NonConnecteException e) {
             fail("La méthode enseignementsSuivis ne devrait pas lever d'exception ici.");
         }
