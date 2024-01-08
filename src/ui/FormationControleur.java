@@ -23,12 +23,10 @@ import javafx.scene.input.MouseEvent;
  * @author Eric Cariou
  */
 public class FormationControleur {
-  private SharedModel sharedModel;
-
-  public void setSharedModel(SharedModel sharedModel) {
-    this.sharedModel = sharedModel;
+  GestionFormation ges;
+  public void setGes(GestionFormation ges) {
+    this.ges = ges;
   }
-
   @FXML
   private ResourceBundle resources;
 

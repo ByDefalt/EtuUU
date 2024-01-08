@@ -1,6 +1,7 @@
 package ui;
 
 import formation.GestionEtudiant;
+import formation.GestionFormation;
 import formation.InformationPersonnelle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,10 +17,10 @@ import javafx.scene.input.MouseEvent;
  * @author Eric Cariou
  */
 public class EtudiantsControleur {
-    private SharedModel sharedModel;
+    GestionFormation ges;
 
-    public void setSharedModel(SharedModel sharedModel) {
-        this.sharedModel = sharedModel;
+    public void setGes(GestionFormation ges) {
+        this.ges = ges;
     }
 
     @FXML
@@ -76,7 +77,8 @@ public class EtudiantsControleur {
 
     @FXML
     void actionBoutonConnexion(ActionEvent event) {
-        this.gesEtudiant.connexion(Integer.parseInt(entreeNumeroEtudiant.getText()), entreeMotDePasseEtudiant.getText());
+        this.gesEtudiant.connexion(Integer.parseInt(entreeNumeroEtudiant.getText()),
+                entreeMotDePasseEtudiant.getText());
     }
 
     @FXML
@@ -86,7 +88,9 @@ public class EtudiantsControleur {
 
     @FXML
     void actionBoutonInscription(ActionEvent event) {
-        InformationPersonnelle info = new InformationPersonnelle(entreeNomEtudiant.getText(), entreePrenomEtudiant.getText(), entreeAdresseEtudiant.getText(), Integer.parseInt(entreeAgeEtudiant.getText()));
+        InformationPersonnelle info = new InformationPersonnelle(entreeNomEtudiant.getText(),
+                entreePrenomEtudiant.getText(), entreeAdresseEtudiant.getText(),
+                Integer.parseInt(entreeAgeEtudiant.getText()));
         this.gesEtudiant.inscription(info, entreeMotDePasseEtudiant.getText());
     }
 
