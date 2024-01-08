@@ -3,7 +3,6 @@ package ui;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
 import formation.GestionFormation;
 import formation.UniteEnseignement;
 import javafx.collections.FXCollections;
@@ -24,7 +23,11 @@ import javafx.scene.input.MouseEvent;
  * @author Eric Cariou
  */
 public class FormationControleur {
+  private SharedModel sharedModel;
 
+    public void setSharedModel(SharedModel sharedModel) {
+        this.sharedModel = sharedModel;
+    }
   @FXML
   private ResourceBundle resources;
 
@@ -106,8 +109,7 @@ public class FormationControleur {
   @FXML
   private RadioButton radioBoutonOptionnelle;
 
-  GestionFormation ges = new GestionFormation();
-  
+
   @FXML
   void actionBoutonAffectationAutomatique(ActionEvent event) {
 
@@ -130,7 +132,7 @@ public class FormationControleur {
 
   @FXML
   void actionBoutonAfficherEtudiantsUEOptionnelle(ActionEvent event) {
-    if (ges.getNomFormation() != null) {
+    if (sharedModel.getSharedVariable().getNomFormation() != null) {
       ObservableList<String> observableEtudiants = FXCollections.observableArrayList(ges
           .listeEtudiantsOption(ges.getGestionEtudiant().getListeUE().stream()
               .filter(ue -> ue.getNomUE().equals(listeUEOptionnelles.getSelectionModel().getSelectedItem()))
@@ -163,7 +165,6 @@ public class FormationControleur {
   void actionBoutonSetTailleGroupeTD(ActionEvent event) {
     if (ges.getNomFormation() != null) {
       ges.setTailleGroupeDirige(Integer.parseInt(entreeTailleGroupeTD.getText()));
-      labelNbGroupesTD.setText(ges.getTailleGroupeDirige() + "");
     }
   }
 
@@ -171,7 +172,6 @@ public class FormationControleur {
   void actionBoutonSetTailleGroupeTP(ActionEvent event) {
     if (ges.getNomFormation() != null) {
       ges.setTailleGroupePratique(Integer.parseInt(entreeTailleGroupeTP.getText()));
-      labelNbGroupesTP.setText(ges.getTailleGroupePratique() + "");
     }
   }
 
@@ -202,12 +202,32 @@ public class FormationControleur {
 
   @FXML
   void actionSelectionUEObligatoire(MouseEvent event) {
-    System.out.println("bonjour1");
+    if (ges.getNomFormation() != null) {
+      UniteEnseignement ue2 = ges.getGestionEtudiant().getListeUE().stream()
+          .filter(ue -> ue.getNomUE().equals(listeUEOptionnelles.getSelectionModel().getSelectedItem()))
+          .findFirst()
+          .orElse(null);
+      if (ue2 != null) {
+        entreeNomUE.setText(ue2.getNomUE());
+        entreeNomResponsableUE.setText(ue2.getNomEnseignant());
+        entreeCapaciteAccueil.setText(Integer.toString(ue2.getNbPlacesMax()));
+      }
+    }
   }
 
   @FXML
   void actionSelectionUEOptionnelle(MouseEvent event) {
-    System.out.println("bonjour2");
+    if (ges.getNomFormation() != null) {
+      UniteEnseignement ue2 = ges.getGestionEtudiant().getListeUE().stream()
+          .filter(ue -> ue.getNomUE().equals(listeUEOptionnelles.getSelectionModel().getSelectedItem()))
+          .findFirst()
+          .orElse(null);
+      if (ue2 != null) {
+        entreeNomUE.setText(ue2.getNomUE());
+        entreeNomResponsableUE.setText(ue2.getNomEnseignant());
+        entreeCapaciteAccueil.setText(Integer.toString(ue2.getNbPlacesMax()));
+      }
+    }
   }
 
   @FXML

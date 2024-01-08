@@ -41,7 +41,11 @@ public class GestionFormation implements InterGestionFormation {
     Matcher matcher = pattern.matcher(email);
     return matcher.matches();
   }
-
+  /**
+   * Renvoi la gestion des étudiants
+   * 
+   * @return la gestion des étudiants
+   */
   public GestionEtudiant getGestionEtudiant() {
     return this.gestionEtudiant;
   }
