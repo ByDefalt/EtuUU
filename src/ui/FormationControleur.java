@@ -1,6 +1,8 @@
 package ui;
 
 import java.net.URL;
+import java.util.Collections;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -115,7 +117,9 @@ public class FormationControleur {
 
   @FXML
   void actionBoutonAffectationAutomatique(ActionEvent event) {
-
+    ges.attribuerAutomatiquementGroupes();
+    labelNbGroupesTD.setText(Integer.toString(ges.nombreGroupesTravauxDiriges()));
+    labelNbGroupesTP.setText(Integer.toString(ges.nombreGroupesTravauxPratiques()));
   }
 
   @FXML
@@ -125,12 +129,26 @@ public class FormationControleur {
 
   @FXML
   void actionBoutonAfficherEtudiantsGroupeTD(ActionEvent event) {
-
+    ObservableList<String> observableEtudiants = FXCollections.observableArrayList(
+        Optional.ofNullable(ges.listeEtudiantsGroupeDirige(Integer.parseInt(entreeGroupeTDEtudiant.getText())))
+            .map(liste -> liste.stream()
+                .map(etudiant -> Integer.toString(etudiant.getNumero()))
+                .collect(Collectors.toList()))
+            .orElse(Collections.emptyList()));
+    listeEtudiants.setItems(observableEtudiants);
+    labelListeEtudiants.setText("Les étudiants du groupe de TP " + entreeGroupeTDEtudiant.getText());
   }
 
   @FXML
   void actionBoutonAfficherEtudiantsGroupeTP(ActionEvent event) {
-
+    ObservableList<String> observableEtudiants = FXCollections.observableArrayList(
+        Optional.ofNullable(ges.listeEtudiantsGroupePratique(Integer.parseInt(entreeGroupeTPEtudiant.getText())))
+            .map(liste -> liste.stream()
+                .map(etudiant -> Integer.toString(etudiant.getNumero()))
+                .collect(Collectors.toList()))
+            .orElse(Collections.emptyList()));
+    listeEtudiants.setItems(observableEtudiants);
+    labelListeEtudiants.setText("Les étudiants du groupe de TP " + entreeGroupeTPEtudiant.getText());
   }
 
   @FXML
@@ -141,7 +159,9 @@ public class FormationControleur {
               .filter(ue -> ue.getNomUE().equals(listeUEOptionnelles.getSelectionModel().getSelectedItem()))
               .findFirst()
               .orElse(null))
-          .stream().map(etudiant -> Integer.toString(etudiant.getNumero())).collect(Collectors.toSet()));
+          .stream()
+          .map(etudiant -> Integer.toString(etudiant.getNumero()))
+          .collect(Collectors.toSet()));
       listeEtudiants.setItems(observableEtudiants);
       labelListeEtudiants
           .setText("Les étudiants inscrits à " + listeUEOptionnelles.getSelectionModel().getSelectedItem());
@@ -241,6 +261,9 @@ public class FormationControleur {
       }
       if (etu.getNumeroTp() != -1) {
         entreeGroupeTPEtudiant.setText(Integer.toString(etu.getNumeroTp()));
+      }
+      if (etu.getNumeroTd() != -1 && etu.getNumeroTp() != -1 && etu.getNbOption() == ges.getNBoption()) {
+        checkInscriptionFinalisee.setSelected(true);
       }
     }
   }

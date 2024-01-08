@@ -92,6 +92,7 @@ public class EtudiantsControleur {
                 entreePrenomEtudiant.getText(), entreeAdresseEtudiant.getText(),
                 Integer.parseInt(entreeAgeEtudiant.getText()));
         this.ges.getGestionEtudiant().inscription(info, entreeMotDePasseEtudiant.getText());
+        System.out.println(ges.getGestionEtudiant().getListeEtudiants());
     }
 
     @FXML
