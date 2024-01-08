@@ -25,9 +25,10 @@ import javafx.scene.input.MouseEvent;
 public class FormationControleur {
   private SharedModel sharedModel;
 
-    public void setSharedModel(SharedModel sharedModel) {
-        this.sharedModel = sharedModel;
-    }
+  public void setSharedModel(SharedModel sharedModel) {
+    this.sharedModel = sharedModel;
+  }
+
   @FXML
   private ResourceBundle resources;
 
@@ -109,7 +110,6 @@ public class FormationControleur {
   @FXML
   private RadioButton radioBoutonOptionnelle;
 
-
   @FXML
   void actionBoutonAffectationAutomatique(ActionEvent event) {
 
@@ -133,8 +133,8 @@ public class FormationControleur {
   @FXML
   void actionBoutonAfficherEtudiantsUEOptionnelle(ActionEvent event) {
     if (sharedModel.getSharedVariable().getNomFormation() != null) {
-      ObservableList<String> observableEtudiants = FXCollections.observableArrayList(ges
-          .listeEtudiantsOption(ges.getGestionEtudiant().getListeUE().stream()
+      ObservableList<String> observableEtudiants = FXCollections.observableArrayList(sharedModel.getSharedVariable()
+          .listeEtudiantsOption(sharedModel.getSharedVariable().getGestionEtudiant().getListeUE().stream()
               .filter(ue -> ue.getNomUE().equals(listeUEOptionnelles.getSelectionModel().getSelectedItem()))
               .findFirst()
               .orElse(null))
@@ -150,28 +150,28 @@ public class FormationControleur {
 
   @FXML
   void actionBoutonCreerFormation(ActionEvent event) {
-    ges.creerFormation(entreeNomFormation.getText(), entreeNomResponsableFormation.getText(),
+    sharedModel.getSharedVariable().creerFormation(entreeNomFormation.getText(), entreeNomResponsableFormation.getText(),
         entreeEmailResponsableFormation.getText());
   }
 
   @FXML
   void actionBoutonNombreChoixOptions(ActionEvent event) {
-    if (ges.getNomFormation() != null) {
-      ges.definirNombreOptions(Integer.parseInt(entreeNombreChoixOptions.getText()));
+    if (sharedModel.getSharedVariable().getNomFormation() != null) {
+      sharedModel.getSharedVariable().definirNombreOptions(Integer.parseInt(entreeNombreChoixOptions.getText()));
     }
   }
 
   @FXML
   void actionBoutonSetTailleGroupeTD(ActionEvent event) {
-    if (ges.getNomFormation() != null) {
-      ges.setTailleGroupeDirige(Integer.parseInt(entreeTailleGroupeTD.getText()));
+    if (sharedModel.getSharedVariable().getNomFormation() != null) {
+      sharedModel.getSharedVariable().setTailleGroupeDirige(Integer.parseInt(entreeTailleGroupeTD.getText()));
     }
   }
 
   @FXML
   void actionBoutonSetTailleGroupeTP(ActionEvent event) {
-    if (ges.getNomFormation() != null) {
-      ges.setTailleGroupePratique(Integer.parseInt(entreeTailleGroupeTP.getText()));
+    if (sharedModel.getSharedVariable().getNomFormation() != null) {
+      sharedModel.getSharedVariable().setTailleGroupePratique(Integer.parseInt(entreeTailleGroupeTP.getText()));
     }
   }
 
@@ -202,8 +202,8 @@ public class FormationControleur {
 
   @FXML
   void actionSelectionUEObligatoire(MouseEvent event) {
-    if (ges.getNomFormation() != null) {
-      UniteEnseignement ue2 = ges.getGestionEtudiant().getListeUE().stream()
+    if (sharedModel.getSharedVariable().getNomFormation() != null) {
+      UniteEnseignement ue2 = sharedModel.getSharedVariable().getGestionEtudiant().getListeUE().stream()
           .filter(ue -> ue.getNomUE().equals(listeUEOptionnelles.getSelectionModel().getSelectedItem()))
           .findFirst()
           .orElse(null);
@@ -217,8 +217,8 @@ public class FormationControleur {
 
   @FXML
   void actionSelectionUEOptionnelle(MouseEvent event) {
-    if (ges.getNomFormation() != null) {
-      UniteEnseignement ue2 = ges.getGestionEtudiant().getListeUE().stream()
+    if (sharedModel.getSharedVariable().getNomFormation() != null) {
+      UniteEnseignement ue2 = sharedModel.getSharedVariable().getGestionEtudiant().getListeUE().stream()
           .filter(ue -> ue.getNomUE().equals(listeUEOptionnelles.getSelectionModel().getSelectedItem()))
           .findFirst()
           .orElse(null);
@@ -232,16 +232,16 @@ public class FormationControleur {
 
   @FXML
   void actionBoutonCreerNouvelleUE(ActionEvent event) {
-    if (ges.getNomFormation() != null) {
+    if (sharedModel.getSharedVariable().getNomFormation() != null) {
       UniteEnseignement ue = new UniteEnseignement(entreeNomUE.getText(), entreeNomResponsableUE.getText());
       try {
         if (radioBoutonObligatoire.isSelected()) {
-          if (ges.ajouterEnseignementObligatoire(ue)) {
+          if (sharedModel.getSharedVariable().ajouterEnseignementObligatoire(ue)) {
             listeUEObligatoires.getItems().add(ue.getNomUE());
           }
         } else if (radioBoutonOptionnelle.isSelected()) {
           int capaciteAccueil = Integer.parseInt(entreeCapaciteAccueil.getText());
-          if (ges.ajouterEnseignementOptionnel(ue, capaciteAccueil)) {
+          if (sharedModel.getSharedVariable().ajouterEnseignementOptionnel(ue, capaciteAccueil)) {
             listeUEOptionnelles.getItems().add(ue.getNomUE());
           }
         }
