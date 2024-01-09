@@ -1,11 +1,20 @@
 package formation;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import io.InterSauvegarde;
+
 import java.util.regex.Matcher;
 
 /**
@@ -16,7 +25,7 @@ import java.util.regex.Matcher;
  * 
  */
 
-public class GestionFormation implements InterGestionFormation {
+public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable {
 
   private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
   private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
@@ -41,6 +50,7 @@ public class GestionFormation implements InterGestionFormation {
     Matcher matcher = pattern.matcher(email);
     return matcher.matches();
   }
+
   /**
    * Renvoi la gestion des étudiants
    * 
@@ -488,7 +498,7 @@ public class GestionFormation implements InterGestionFormation {
    */
   @Override
   public Set<Etudiant> listeEtudiantsOption(UniteEnseignement option) {
-    if (option==null || !this.gestionEtudiant.getListeUE().contains(option)) {
+    if (option == null || !this.gestionEtudiant.getListeUE().contains(option)) {
       return null;
     }
     Set<Etudiant> listeetu = new HashSet<>();
@@ -501,4 +511,52 @@ public class GestionFormation implements InterGestionFormation {
     }
     return listeetu;
   }
+
+  @Override
+  public void sauvegarderDonnees(String nomFichier) throws IOException {
+    try (FileOutputStream fileOut = new FileOutputStream(nomFichier);
+        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+      objectOut.writeObject(this);
+      System.out.println("Données sauvegardées avec succès dans le fichier " + nomFichier);
+    } catch (IOException e) {
+      System.err.println("Erreur lors de la sauvegarde des données : " + e.getMessage());
+      throw e;
+    }
+  }
+
+  @Override
+  public void chargerDonnees(String nomFichier) throws IOException {
+    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nomFichier))) {
+      try {
+        Object objet = ois.readObject();
+        if (objet instanceof GestionFormation) {
+          GestionFormation objetCharge = (GestionFormation) objet;
+          // Copier les propriétés de l'objet chargé dans l'instance courante
+          this.setPropriete1(objetCharge.getPropriete1());
+          this.setPropriete2(objetCharge.getPropriete2());
+
+          // Répétez cela pour toutes les propriétés de votre classe
+          System.out.println("Données chargées avec succès depuis " + nomFichier);
+        } else {
+          System.err.println("Le fichier ne contient pas une instance de VotreClasse");
+        }
+      } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+  public void copierDepuis(GestionFormation autreFormation) {
+    this.nomFormation = autreFormation.nomFormation;
+    this.nomResponsable = autreFormation.nomResponsable;
+    this.email = autreFormation.email;
+    this.tds.clear();  // Vous devrez peut-être implémenter une copie profonde si nécessaire
+    this.tds.putAll(autreFormation.tds);
+    this.tps.clear();  // Vous devrez peut-être implémenter une copie profonde si nécessaire
+    this.tps.putAll(autreFormation.tps);
+    this.gestionEtudiant = autreFormation.gestionEtudiant;  // Assurez-vous que GestionEtudiant a une méthode copier()
+    this.tailleGroupeDirige = autreFormation.tailleGroupeDirige;
+    this.tailleGroupePratique = autreFormation.tailleGroupePratique;
+    this.NBoption = autreFormation.NBoption;
+}
+
 }

@@ -1,5 +1,6 @@
 package ui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Optional;
@@ -23,10 +24,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  * Le contr�leur associ� � la fen�tre d�finie dans formation.fxml.
@@ -37,7 +36,7 @@ public class FormationControleur {
   private GestionFormation ges;
   private Stage fenetreEtudiants;
   private Stage FenetreFormation;
-
+  
   public void setFenetreFormation(Stage FenetreFormation) {
     this.FenetreFormation = FenetreFormation;
   }
@@ -274,7 +273,11 @@ public class FormationControleur {
 
   @FXML
   void actionMenuCharger(ActionEvent event) {
-
+    try {
+      ges.chargerDonnees("");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   @FXML
@@ -285,7 +288,11 @@ public class FormationControleur {
 
   @FXML
   void actionMenuSauvegarder(ActionEvent event) {
-
+    try {
+      ges.sauvegarderDonnees("");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   @FXML
