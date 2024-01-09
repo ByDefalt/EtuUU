@@ -28,7 +28,7 @@ import java.util.regex.Matcher;
  */
 
 public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable {
-
+  
   /**
    * Le pattern d'un email
    */
@@ -508,9 +508,8 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    * @param etu     L'Étudiant à qui envoyer le message
    * @param message Le message à envoyer
    */
-  public void envoyermessage(Etudiant etu, String message) {
-    if (etu != null && message != null && !message.isEmpty()) {
-      String titre = message.substring(0, Math.min(message.length(), 20)) + "...";
+  public void envoyermessage(Etudiant etu, String titre,String message) {
+    if (etu != null && message != null && !message.isEmpty() && titre != null && !titre.isEmpty()) {
       Message mes = new Message(titre, message);
       etu.getMessages().add(mes);
     }
