@@ -28,11 +28,9 @@ import javafx.scene.input.MouseEvent;
  */
 public class EtudiantsControleur {
 	private GestionFormation gestionFormation;
-	private GestionEtudiant gestionEtudiant;
 
 	public void setGes(GestionFormation gestionFormation) {
 		this.gestionFormation = gestionFormation;
-		this.gestionEtudiant = this.gestionFormation.getGestionEtudiant();
 	}
 
 	@FXML
@@ -84,10 +82,10 @@ public class EtudiantsControleur {
 	void actionBoutonChoisirOption(ActionEvent event) {
 		String ueNom = listeUESuiviesEtudiant.getSelectionModel().getSelectedItem();
 		if (ueNom != null) {
-			for (UniteEnseignement ue : this.gestionEtudiant.getListeUE()) {
+			for (UniteEnseignement ue : this.gestionFormation.getGestionEtudiant().getListeUE()) {
 				if (ue.getNomUE().equals(ueNom)) {
 					try {
-						this.gestionEtudiant.choisirOption(ue);
+						this.gestionFormation.getGestionEtudiant().choisirOption(ue);
 					} catch (NonConnecteException e) {
 						this.afficherPopup("Erreur de connexion", AlertType.ERROR);
 					}
@@ -101,10 +99,10 @@ public class EtudiantsControleur {
 		if (entreeNumeroEtudiant.getText().isEmpty() || entreeMotDePasseEtudiant.getText().isEmpty()) {
 			this.afficherPopup("Les champs nécessaire a la connexion ne sont pas tous remplis !", AlertType.ERROR);
 		} else {
-			this.gestionEtudiant.connexion(Integer.parseInt(entreeNumeroEtudiant.getText()),
+			this.gestionFormation.getGestionEtudiant().connexion(Integer.parseInt(entreeNumeroEtudiant.getText()),
 					entreeMotDePasseEtudiant.getText());
 			try {
-				Etudiant etudiant = this.gestionEtudiant.getEtudiantConnecte();
+				Etudiant etudiant = this.gestionFormation.getGestionEtudiant().getEtudiantConnecte();
 				entreeNomEtudiant.setText(etudiant.getInformationPersonnelle().getNom());
 				entreePrenomEtudiant.setText(etudiant.getInformationPersonnelle().getPrenom());
 				entreeAdresseEtudiant.setText(etudiant.getInformationPersonnelle().getAdresse());
@@ -124,7 +122,7 @@ public class EtudiantsControleur {
 				} else {
 					entreeNombreOptions.setText("non défini");
 				}
-				if (this.gestionEtudiant.inscriptionFinalisee()) {
+				if (this.gestionFormation.getGestionEtudiant().inscriptionFinalisee()) {
 					checkInscriptionFinalisee.setSelected(true);
 				} else {
 					checkInscriptionFinalisee.setSelected(false);
@@ -134,16 +132,16 @@ public class EtudiantsControleur {
 				listeUESuiviesEtudiant = new ListView<>(listeUe);
 
 				ObservableList<String> listeUEOptionnelles = FXCollections
-						.observableArrayList(this.gestionEtudiant.enseignementsOptionnels()
+						.observableArrayList(this.gestionFormation.getGestionEtudiant().enseignementsOptionnels()
 								.stream().map(UniteEnseignement::getNomUE).collect(Collectors.toSet()));
 				listeUEOptionnellesFormation = new ListView<>(listeUEOptionnelles);
 
 				ObservableList<String> messages = FXCollections
-						.observableArrayList(this.gestionEtudiant.listeTousMessages());
+						.observableArrayList(this.gestionFormation.getGestionEtudiant().listeTousMessages());
 				listeTousMessages = new ListView<>(messages);
 
 				ObservableList<String> messagesNonLus = FXCollections
-						.observableArrayList(this.gestionEtudiant.listeTousMessages());
+						.observableArrayList(this.gestionFormation.getGestionEtudiant().listeTousMessages());
 				listeMessagesNonLus = new ListView<>(messagesNonLus);
 			} catch (NonConnecteException e) {
 				this.afficherPopup("Erreur de connexion", AlertType.ERROR);
@@ -154,7 +152,7 @@ public class EtudiantsControleur {
 	@FXML
 	void actionBoutonDeconnexion(ActionEvent event) {
 		try {
-			this.gestionEtudiant.deconnexion();
+			this.gestionFormation.getGestionEtudiant().deconnexion();
 
 			entreeNumeroEtudiant.setText("");
 			entreeMotDePasseEtudiant.setText("");
@@ -183,9 +181,9 @@ public class EtudiantsControleur {
     		InformationPersonnelle info = new InformationPersonnelle(entreeNomEtudiant.getText(),
                     entreePrenomEtudiant.getText(), entreeAdresseEtudiant.getText(),
                     Integer.parseInt(entreeAgeEtudiant.getText()));
-            int resInscription = this.gestionEtudiant.inscription(info, entreeMotDePasseEtudiant.getText());
+            int resInscription = this.gestionFormation.getGestionEtudiant().inscription(info, entreeMotDePasseEtudiant.getText());
 			
-            for(Etudiant etudiant : this.gestionEtudiant.getListeEtudiants()) {
+            for(Etudiant etudiant : this.gestionFormation.getGestionEtudiant().getListeEtudiants()) {
             	if(etudiant.getNumero() == resInscription) {
             		if(this.gestionFormation.getNBoption() != -1) {
             			this.gestionFormation.setNbOptionEtudiant(etudiant);
@@ -202,24 +200,23 @@ public class EtudiantsControleur {
     	} else {
     		this.afficherPopup("Les champs nécessaire a l'inscription ne sont pas tous remplis !", AlertType.ERROR);
     	}
-		System.out.println(gestionFormation.getGestionEtudiant().getListeEtudiants());
     }
 
 	@FXML
 	void actionBoutonRafraichirListesMessages(ActionEvent event) {
 		try {
-			for (Message message : this.gestionEtudiant.getEtudiantConnecte().getMessages()) {
-				if (this.gestionEtudiant.listeMessageNonLus().contains(message.getTitre())) {
+			for (Message message : this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages()) {
+				if (this.gestionFormation.getGestionEtudiant().listeMessageNonLus().contains(message.getTitre())) {
 					message.setLu();
 				}
 			}
 
 			ObservableList<String> messages = FXCollections
-					.observableArrayList(this.gestionEtudiant.listeTousMessages());
+					.observableArrayList(this.gestionFormation.getGestionEtudiant().listeTousMessages());
 			listeTousMessages = new ListView<>(messages);
 
 			ObservableList<String> messagesNonLus = FXCollections
-					.observableArrayList(this.gestionEtudiant.listeTousMessages());
+					.observableArrayList(this.gestionFormation.getGestionEtudiant().listeTousMessages());
 			listeMessagesNonLus = new ListView<>(messagesNonLus);
 
 		} catch (NonConnecteException e) {
@@ -230,8 +227,8 @@ public class EtudiantsControleur {
 	@FXML
 	void actionSelectionMessageListeMessagesNonLus(MouseEvent event) {
 		try {
-			for (Message message : this.gestionEtudiant.getEtudiantConnecte().getMessages()) {
-				if (this.gestionEtudiant.listeMessageNonLus().contains(message.getTitre())) {
+			for (Message message : this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages()) {
+				if (this.gestionFormation.getGestionEtudiant().listeMessageNonLus().contains(message.getTitre())) {
 					zoneTexteContenuMessage.setText(message.getContenu());
 				}
 			}
@@ -243,8 +240,8 @@ public class EtudiantsControleur {
 	@FXML
 	void actionSelectionMessageListeTousMessages(MouseEvent event) {
 		try {
-			for (Message message : this.gestionEtudiant.getEtudiantConnecte().getMessages()) {
-				if (this.gestionEtudiant.listeTousMessages().contains(message.getTitre())) {
+			for (Message message : this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages()) {
+				if (this.gestionFormation.getGestionEtudiant().listeTousMessages().contains(message.getTitre())) {
 					zoneTexteContenuMessage.setText(message.getContenu());
 				}
 			}
