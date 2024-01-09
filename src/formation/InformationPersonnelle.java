@@ -1,5 +1,6 @@
 package formation;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -24,7 +25,7 @@ import java.util.Objects;
  *
  * @author Eric Cariou
  */
-public final class InformationPersonnelle implements java.io.Serializable {
+public final class InformationPersonnelle implements Serializable {
 
   /**
    * Identifiant de s�rialisation.
