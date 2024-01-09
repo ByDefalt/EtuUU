@@ -3,8 +3,24 @@ package formation;
 import java.util.Objects;
 
 /**
- * Description des informations personnelles d'un �tudiant : identit�, age et
- * adresse.
+ * Cette classe représente les informations personnelles d'un étudiant, incluant
+ * son identité (nom et prénom), son âge et son adresse.
+ *
+ * <p>
+ * La classe est immuable, ce qui signifie que les propriétés nom, prénom, âge et
+ * adresse ne peuvent pas être modifiées après la création de l'objet.
+ * </p>
+ *
+ * <p>
+ * Exemple d'utilisation :
+ * <pre>{@code
+ * // Création d'une instance avec les informations obligatoires
+ * InformationPersonnelle personne1 = new InformationPersonnelle("Doe", "John");
+ * 
+ * // Création d'une instance avec toutes les informations
+ * InformationPersonnelle personne2 = new InformationPersonnelle("Smith", "Alice", "123 Main St", 25);
+ * }</pre>
+ * </p>
  *
  * @author Eric Cariou
  */
@@ -123,10 +139,23 @@ public final class InformationPersonnelle implements java.io.Serializable {
       throw new IllegalArgumentException("Les paramètres ne sont pas valides.");
     }
   }
+
+  /**
+   * Retourne le hashcode de l'objet en prenant en compte ses propriétés.
+   *
+   * @return le hashcode de l'objet
+   */
   @Override
   public int hashCode() {
     return Objects.hash(adresse, age, nom, prenom);
   }
+
+  /**
+   * Compare l'objet actuel avec un autre objet pour l'égalité.
+   *
+   * @param obj l'objet à comparer
+   * @return true si les objets sont égaux, false sinon
+   */
   @Override
   public boolean equals(final Object obj) {
     if (this == obj) {
@@ -143,6 +172,12 @@ public final class InformationPersonnelle implements java.io.Serializable {
         && Objects.equals(nom, other.nom)
         && Objects.equals(prenom, other.prenom);
   }
+
+  /**
+   * Retourne une représentation textuelle de l'objet.
+   *
+   * @return une chaîne de caractères représentant l'objet
+   */
   @Override
   public String toString() {
     return prenom + " " + nom + " d'age " + age + " ans, habite " + adresse;

@@ -6,6 +6,33 @@ import java.util.Objects;
  * Représente une Unité d'Enseignement (UE) dans le contexte d'une formation.
  * Chaque UE a un nom, un enseignant associé, un nombre de participants, un nombre de places maximales
  * et une optionnalité déterminant si l'UE est facultative ou non.
+ * 
+ * <p>
+ * Exemple d'utilisation :
+ * <pre>{@code
+ * // Création d'une Unité d'Enseignement obligatoire
+ * UniteEnseignement ueObligatoire = new UniteEnseignement("Mathématiques", "Professeur A.");
+ * 
+ * // Affichage des informations de l'UE obligatoire
+ * System.out.println("UE Obligatoire : " + ueObligatoire.getNomUE());
+ * System.out.println("Enseignant : " + ueObligatoire.getNomEnseignant());
+ * System.out.println("Nombre de participants : " + ueObligatoire.getnbParticipant());
+ * 
+ * // Création d'une Unité d'Enseignement facultative
+ * UniteEnseignement ueFacultative = new UniteEnseignement("Informatique", "Professeur B.");
+ * 
+ * // Activation de l'option facultative et définition du nombre de places maximales
+ * ueFacultative.setOptionnel(true);
+ * ueFacultative.setNbPlacesMax(30);
+ * 
+ * // Affichage des informations de l'UE facultative
+ * System.out.println("\nUE Facultative : " + ueFacultative.getNomUE());
+ * System.out.println("Enseignant : " + ueFacultative.getNomEnseignant());
+ * System.out.println("Nombre de participants : " + ueFacultative.getnbParticipant());
+ * System.out.println("Nombre de places maximales : " + ueFacultative.getNbPlacesMax());
+ * }</pre>
+ * </p>
+ * 
  */
 public class UniteEnseignement {
 
