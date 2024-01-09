@@ -186,8 +186,7 @@ public class FormationControleur {
           .map(etudiant -> Integer.toString(etudiant.getNumero()))
           .collect(Collectors.toSet()));
       listeEtudiants.setItems(observableEtudiants);
-      labelListeEtudiants
-          .setText("Les étudiants inscrits à " + listeUEOptionnelles.getSelectionModel().getSelectedItem());
+      labelListeEtudiants.setText("Les étudiants inscrits à " + listeUEOptionnelles.getSelectionModel().getSelectedItem());
     }
   }
 

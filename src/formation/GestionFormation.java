@@ -467,12 +467,12 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
             this.listeEtudiantsGroupeDirige(numgroupetd).remove(etudiant);
             this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
             etudiant.setNumeroTd(groupeDirige);
-            this.envoyermessage(etudiant, "changement de groupe :" + numgroupetd
+            this.envoyermessage(etudiant, "changement de groupe","changement de groupe :" + numgroupetd
                 + " ----> " + etudiant.getNumeroTd());
           } else {
             this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
             etudiant.setNumeroTd(groupeDirige);
-            this.envoyermessage(etudiant, "nouveaux groupe :" + groupeDirige);
+            this.envoyermessage(etudiant, "nouveaux groupe","nouveaux groupe :" + groupeDirige);
           }
         } else {
           res = -1;
@@ -486,12 +486,12 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
             this.tps.get(numgroupetp).remove(etudiant);
             this.tps.get(groupePratique).add(etudiant);
             etudiant.setNumeroTp(groupePratique);
-            this.envoyermessage(etudiant, "changement de groupe :" + numgroupetp
+            this.envoyermessage(etudiant,"changement de groupe" ,"changement de groupe :" + numgroupetp
                 + " ----> " + etudiant.getNumeroTp());
           } else {
             this.tps.get(groupePratique).add(etudiant);
             etudiant.setNumeroTp(groupePratique);
-            this.envoyermessage(etudiant, "nouveaux groupe :" + groupePratique);
+            this.envoyermessage(etudiant, "changement de groupe","nouveaux groupe :" + groupePratique);
           }
         } else {
           if (res == -1) {
@@ -633,22 +633,17 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
     for (Map.Entry<Integer, Set<Etudiant>> entry : this.tds.entrySet()) {
       Set<Etudiant> etudiants = entry.getValue();
       Set<Etudiant> copieEtudiants = new HashSet<>();
-
       for (Etudiant etudiant : etudiants) {
         copieEtudiants.add((Etudiant) etudiant.clone());
       }
-
       this.tds.put(entry.getKey(), copieEtudiants);
     }
-
     for (Map.Entry<Integer, Set<Etudiant>> entry : this.tps.entrySet()) {
       Set<Etudiant> etudiants = entry.getValue();
       Set<Etudiant> copieEtudiants = new HashSet<>();
-
       for (Etudiant etudiant : etudiants) {
         copieEtudiants.add((Etudiant) etudiant.clone());
       }
-
       this.tps.put(entry.getKey(), copieEtudiants);
     }
   }

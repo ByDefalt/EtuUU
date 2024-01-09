@@ -161,7 +161,7 @@ class TestGestionFormation {
         ;
         ges.getGestionEtudiant().inscription(inf, "l");
         Etudiant etu = ges.getGestionEtudiant().getListeEtudiants().iterator().next();
-        ges.envoyermessage(etu, "bonjour");
+        ges.envoyermessage(etu,"titre", "bonjour");
         assertTrue(etu.getMessages().iterator().next().getContenu() == "bonjour");
     }
 
