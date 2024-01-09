@@ -1,15 +1,15 @@
 package formation;
 
 /**
- * Exception levée quand l'étudiant essaye d'accéder à des services alors qu'il
- * n'est pas connecté.
+ * Exception levï¿½e quand l'ï¿½tudiant essaye d'accï¿½der ï¿½ des services alors qu'il
+ * n'est pas connectï¿½.
  *
  * @author Eric Cariou
  */
 public class NonConnecteException extends Exception {
   
   /**
-   * Identifiant de sérialisation.
+   * Identifiant de sï¿½rialisation.
    */
   private static final long serialVersionUID = -1842867585789051307L;
   

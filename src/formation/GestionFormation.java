@@ -25,7 +25,7 @@ import java.util.regex.Matcher;
  * 
  */
 
-public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable {
+public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable, Cloneable {
 
   private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
   private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
@@ -542,7 +542,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
           // Copier les propriétés de l'objet chargé dans l'instance courante
           this.setPropriete1(objetCharge.getPropriete1());
           this.setPropriete2(objetCharge.getPropriete2());
-
+          this=objetCharge.clone();
           // Répétez cela pour toutes les propriétés de votre classe
           System.out.println("Données chargées avec succès depuis " + nomFichier);
         } else {
@@ -562,10 +562,66 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
     this.tds.putAll(autreFormation.tds);
     this.tps.clear(); // Vous devrez peut-être implémenter une copie profonde si nécessaire
     this.tps.putAll(autreFormation.tps);
-    this.gestionEtudiant = autreFormation.gestionEtudiant; // Assurez-vous que GestionEtudiant a une méthode copier()
+    this.gestionEtudiant = autreFormation.gestionEtudiant
+    clone(); // Assurez-vous que GestionEtudiant a une méthode copier()
     this.tailleGroupeDirige = autreFormation.tailleGroupeDirige;
     this.tailleGroupePratique = autreFormation.tailleGroupePratique;
     this.NBoption = autreFormation.NBoption;
+    this.tds = new HashMap<>();
+    this.tps = new HashMap<>();
+    // Copie profonde des ensembles d'Etudiants
+    for (Map.Entry<Integer, Set<Etudiant>> entry : this.tds.entrySet()) {
+      Set<Etudiant> etudiants = entry.getValue();
+      Set<Etudiant> copieEtudiants = new HashSet<>();
+
+      for (Etudiant etudiant : etudiants) {
+        copieEtudiants.add((Etudiant) etudiant.clone());
+      }
+
+      this.tds.put(entry.getKey(), copieEtudiants);
+    }
+
+    for (Map.Entry<Integer, Set<Etudiant>> entry : this.tps.entrySet()) {
+      Set<Etudiant> etudiants = entry.getValue();
+      Set<Etudiant> copieEtudiants = new HashSet<>();
+
+      for (Etudiant etudiant : etudiants) {
+        copieEtudiants.add((Etudiant) etudiant.clone());
+      }
+
+      this.tps.put(entry.getKey(), copieEtudiants);
+    }
   }
 
+  @Override
+  protected Object clone() throws CloneNotSupportedException {
+    GestionFormation copie = (GestionFormation) super.clone();
+    copie.tds = new HashMap<>();
+    copie.tps = new HashMap<>();
+    // Copie profonde des ensembles d'Etudiants
+    for (Map.Entry<Integer, Set<Etudiant>> entry : this.tds.entrySet()) {
+      Set<Etudiant> etudiants = entry.getValue();
+      Set<Etudiant> copieEtudiants = new HashSet<>();
+
+      for (Etudiant etudiant : etudiants) {
+        copieEtudiants.add((Etudiant) etudiant.clone());
+      }
+
+      copie.tds.put(entry.getKey(), copieEtudiants);
+    }
+
+    for (Map.Entry<Integer, Set<Etudiant>> entry : this.tps.entrySet()) {
+      Set<Etudiant> etudiants = entry.getValue();
+      Set<Etudiant> copieEtudiants = new HashSet<>();
+
+      for (Etudiant etudiant : etudiants) {
+        copieEtudiants.add((Etudiant) etudiant.clone());
+      }
+
+      copie.tps.put(entry.getKey(), copieEtudiants);
+    }
+    copie.gestionEtudiant = (GestionEtudiant) this.gestionEtudiant.clone();
+
+    return copie;
+  }
 }

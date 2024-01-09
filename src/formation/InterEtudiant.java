@@ -4,144 +4,144 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Les fonctionnalités offertes à un étudiant.
+ * Les fonctionnalitï¿½s offertes ï¿½ un ï¿½tudiant.
  *
  * @author Eric Cariou
  */
 public interface InterEtudiant {
   
   /**
-   * Crée le compte d'un étudiant à partir de ses informations personnelles et
-   * de son mot de passe puis retourne son numéro d'étudiant généré
+   * Crï¿½e le compte d'un ï¿½tudiant ï¿½ partir de ses informations personnelles et
+   * de son mot de passe puis retourne son numï¿½ro d'ï¿½tudiant gï¿½nï¿½rï¿½
    * automatiquement.
    *
-   * @param infos les informations personnelles de l'étudiant
-   * @param motDePasse le mot de passe de l'étudiant pour se connecter (la
-   *        chaine doit être non vide)
-   * @return le numéro unique de l'étudiant ou -1 en cas de problème
+   * @param infos les informations personnelles de l'ï¿½tudiant
+   * @param motDePasse le mot de passe de l'ï¿½tudiant pour se connecter (la
+   *        chaine doit ï¿½tre non vide)
+   * @return le numï¿½ro unique de l'ï¿½tudiant ou -1 en cas de problï¿½me
    */
   int inscription(InformationPersonnelle infos, String motDePasse);
   
   /**
-   * Connecte l'étudiant avec son numéro d'étudiant et son mot de passe.
+   * Connecte l'ï¿½tudiant avec son numï¿½ro d'ï¿½tudiant et son mot de passe.
    *
-   * @param numero le numéro de l'étudiant
-   * @param motDePasse le mot de passe de l'étudiant
-   * @return <code>true</code> si le couple numéro/mot de passe est correct
-   *         (l'étudiant est alors considéré comme connecté au système),
+   * @param numero le numï¿½ro de l'ï¿½tudiant
+   * @param motDePasse le mot de passe de l'ï¿½tudiant
+   * @return <code>true</code> si le couple numï¿½ro/mot de passe est correct
+   *         (l'ï¿½tudiant est alors considï¿½rï¿½ comme connectï¿½ au systï¿½me),
    *         <code>false</code> si le couple est incorrect
    */
   boolean connexion(int numero, String motDePasse);
   
   /**
-   * Déconnecte l'étudiant actuellement connecté au système.
+   * Dï¿½connecte l'ï¿½tudiant actuellement connectï¿½ au systï¿½me.
    *
-   * @throws NonConnecteException si aucun étudiant n'était connecté
+   * @throws NonConnecteException si aucun ï¿½tudiant n'ï¿½tait connectï¿½
    */
   void deconnexion() throws NonConnecteException;
   
   /**
-   * L'ensemble des unités d'enseignement obligatoires de l'année de formation.
+   * L'ensemble des unitï¿½s d'enseignement obligatoires de l'annï¿½e de formation.
    *
    * @return l'ensemble des UE obligatoires
    */
   Set<UniteEnseignement> enseignementsObligatoires();
   
   /**
-   * L'ensemble des unités d'enseignement optionnelles de l'année de formation.
+   * L'ensemble des unitï¿½s d'enseignement optionnelles de l'annï¿½e de formation.
    *
    * @return l'ensemble des UE optionnelles
    */
   Set<UniteEnseignement> enseignementsOptionnels();
   
   /**
-   * Retourne le nombre d'options que l'étudiant doit choisir au total.
+   * Retourne le nombre d'options que l'ï¿½tudiant doit choisir au total.
    *
-   * @return le nombre d'options que l'étudiant doit choisir ou -1 si ce nombre
-   *         n'a pas été encore défini.
-   * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
-   *         n'est pas connecté
+   * @return le nombre d'options que l'ï¿½tudiant doit choisir ou -1 si ce nombre
+   *         n'a pas ï¿½tï¿½ encore dï¿½fini.
+   * @throws NonConnecteException si la mï¿½thode est appelï¿½e alors que l'ï¿½tudiant
+   *         n'est pas connectï¿½
    */
   int nombreOptions() throws NonConnecteException;
   
   /**
-   * Choix d'une UE optionnelle par l'étudiant.
+   * Choix d'une UE optionnelle par l'ï¿½tudiant.
    *
-   * @param ue l'UE que l'étudiant veut choisir
-   * @return <code>true</code> si l'étudiant a été inscrit à l'UE,
+   * @param ue l'UE que l'ï¿½tudiant veut choisir
+   * @return <code>true</code> si l'ï¿½tudiant a ï¿½tï¿½ inscrit ï¿½ l'UE,
    *         <code>false</code> si l'inscription n'a pas pu se faire (manque de
    *         places dans l'UE ou l'UE n'est pas une option)
-   * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
-   *         n'est pas connecté
+   * @throws NonConnecteException si la mï¿½thode est appelï¿½e alors que l'ï¿½tudiant
+   *         n'est pas connectï¿½
    */
   boolean choisirOption(UniteEnseignement ue) throws NonConnecteException;
   
   
   /**
-   * Renvoie le numéro de groupe de TD de l'étudiant s'il a été défini.
+   * Renvoie le numï¿½ro de groupe de TD de l'ï¿½tudiant s'il a ï¿½tï¿½ dï¿½fini.
    *
-   * @return le numéro de groupe de TD s'il a été défini ou -1 si ça n'est pas
+   * @return le numï¿½ro de groupe de TD s'il a ï¿½tï¿½ dï¿½fini ou -1 si ï¿½a n'est pas
    *         encore le cas
-   * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
-   *         n'est pas connecté
+   * @throws NonConnecteException si la mï¿½thode est appelï¿½e alors que l'ï¿½tudiant
+   *         n'est pas connectï¿½
    */
   int getNumeroGroupeTravauxDiriges() throws NonConnecteException;
   
   /**
-   * Renvoie le numéro de groupe de TP de l'étudiant s'il a été défini.
+   * Renvoie le numï¿½ro de groupe de TP de l'ï¿½tudiant s'il a ï¿½tï¿½ dï¿½fini.
    *
-   * @return le numéro de groupe de TP s'il a été défini ou -1 si ça n'est pas
+   * @return le numï¿½ro de groupe de TP s'il a ï¿½tï¿½ dï¿½fini ou -1 si ï¿½a n'est pas
    *         encore le cas
-   * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
-   *         n'est pas connecté
+   * @throws NonConnecteException si la mï¿½thode est appelï¿½e alors que l'ï¿½tudiant
+   *         n'est pas connectï¿½
    */
   int getNumeroGroupeTravauxPratiques() throws NonConnecteException;
   
   /**
-   * Renvoie l'ensemble des enseignements suivis par l'étudiant : les UE
-   * obligatoires ainsi que les UE optionnelles où il est inscrit.
+   * Renvoie l'ensemble des enseignements suivis par l'ï¿½tudiant : les UE
+   * obligatoires ainsi que les UE optionnelles oï¿½ il est inscrit.
    *
-   * @return l'ensemble des UE suivies par l'étudiant
-   * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
-   *         n'est pas connecté
+   * @return l'ensemble des UE suivies par l'ï¿½tudiant
+   * @throws NonConnecteException si la mï¿½thode est appelï¿½e alors que l'ï¿½tudiant
+   *         n'est pas connectï¿½
    */
   Set<UniteEnseignement> enseignementsSuivis() throws NonConnecteException;
   
   /**
-   * Renvoie la liste de tous les messages reçus par l'étudiant (lus et non
-   * lus), dans l'ordre où ils ont été reçus.
+   * Renvoie la liste de tous les messages reï¿½us par l'ï¿½tudiant (lus et non
+   * lus), dans l'ordre oï¿½ ils ont ï¿½tï¿½ reï¿½us.
    *
-   * @return tous les messages de l'étudiant
-   * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
-   *         n'est pas connecté
+   * @return tous les messages de l'ï¿½tudiant
+   * @throws NonConnecteException si la mï¿½thode est appelï¿½e alors que l'ï¿½tudiant
+   *         n'est pas connectï¿½
    */
   List<String> listeTousMessages() throws NonConnecteException;
   
   /**
-   * Renvoie la liste des messages non lus par l'étudiant, dans l'ordre où ils
-   * ont été reçus.
+   * Renvoie la liste des messages non lus par l'ï¿½tudiant, dans l'ordre oï¿½ ils
+   * ont ï¿½tï¿½ reï¿½us.
    *
-   * @return les messages non lus de l'étudiant
-   * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
-   *         n'est pas connecté
+   * @return les messages non lus de l'ï¿½tudiant
+   * @throws NonConnecteException si la mï¿½thode est appelï¿½e alors que l'ï¿½tudiant
+   *         n'est pas connectï¿½
    */
   List<String> listeMessageNonLus() throws NonConnecteException;
   
   /**
-   * Indique si l'inscription de l'étudiant est finalisée, c'est-à-dire si
-   * l'étudiant :
+   * Indique si l'inscription de l'ï¿½tudiant est finalisï¿½e, c'est-ï¿½-dire si
+   * l'ï¿½tudiant :
    * <ul>
-   * <li>A été affecté à un groupe de TD</li>
-   * <li>A été affecté à un groupe de TP</li>
+   * <li>A ï¿½tï¿½ affectï¿½ ï¿½ un groupe de TD</li>
+   * <li>A ï¿½tï¿½ affectï¿½ ï¿½ un groupe de TP</li>
    * <li>A choisi autant d'options que requis</li>
    * </ul>
-   * Si au moins une des conditions n'est pas validée, l'étudiant n'a pas
-   * finalisé son inscription.
+   * Si au moins une des conditions n'est pas validï¿½e, l'ï¿½tudiant n'a pas
+   * finalisï¿½ son inscription.
    *
-   * @return <code>true</code> si l'inscription de l'étudiant est finalisée,
+   * @return <code>true</code> si l'inscription de l'ï¿½tudiant est finalisï¿½e,
    *         <code>false</code> sinon
-   * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
-   *         n'est pas connecté
+   * @throws NonConnecteException si la mï¿½thode est appelï¿½e alors que l'ï¿½tudiant
+   *         n'est pas connectï¿½
    */
   boolean inscriptionFinalisee() throws NonConnecteException;
   
