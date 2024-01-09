@@ -1,9 +1,12 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import formation.InformationPersonnelle;
+import formation.UniteEnseignement;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +19,7 @@ import org.junit.jupiter.api.Test;
  * @see formation.InformationPersonnelle
  */
 class TestInformationPersonnelle {
-  
+
   /**
    * Une information basique : pr�nom et nom.
    */
@@ -25,7 +28,7 @@ class TestInformationPersonnelle {
    * Une information compl�te : pr�nom, nom, adresse et age.
    */
   private InformationPersonnelle infoComplete;
-  
+
   /**
    * Instancie une information basique et une compl�te pour les tests.
    *
@@ -34,18 +37,18 @@ class TestInformationPersonnelle {
   @BeforeEach
   void setUp() throws Exception {
     infoBasique = new InformationPersonnelle("Skywalker", "Luke");
-    infoComplete =
-        new InformationPersonnelle("Skywalker", "Luke", "Plan�te Tatooine", 20);
+    infoComplete = new InformationPersonnelle("Skywalker", "Luke", "Plan�te Tatooine", 20);
   }
-  
+
   /**
    * Ne fait rien apr�s les tests : � modifier au besoin.
    *
    * @throws Exception ne peut pas �tre lev�e ici
    */
   @AfterEach
-  void tearDown() throws Exception {}
-  
+  void tearDown() throws Exception {
+  }
+
   /**
    * V�rifie que l'on peut positionner un age de 25 ans.
    */
@@ -54,7 +57,7 @@ class TestInformationPersonnelle {
     infoBasique.setAge(25);
     assertEquals(infoBasique.getAge(), 25);
   }
-  
+
   /**
    * V�rifie qu'on ne peut pas positionner un age n�gatif sur une information
    * basique.
@@ -64,7 +67,7 @@ class TestInformationPersonnelle {
     infoBasique.setAge(-20);
     assertTrue(infoBasique.getAge() != -20);
   }
-  
+
   /**
    * V�rifie qu'on ne peut pas positionner un age n�gatif sur une information
    * compl�te : l'�ge reste le m�me qu'avant.
@@ -75,8 +78,7 @@ class TestInformationPersonnelle {
     infoComplete.setAge(-20);
     assertEquals(infoComplete.getAge(), age);
   }
-  
-  
+
   /**
    * V�rifie qu'une adresse n'est pas null quand on cr�e une information
    * personnelle.
@@ -86,7 +88,7 @@ class TestInformationPersonnelle {
     assertTrue(infoBasique.getAdresse() != null);
     assertTrue(infoComplete.getAdresse() != null);
   }
-  
+
   /**
    * V�rifie qu'on ne peut pas positionner une adresse null sur une information
    * existante.
@@ -96,17 +98,17 @@ class TestInformationPersonnelle {
     infoComplete.setAdresse(null);
     assertTrue(infoComplete.getAdresse() != null);
   }
-  
+
   /**
    * V�rifie que les param�tres des constructeurs sont correctement g�r�s.
    */
   @Test
   void testConstructeur() {
-    InformationPersonnelle inf =new InformationPersonnelle("Vador", "Dark", "", 30);
+    InformationPersonnelle inf = new InformationPersonnelle("Vador", "Dark", "", 30);
     assertEquals(inf.getNom(), "Vador");
     assertEquals(inf.getPrenom(), "Dark");
     assertTrue(inf.getAdresse() != null);
     assertTrue(inf.getAge() >= 0);
   }
-  
+
 }

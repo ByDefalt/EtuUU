@@ -1,6 +1,7 @@
 package tests;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -20,13 +21,13 @@ class TestGestionFormation {
     private GestionFormation ges;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp(){
         ges = new GestionFormation();
         ges.creerFormation("L3IFA", "jsp", "jsp@gmail.com");
     }
 
     @AfterEach
-    void tearDown() throws Exception {
+    void tearDown(){
     }
 
     @Test
@@ -36,63 +37,47 @@ class TestGestionFormation {
         assertTrue(ges2.getNomFormation() == "L3IFA");
         assertTrue(ges2.getNomResponsableFormation() == "jsp");
         assertTrue(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
-    }
-
-    @Test
-    void testConstructeur2() {
-        GestionFormation ges2 = new GestionFormation();
+        ges2 = new GestionFormation();
         ges2.creerFormation("", "jsp", "jsp@gmail.com");
         assertTrue(ges2.getNomFormation() == null);
         assertFalse(ges2.getNomResponsableFormation() == "jsp");
         assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
-    }
-
-    @Test
-    void testConstructeur3() {
-        GestionFormation ges2 = new GestionFormation();
+        ges2 = new GestionFormation();
+        ges2.creerFormation("", "jsp", "jsp@gmail.com");
+        assertTrue(ges2.getNomFormation() == null);
+        assertFalse(ges2.getNomResponsableFormation() == "jsp");
+        assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
+        ges2 = new GestionFormation();
         ges2.creerFormation(null, "jsp", "jsp@gmail.com");
         assertTrue(ges2.getNomFormation() == null);
         assertFalse(ges2.getNomResponsableFormation() == "jsp");
         assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
-    }
-
-    @Test
-    void testConstructeur4() {
-        GestionFormation ges2 = new GestionFormation();
+        ges2 = new GestionFormation();
         ges2.creerFormation("L3IFA", "", "jsp@gmail.com");
         assertTrue(ges2.getNomFormation() == null);
         assertFalse(ges2.getNomResponsableFormation() == "jsp");
         assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
-    }
-    @Test
-    void testConstructeur5() {
-        GestionFormation ges2 = new GestionFormation();
+        ges2 = new GestionFormation();
         ges2.creerFormation("L3IFA", null, "jsp@gmail.com");
         assertTrue(ges2.getNomFormation() == null);
         assertFalse(ges2.getNomResponsableFormation() == "jsp");
         assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
-    }
-    @Test
-    void testConstructeur6() {
-        GestionFormation ges2 = new GestionFormation();
+        ges2 = new GestionFormation();
         ges2.creerFormation("L3IFA", "fds", "");
         assertTrue(ges2.getNomFormation() == null);
         assertFalse(ges2.getNomResponsableFormation() == "jsp");
         assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
-    }
-    @Test
-    void testConstructeur7() {
-        GestionFormation ges2 = new GestionFormation();
+        ges2 = new GestionFormation();
         ges2.creerFormation("L3IFA", "fds", null);
         assertTrue(ges2.getNomFormation() == null);
         assertFalse(ges2.getNomResponsableFormation() == "jsp");
         assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
+        ges2 = new GestionFormation();
         ges2.creerFormation("L3IFA", "ergr", "jhger");
         assertTrue(ges2.getNomFormation() == null);
         assertFalse(ges2.getNomResponsableFormation() == "jsp");
         assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
     }
-
     @Test
     void TestisValidEmail() {
         assertFalse(ges.isValidEmail("hgf@"));
