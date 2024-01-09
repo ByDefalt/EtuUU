@@ -30,6 +30,10 @@ import java.util.regex.Matcher;
 public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable {
   
   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2231338258512306498L;
+/**
    * Le pattern d'un email
    */
   private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";

@@ -1,5 +1,6 @@
 package formation;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -37,9 +38,14 @@ import java.util.Objects;
  * </p>
  * 
  */
-public class UniteEnseignement {
-
+public class UniteEnseignement implements Serializable {
+	
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4246360324259682345L;
+
+	/**
      * Le nom de l'Unité d'Enseignement (UE).
      */
     private final String nomUE;
