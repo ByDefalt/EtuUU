@@ -37,6 +37,7 @@ public class FormationControleur {
   private GestionFormation ges;
   private Stage fenetreEtudiants;
   private Stage FenetreFormation;
+
   public void setFenetreFormation(Stage FenetreFormation) {
     this.FenetreFormation = FenetreFormation;
   }
@@ -139,7 +140,15 @@ public class FormationControleur {
 
   @FXML
   void actionBoutonAffectationManuelleGroupes(ActionEvent event) {
-
+    Etudiant etu = ges.getGestionEtudiant().getListeEtudiants().stream()
+        .filter(etudiant -> Integer.toString(etudiant.getNumero())
+            .equals(listeEtudiants.getSelectionModel().getSelectedItem()))
+        .findFirst()
+        .orElse(null);
+    ges.changerGroupe(
+        etu,
+        Integer.parseInt(entreeGroupeTDEtudiant.getText()),
+        Integer.parseInt(entreeGroupeTPEtudiant.getText()));
   }
 
   @FXML
@@ -273,6 +282,7 @@ public class FormationControleur {
     fenetreEtudiants.close();
     FenetreFormation.close();
   }
+
   @FXML
   void actionMenuSauvegarder(ActionEvent event) {
 

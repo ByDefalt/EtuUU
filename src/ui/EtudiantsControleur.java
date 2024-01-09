@@ -72,18 +72,18 @@ public class EtudiantsControleur {
 
     @FXML
     void actionBoutonChoisirOption(ActionEvent event) {
-        this.gesEtudiant.choisirOption(null);
+        this.ges.getGestionEtudiant().choisirOption(null);
     }
 
     @FXML
     void actionBoutonConnexion(ActionEvent event) {
-        this.gesEtudiant.connexion(Integer.parseInt(entreeNumeroEtudiant.getText()),
+        this.ges.getGestionEtudiant().connexion(Integer.parseInt(entreeNumeroEtudiant.getText()),
                 entreeMotDePasseEtudiant.getText());
     }
 
     @FXML
     void actionBoutonDeconnexion(ActionEvent event) {
-        this.gesEtudiant.deconnexion();
+        this.ges.getGestionEtudiant().deconnexion();
     }
 
     @FXML
