@@ -1,5 +1,3 @@
-serialisation |
-clone	      |---> pour charger données/sauvgarder
 comentaire des methodes et instances
 rajouter plus de test et verifier exeption tout le code
 vérifier l'orthographe
