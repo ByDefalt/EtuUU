@@ -202,6 +202,7 @@ public class EtudiantsControleur {
     	} else {
     		this.afficherPopup("Les champs nécessaire a l'inscription ne sont pas tous remplis !", AlertType.ERROR);
     	}
+		System.out.println(gestionFormation.getGestionEtudiant().getListeEtudiants());
     }
 
 	@FXML

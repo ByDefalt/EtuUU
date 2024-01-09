@@ -280,6 +280,7 @@ public class FormationControleur {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    System.out.println(ges.getGestionEtudiant().getListeEtudiants());
   }
 
   @FXML

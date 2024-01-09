@@ -27,7 +27,7 @@ import java.util.regex.Matcher;
  * 
  */
 
-public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable {
+public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable,Cloneable {
   
   /**
 	 * 
