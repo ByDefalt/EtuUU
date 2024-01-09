@@ -1,5 +1,6 @@
 package formation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,8 +12,9 @@ import java.util.Set;
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
-public class GestionEtudiant implements InterEtudiant {
-    // ******************************* ATTRIBUT D'INSTANCES
+public class GestionEtudiant implements InterEtudiant, Serializable {
+	// ******************************* ATTRIBUT D'INSTANCES
+	private static final long serialVersionUID = -6680817996802511324L;
     private int nbEtudiant = 0;
     private final Set<Etudiant> listeEtudiants = new HashSet<>();
     private Set<UniteEnseignement> listeUE = new HashSet<>();

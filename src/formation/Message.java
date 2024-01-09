@@ -1,5 +1,7 @@
 package formation;
 
+import java.io.Serializable;
+
 /**
  * Cette classe représente un message avec un titre, un contenu, et un statut de lecture.
  * Les fonctionnalités offertes pour un message incluent la récupération du titre et du contenu,
@@ -26,9 +28,14 @@ package formation;
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
-public class Message {
+public class Message implements Serializable {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6196868605030678324L;
+
+	/**
      * Le titre du message.
      */
     private final String titre;

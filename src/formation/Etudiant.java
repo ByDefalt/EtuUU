@@ -1,5 +1,6 @@
 package formation;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -8,9 +9,10 @@ import java.util.*;
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
-public class Etudiant {
-    // ******************************* ATTRIBUT D'INSTANCES
-    private final InformationPersonnelle informationPersonnelle;
+public class Etudiant implements Serializable {
+	// ******************************* ATTRIBUT D'INSTANCES
+	private static final long serialVersionUID = -4629219965918701551L;
+	private final InformationPersonnelle informationPersonnelle;
     private final String motDePasse;
     private int numero;
     private int nbOption = -1;
