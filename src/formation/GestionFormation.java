@@ -555,20 +555,15 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
   }
 
   public void copierDepuis(GestionFormation autreFormation) {
-    this.nomFormation = autreFormation.nomFormation;
-    this.nomResponsable = autreFormation.nomResponsable;
-    this.email = autreFormation.email;
-    this.tds.clear(); // Vous devrez peut-être implémenter une copie profonde si nécessaire
-    this.tds.putAll(autreFormation.tds);
-    this.tps.clear(); // Vous devrez peut-être implémenter une copie profonde si nécessaire
-    this.tps.putAll(autreFormation.tps);
-    this.gestionEtudiant = autreFormation.gestionEtudiant
-    clone(); // Assurez-vous que GestionEtudiant a une méthode copier()
-    this.tailleGroupeDirige = autreFormation.tailleGroupeDirige;
-    this.tailleGroupePratique = autreFormation.tailleGroupePratique;
-    this.NBoption = autreFormation.NBoption;
-    this.tds = new HashMap<>();
-    this.tps = new HashMap<>();
+    this.nomFormation = autreFormation.getNomFormation();
+    this.nomResponsable = autreFormation.getNomResponsableFormation();
+    this.email = autreFormation.getEmailResponsableFormation();
+    this.tds.clear();
+    this.tps.clear();
+    this.gestionEtudiant = autreFormation.getGestionEtudiant().clone();
+    this.tailleGroupeDirige = autreFormation.getTailleGroupeDirige();
+    this.tailleGroupePratique = autreFormation.getTailleGroupePratique();
+    this.NBoption = autreFormation.getNBoption();
     // Copie profonde des ensembles d'Etudiants
     for (Map.Entry<Integer, Set<Etudiant>> entry : this.tds.entrySet()) {
       Set<Etudiant> etudiants = entry.getValue();
@@ -591,37 +586,5 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
 
       this.tps.put(entry.getKey(), copieEtudiants);
     }
-  }
-
-  @Override
-  protected Object clone() throws CloneNotSupportedException {
-    GestionFormation copie = (GestionFormation) super.clone();
-    copie.tds = new HashMap<>();
-    copie.tps = new HashMap<>();
-    // Copie profonde des ensembles d'Etudiants
-    for (Map.Entry<Integer, Set<Etudiant>> entry : this.tds.entrySet()) {
-      Set<Etudiant> etudiants = entry.getValue();
-      Set<Etudiant> copieEtudiants = new HashSet<>();
-
-      for (Etudiant etudiant : etudiants) {
-        copieEtudiants.add((Etudiant) etudiant.clone());
-      }
-
-      copie.tds.put(entry.getKey(), copieEtudiants);
-    }
-
-    for (Map.Entry<Integer, Set<Etudiant>> entry : this.tps.entrySet()) {
-      Set<Etudiant> etudiants = entry.getValue();
-      Set<Etudiant> copieEtudiants = new HashSet<>();
-
-      for (Etudiant etudiant : etudiants) {
-        copieEtudiants.add((Etudiant) etudiant.clone());
-      }
-
-      copie.tps.put(entry.getKey(), copieEtudiants);
-    }
-    copie.gestionEtudiant = (GestionEtudiant) this.gestionEtudiant.clone();
-
-    return copie;
   }
 }

@@ -1,0 +1,8 @@
+serialisation |
+clone	      |---> pour charger données
+comentaire des methodes et instances
+vérifier l'orthographe
+reverifier le code
+doc général
+doc des test
+générer le exe (sais comment faire)
