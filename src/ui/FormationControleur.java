@@ -159,7 +159,7 @@ public class FormationControleur {
                 .collect(Collectors.toList()))
             .orElse(Collections.emptyList()));
     listeEtudiants.setItems(observableEtudiants);
-    labelListeEtudiants.setText("Les étudiants du groupe de TP " + entreeGroupeTDEtudiant.getText());
+    labelListeEtudiants.setText("Les étudiants du groupe de TD " + entreeGroupeTDEtudiant.getText());
   }
 
   @FXML

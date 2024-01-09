@@ -185,7 +185,7 @@ public final class InformationPersonnelle implements Serializable,Cloneable {
   }
 
   @Override
-  protected Object clone() throws CloneNotSupportedException {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 }
