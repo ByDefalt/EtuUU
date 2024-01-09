@@ -11,13 +11,6 @@ import java.util.*;
 public class Etudiant {
     // ******************************* ATTRIBUT D'INSTANCES
     private final InformationPersonnelle informationPersonnelle;
-    /*
-     * lo
-     */
-    public InformationPersonnelle getInformationPersonnelle() {
-        return informationPersonnelle;
-    }
-
     private final String motDePasse;
     private int numero;
     private int nbOption = -1;
@@ -35,6 +28,15 @@ public class Etudiant {
     public Etudiant(InformationPersonnelle informationPersonnelle, String motDePasse) {
         this.informationPersonnelle = informationPersonnelle;
         this.motDePasse = motDePasse;
+    }
+    
+    /**
+     * Obtient les informations personnelles de l'étudiant.
+     *
+     * @return les informations personnelles de l'étudiant.
+     */
+    public InformationPersonnelle getInformationPersonnelle() {
+        return informationPersonnelle;
     }
 
     /**
@@ -161,4 +163,13 @@ public class Etudiant {
         Etudiant other = (Etudiant) obj;
         return numero == other.numero;
     }
+
+	@Override
+	public String toString() {
+		return "Etudiant [informationPersonnelle=" + informationPersonnelle + ", motDePasse=" + motDePasse + ", numero="
+				+ numero + ", nbOption=" + nbOption + ", numeroTp=" + numeroTp + ", numeroTd=" + numeroTd
+				+ ", listeUEsuivies=" + listeUEsuivies + ", messages=" + messages + "]";
+	}
+    
+    
 }

@@ -82,6 +82,19 @@ public class GestionEtudiant implements InterEtudiant {
 
         this.etudiantConnecte = null;
     }
+    
+    /**
+     * Obtient l'étudiant connecté.
+     *
+     * @return L'étudiant connecté
+     */
+    public Etudiant getEtudiantConnecte() throws NonConnecteException {
+    	if (this.etudiantConnecte == null) {
+            throw new NonConnecteException();
+        }
+    	
+        return this.etudiantConnecte;
+    }
 
     /**
      * L'ensemble des étudiants de l'ann�e de formation.
@@ -89,7 +102,7 @@ public class GestionEtudiant implements InterEtudiant {
      * @return l'ensemble des étudiants
      */
     public Set<Etudiant> getListeEtudiants() {
-        return listeEtudiants;
+        return this.listeEtudiants;
     }
 
     /**
@@ -319,7 +332,8 @@ public class GestionEtudiant implements InterEtudiant {
      */
     @Override
     public List<String> listeMessageNonLus() throws NonConnecteException {
-        if (this.etudiantConnecte == null) {
+    	if (this.etudiantConnecte == null) {
+    		System.out.println(this.etudiantConnecte);
             throw new NonConnecteException();
         }
 
