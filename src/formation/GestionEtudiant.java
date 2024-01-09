@@ -315,11 +315,11 @@ public class GestionEtudiant implements InterEtudiant {
             throw new NonConnecteException();
         }
 
-        List<String> contenus = new ArrayList<>();
+        List<String> titres = new ArrayList<>();
         for (Message message : this.etudiantConnecte.getMessages()) {
-            contenus.add(message.getContenu());
+            titres.add(message.getTitre());
         }
-        return contenus;
+        return titres;
     }
 
     /**
@@ -337,13 +337,13 @@ public class GestionEtudiant implements InterEtudiant {
             throw new NonConnecteException();
         }
 
-        List<String> contenus = new ArrayList<>();
+        List<String> titres = new ArrayList<>();
         for (Message message : this.etudiantConnecte.getMessages()) {
             if (message.estLu()) {
-                contenus.add(message.getContenu());
+            	titres.add(message.getTitre());
             }
         }
-        return contenus;
+        return titres;
     }
 
     /**

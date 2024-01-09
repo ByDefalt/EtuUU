@@ -12,6 +12,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -78,8 +80,19 @@ public class EtudiantsControleur {
     private TextArea zoneTexteContenuMessage;
 
     @FXML
-    void actionBoutonChoisirOption(ActionEvent event) {
-    	// Implémentez cette méthode selon vos besoins
+    void actionBoutonChoisirOption(ActionEvent event) throws NonConnecteException {
+    	String ueNom = listeUESuiviesEtudiant.getSelectionModel().getSelectedItem();
+    	if (ueNom != null) {
+    		for(UniteEnseignement ue : this.gestionEtudiant.getListeUE()) {
+    			if(ue.getNomUE().equals(ueNom)) {
+    				try {
+    					this.gestionEtudiant.choisirOption(ue);
+    				} catch(NonConnecteException e) {
+    					this.afficherPopup("Erreur de connexion", AlertType.ERROR);
+    				}
+    			}
+    		}
+    	}
     }
 
     @FXML
@@ -92,9 +105,21 @@ public class EtudiantsControleur {
 	        entreePrenomEtudiant.setText(etudiant.getInformationPersonnelle().getPrenom());
 	        entreeAdresseEtudiant.setText(etudiant.getInformationPersonnelle().getAdresse());
 	        entreeAgeEtudiant.setText(String.valueOf(etudiant.getInformationPersonnelle().getAge()));
-	        entreeGroupeTD.setText(String.valueOf(etudiant.getNumeroTd()));
-	        entreeGroupeTP.setText(String.valueOf(etudiant.getNumeroTp()));
-	        entreeNombreOptions.setText(String.valueOf(etudiant.getNbOption()));
+	        if(etudiant.getNumeroTd() != -1) {
+	        	entreeGroupeTD.setText(String.valueOf(etudiant.getNumeroTd()));
+	        } else {
+	        	entreeGroupeTD.setText("non défini");
+	        }
+	        if(etudiant.getNumeroTp() != -1) {
+	        	entreeGroupeTP.setText(String.valueOf(etudiant.getNumeroTp()));
+	        } else {
+	        	entreeGroupeTP.setText("non défini");
+	        }
+	        if(etudiant.getNbOption() != -1) {
+	        	entreeNombreOptions.setText(String.valueOf(etudiant.getNbOption()));
+	        } else {
+	        	entreeNombreOptions.setText("non défini");
+	        }
 	        if (this.gestionEtudiant.inscriptionFinalisee()) {
 	            checkInscriptionFinalisee.setSelected(true);
 	        } else {
@@ -107,19 +132,36 @@ public class EtudiantsControleur {
 	        ObservableList<String> listeUEOptionnelles = FXCollections.observableArrayList(this.gestionEtudiant.enseignementsOptionnels()
 	        		.stream().map(UniteEnseignement::getNomUE).collect(Collectors.toSet()));
 	        listeUEOptionnellesFormation = new ListView<>(listeUEOptionnelles);
+	        
 	        ObservableList<String> messages = FXCollections.observableArrayList(this.gestionEtudiant.listeTousMessages());
 	        listeTousMessages = new ListView<>(messages);
 	        
 	        ObservableList<String> messagesNonLus = FXCollections.observableArrayList(this.gestionEtudiant.listeTousMessages());
 	        listeMessagesNonLus = new ListView<>(messagesNonLus);
         } catch (NonConnecteException e) {
-        	System.out.println(e);
+        	this.afficherPopup("Erreur de connexion", AlertType.ERROR);
         }
     }
 
     @FXML
     void actionBoutonDeconnexion(ActionEvent event) throws NonConnecteException {
         this.gestionEtudiant.deconnexion();
+        
+        entreeNumeroEtudiant.setText("");
+        entreeMotDePasseEtudiant.setText("");
+        entreeNomEtudiant.setText("");
+        entreePrenomEtudiant.setText("");
+        entreeAdresseEtudiant.setText("");
+        entreeAgeEtudiant.setText("");
+        entreeGroupeTD.setText("");
+        entreeGroupeTP.setText("");
+        entreeNombreOptions.setText("");
+        checkInscriptionFinalisee.setSelected(false);
+
+        listeUESuiviesEtudiant.getItems().clear();
+        listeUEOptionnellesFormation.getItems().clear();
+        listeTousMessages.getItems().clear();
+        listeMessagesNonLus.getItems().clear();
     }
 
     @FXML
@@ -129,10 +171,10 @@ public class EtudiantsControleur {
                 Integer.parseInt(entreeAgeEtudiant.getText()));
         int resInscription = this.gestionEtudiant.inscription(info, entreeMotDePasseEtudiant.getText());
         if(resInscription != -1) {
-        	entreeNomEtudiant.setText(null);
-        	entreePrenomEtudiant.setText(null);
-        	entreeAdresseEtudiant.setText(null);
-        	entreeAgeEtudiant.setText(null);
+        	entreeNomEtudiant.setText("");
+        	entreePrenomEtudiant.setText("");
+        	entreeAdresseEtudiant.setText("");
+        	entreeAgeEtudiant.setText("");
         	entreeNumeroEtudiant.setText(String.valueOf(resInscription));
         }
         
@@ -152,6 +194,20 @@ public class EtudiantsControleur {
     void actionSelectionMessageListeTousMessages(MouseEvent event) {
         // Implémentez cette méthode selon vos besoins
     }
+    
+    private void afficherPopup(String message, AlertType type) {
+    	Alert alert = new Alert(type);
+    	if (type == AlertType.ERROR) {
+    		alert.setTitle("Erreur");
+    	} else {
+    		alert.setTitle("Information");
+    	}
+    	alert.setHeaderText(null);
+    	alert.setContentText(message);
+    	alert.setResizable(true);
+    	alert.showAndWait();
+    }
+
 
     @FXML
     void initialize() {

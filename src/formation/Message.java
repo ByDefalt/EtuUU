@@ -8,6 +8,7 @@ package formation;
  */
 public class Message {
     // ******************************* ATTRIBUT D'INSTANCES
+	private final String titre;
     private final String contenu;
     private boolean lu;
 
@@ -16,9 +17,19 @@ public class Message {
      *
      * @param contenu Le contenu du message.
      */
-    public Message(String contenu) {
+    public Message(String titre, String contenu) {
+    	this.titre = titre;
         this.contenu = contenu;
         this.lu = false;
+    }
+    
+    /**
+     * Obtient le titre du message.
+     *
+     * @return Le titre du message.
+     */
+    public String getTitre() {
+        return this.titre;
     }
 
     /**
@@ -27,7 +38,7 @@ public class Message {
      * @return Le contenu du message.
      */
     public String getContenu() {
-        return contenu;
+        return this.contenu;
     }
 
     /**
@@ -36,7 +47,7 @@ public class Message {
      * @return true si le message a été lu, false sinon.
      */
     public boolean estLu() {
-        return lu;
+        return this.lu;
     }
 
     /**
