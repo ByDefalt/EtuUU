@@ -26,7 +26,7 @@ import java.util.regex.Matcher;
  * 
  */
 
-public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable, Cloneable {
+public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable{
 
   /**
    * Le pattern d'un email
@@ -597,6 +597,9 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
     }
   }
 
+  /**
+   * @param autreFormation
+   */
   public void copierDepuis(GestionFormation autreFormation) {
     this.nomFormation = autreFormation.getNomFormation();
     this.nomResponsable = autreFormation.getNomResponsableFormation();
@@ -630,4 +633,5 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
       this.tps.put(entry.getKey(), copieEtudiants);
     }
   }
+
 }

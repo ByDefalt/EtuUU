@@ -123,12 +123,10 @@ public final class InformationPersonnelle implements java.io.Serializable {
       throw new IllegalArgumentException("Les paramètres ne sont pas valides.");
     }
   }
-
   @Override
   public int hashCode() {
     return Objects.hash(adresse, age, nom, prenom);
   }
-
   @Override
   public boolean equals(final Object obj) {
     if (this == obj) {
@@ -145,7 +143,6 @@ public final class InformationPersonnelle implements java.io.Serializable {
         && Objects.equals(nom, other.nom)
         && Objects.equals(prenom, other.prenom);
   }
-
   @Override
   public String toString() {
     return prenom + " " + nom + " d'age " + age + " ans, habite " + adresse;

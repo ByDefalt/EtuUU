@@ -1,15 +1,24 @@
 package formation;
 
 /**
- * Les fonctionnalités offertes à un message.
+ * Les fonctionnalités offertes pour un message.
  *
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
 public class Message {
-    // ******************************* ATTRIBUT D'INSTANCES
+
+	/**
+	 * Le titre du message
+	 */
 	private final String titre;
+    /**
+     * Le contenu du message
+     */
     private final String contenu;
+    /**
+     * Savoir si le message à été lu
+     */
     private boolean lu;
 
     /**
