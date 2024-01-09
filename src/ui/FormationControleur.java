@@ -230,6 +230,7 @@ public class FormationControleur {
   void actionBoutonNombreChoixOptions(ActionEvent event) {
     if (ges.getNomFormation() != null) {
       ges.definirNombreOptions(Integer.parseInt(entreeNombreChoixOptions.getText()));
+      ges.getGestionEtudiant().getListeEtudiants().forEach(etudiant -> ges.setNbOptionEtudiant(etudiant));
     }
   }
 

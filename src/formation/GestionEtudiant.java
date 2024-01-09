@@ -369,7 +369,6 @@ public class GestionEtudiant implements InterEtudiant, Serializable {
         if (this.etudiantConnecte == null) {
             throw new NonConnecteException();
         }
-
         return etudiantConnecte.getNumeroTd() != -1 && etudiantConnecte.getNumeroTp() != -1
                 && this.nombreOptions() == this.nombresOptionsChoisi();
     }
