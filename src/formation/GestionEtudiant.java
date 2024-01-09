@@ -12,7 +12,7 @@ import java.util.Set;
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
-public class GestionEtudiant implements InterEtudiant, Serializable {
+public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
 	// ******************************* ATTRIBUT D'INSTANCES
 	private static final long serialVersionUID = -6680817996802511324L;
     private int nbEtudiant = 0;

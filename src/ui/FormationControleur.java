@@ -276,7 +276,7 @@ public class FormationControleur {
   @FXML
   void actionMenuCharger(ActionEvent event) {
     try {
-      ges.chargerDonnees("");
+      ges.chargerDonnees("save");
     } catch (IOException e) {
       e.printStackTrace();
     }

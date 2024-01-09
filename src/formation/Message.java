@@ -28,7 +28,7 @@ import java.io.Serializable;
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
-public class Message implements Serializable {
+public class Message implements Serializable,Cloneable {
 
     /**
 	 * 

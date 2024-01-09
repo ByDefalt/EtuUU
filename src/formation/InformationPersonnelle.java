@@ -25,7 +25,7 @@ import java.util.Objects;
  *
  * @author Eric Cariou
  */
-public final class InformationPersonnelle implements Serializable {
+public final class InformationPersonnelle implements Serializable,Cloneable {
 
   /**
    * Identifiant de s�rialisation.

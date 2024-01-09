@@ -600,7 +600,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
 
   @Override
   public void chargerDonnees(String nomFichier) throws IOException {
-    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nomFichier))) {
+    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("save" + File.separator + nomFichier))) {
       try {
         Object objet = ois.readObject();
         if (objet instanceof GestionFormation) {

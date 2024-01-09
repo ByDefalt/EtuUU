@@ -9,7 +9,7 @@ import java.util.*;
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
-public class Etudiant implements Serializable {
+public class Etudiant implements Serializable,Cloneable {
 	// ******************************* ATTRIBUT D'INSTANCES
 	private static final long serialVersionUID = -4629219965918701551L;
 	private InformationPersonnelle informationPersonnelle;
