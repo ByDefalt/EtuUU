@@ -1,5 +1,6 @@
 package formation;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -522,7 +523,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
 
   @Override
   public void sauvegarderDonnees(String nomFichier) throws IOException {
-    try (FileOutputStream fileOut = new FileOutputStream(nomFichier);
+    try (FileOutputStream fileOut = new FileOutputStream("save"+File.separator+nomFichier);
         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
       objectOut.writeObject(this);
       System.out.println("Données sauvegardées avec succès dans le fichier " + nomFichier);
