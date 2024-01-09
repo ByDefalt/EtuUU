@@ -1,5 +1,6 @@
 # Fichiers et répertoires liés à Eclipse
 .metadata/
+.classpath
 .project
 
 # Répertoire des classes compilées
