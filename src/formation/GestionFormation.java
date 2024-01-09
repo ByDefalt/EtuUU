@@ -598,9 +598,6 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
     }
   }
 
-  /**
-   * @param autreFormation
-   */
   public void copierDepuis(GestionFormation autreFormation) {
     this.nomFormation = autreFormation.getNomFormation();
     this.nomResponsable = autreFormation.getNomResponsableFormation();
