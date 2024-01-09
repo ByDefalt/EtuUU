@@ -236,7 +236,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    *         de probl�me
    */
   @Override
-  public boolean ajouterEnseignementOptionnel(UniteEnseignement ue,int nbPlaces) {
+  public boolean ajouterEnseignementOptionnel(UniteEnseignement ue, int nbPlaces) {
     if (ue != null) {
       if (!this.gestionEtudiant.getListeUE().contains(ue)) {
         ue.setOptionnel(true);
@@ -257,7 +257,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public void definirNombreOptions(int nombre) {
-    if (this.NBoption == -1 && nombre>=1) {
+    if (this.NBoption == -1 && nombre >= 1) {
       this.NBoption = nombre;
     }
   }
@@ -271,7 +271,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public void setTailleGroupeDirige(int taille) {
-    if (this.tailleGroupeDirige == -1 && taille>1) {
+    if (this.tailleGroupeDirige == -1 && taille > 1) {
       this.tailleGroupeDirige = taille;
     }
   }
@@ -285,7 +285,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public void setTailleGroupePratique(int taille) {
-    if (this.tailleGroupePratique == -1 && taille>1) {
+    if (this.tailleGroupePratique == -1 && taille > 1) {
       this.tailleGroupePratique = taille;
     }
   }
@@ -417,15 +417,19 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    *         </ul>
    */
   public boolean interval(double valeur, Map<Integer, Set<Etudiant>> mamap) {
-    boolean res = true;
-    for (Map.Entry<Integer, Set<Etudiant>> entry : mamap.entrySet()) {
-      Set<Etudiant> value = entry.getValue();
-      if (value.size() > valeur + 1 || value.size() < valeur - 1) {
-        res = false;
-        break;
+    if (mamap != null) {
+      boolean res = true;
+      for (Map.Entry<Integer, Set<Etudiant>> entry : mamap.entrySet()) {
+        Set<Etudiant> value = entry.getValue();
+        if (value.size() > valeur + 1 || value.size() < valeur - 1) {
+          res = false;
+          break;
+        }
       }
+      return res;
+    } else {
+      return false;
     }
-    return res;
   }
 
   /**
@@ -447,52 +451,55 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    *         </ul>
    */
   @Override
-  public int changerGroupe(Etudiant etudiant, int groupeDirige,
-      int groupePratique) {
-    int res = 0;
-    int numgroupetp = etudiant.getNumeroTp();
-    int numgroupetd = etudiant.getNumeroTd();
-    if (groupeDirige > 0) {
-      if (this.listeEtudiantsGroupeDirige(groupeDirige)
-          .size() < this.tailleGroupeDirige) {
-        if (numgroupetd != -1) {
-          this.listeEtudiantsGroupeDirige(numgroupetd).remove(etudiant);
-          this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
-          etudiant.setNumeroTd(groupeDirige);
-          this.envoyermessage(etudiant, "changement de groupe :" + numgroupetd
-              + " ----> " + etudiant.getNumeroTd());
+  public int changerGroupe(Etudiant etudiant, int groupeDirige, int groupePratique) {
+    if (etudiant != null) {
+      int res = 0;
+      int numgroupetp = etudiant.getNumeroTp();
+      int numgroupetd = etudiant.getNumeroTd();
+      if (groupeDirige > 0) {
+        if (this.listeEtudiantsGroupeDirige(groupeDirige)
+            .size() < this.tailleGroupeDirige) {
+          if (numgroupetd != -1) {
+            this.listeEtudiantsGroupeDirige(numgroupetd).remove(etudiant);
+            this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
+            etudiant.setNumeroTd(groupeDirige);
+            this.envoyermessage(etudiant, "changement de groupe :" + numgroupetd
+                + " ----> " + etudiant.getNumeroTd());
+          } else {
+            this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
+            etudiant.setNumeroTd(groupeDirige);
+            this.envoyermessage(etudiant, "nouveaux groupe :" + groupeDirige);
+          }
         } else {
-          this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
-          etudiant.setNumeroTd(groupeDirige);
-          this.envoyermessage(etudiant, "nouveaux groupe :" + groupeDirige);
-        }
-      } else {
-        res = -1;
-      }
-    }
-    if (groupePratique > 0) {
-      if (this.listeEtudiantsGroupePratique(groupePratique)
-          .size() < this.tailleGroupePratique) {
-        if (numgroupetp != -1) {
-          this.tps.get(numgroupetp).remove(etudiant);
-          this.tps.get(groupePratique).add(etudiant);
-          etudiant.setNumeroTp(groupePratique);
-          this.envoyermessage(etudiant, "changement de groupe :" + numgroupetp
-              + " ----> " + etudiant.getNumeroTp());
-        } else {
-          this.tps.get(groupePratique).add(etudiant);
-          etudiant.setNumeroTp(groupePratique);
-          this.envoyermessage(etudiant, "nouveaux groupe :" + groupePratique);
-        }
-      } else {
-        if (res == -1) {
-          res = -3;
-        } else {
-          res = -2;
+          res = -1;
         }
       }
+
+      if (groupePratique > 0) {
+        if (this.listeEtudiantsGroupePratique(groupePratique)
+            .size() < this.tailleGroupePratique) {
+          if (numgroupetp != -1) {
+            this.tps.get(numgroupetp).remove(etudiant);
+            this.tps.get(groupePratique).add(etudiant);
+            etudiant.setNumeroTp(groupePratique);
+            this.envoyermessage(etudiant, "changement de groupe :" + numgroupetp
+                + " ----> " + etudiant.getNumeroTp());
+          } else {
+            this.tps.get(groupePratique).add(etudiant);
+            etudiant.setNumeroTp(groupePratique);
+            this.envoyermessage(etudiant, "nouveaux groupe :" + groupePratique);
+          }
+        } else {
+          if (res == -1) {
+            res = -3;
+          } else {
+            res = -2;
+          }
+        }
+      }
+      return res;
     }
-    return res;
+    return -3;
   }
 
   /**
@@ -502,9 +509,11 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    * @param message Le message à envoyer
    */
   public void envoyermessage(Etudiant etu, String message) {
-    String titre = message.substring(0, Math.min(message.length(), 20)) + "...";
-    Message mes = new Message(titre, message);
-    etu.getMessages().add(mes);
+    if (etu != null && message != null && !message.isEmpty()) {
+      String titre = message.substring(0, Math.min(message.length(), 20)) + "...";
+      Message mes = new Message(titre, message);
+      etu.getMessages().add(mes);
+    }
   }
 
   /**
@@ -514,7 +523,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public int nombreGroupesTravauxDiriges() {
-    return tds.size();
+    return this.tds.size();
   }
 
   /**
@@ -524,7 +533,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public int nombreGroupesTravauxPratiques() {
-    return tps.size();
+    return this.tps.size();
   }
 
   /**
@@ -536,7 +545,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public Set<Etudiant> listeEtudiantsGroupeDirige(int groupe) {
-    return tds.get(groupe);
+    return this.tds.get(groupe);
   }
 
   /**
@@ -548,7 +557,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public Set<Etudiant> listeEtudiantsGroupePratique(int groupe) {
-    return tps.get(groupe);
+    return this.tps.get(groupe);
   }
 
   /**
