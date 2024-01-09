@@ -6,6 +6,7 @@ import formation.Etudiant;
 import formation.GestionEtudiant;
 import formation.GestionFormation;
 import formation.InformationPersonnelle;
+import formation.Message;
 import formation.NonConnecteException;
 import formation.UniteEnseignement;
 import javafx.collections.FXCollections;
@@ -80,7 +81,7 @@ public class EtudiantsControleur {
     private TextArea zoneTexteContenuMessage;
 
     @FXML
-    void actionBoutonChoisirOption(ActionEvent event) throws NonConnecteException {
+    void actionBoutonChoisirOption(ActionEvent event) {
     	String ueNom = listeUESuiviesEtudiant.getSelectionModel().getSelectedItem();
     	if (ueNom != null) {
     		for(UniteEnseignement ue : this.gestionEtudiant.getListeUE()) {
@@ -96,7 +97,7 @@ public class EtudiantsControleur {
     }
 
     @FXML
-    void actionBoutonConnexion(ActionEvent event) throws NonConnecteException{
+    void actionBoutonConnexion(ActionEvent event) {
         this.gestionEtudiant.connexion(Integer.parseInt(entreeNumeroEtudiant.getText()),
                 entreeMotDePasseEtudiant.getText());
         try {
@@ -144,24 +145,28 @@ public class EtudiantsControleur {
     }
 
     @FXML
-    void actionBoutonDeconnexion(ActionEvent event) throws NonConnecteException {
-        this.gestionEtudiant.deconnexion();
-        
-        entreeNumeroEtudiant.setText("");
-        entreeMotDePasseEtudiant.setText("");
-        entreeNomEtudiant.setText("");
-        entreePrenomEtudiant.setText("");
-        entreeAdresseEtudiant.setText("");
-        entreeAgeEtudiant.setText("");
-        entreeGroupeTD.setText("");
-        entreeGroupeTP.setText("");
-        entreeNombreOptions.setText("");
-        checkInscriptionFinalisee.setSelected(false);
-
-        listeUESuiviesEtudiant.getItems().clear();
-        listeUEOptionnellesFormation.getItems().clear();
-        listeTousMessages.getItems().clear();
-        listeMessagesNonLus.getItems().clear();
+    void actionBoutonDeconnexion(ActionEvent event) {
+    	try {
+	        this.gestionEtudiant.deconnexion();
+	        
+	        entreeNumeroEtudiant.setText("");
+	        entreeMotDePasseEtudiant.setText("");
+	        entreeNomEtudiant.setText("");
+	        entreePrenomEtudiant.setText("");
+	        entreeAdresseEtudiant.setText("");
+	        entreeAgeEtudiant.setText("");
+	        entreeGroupeTD.setText("");
+	        entreeGroupeTP.setText("");
+	        entreeNombreOptions.setText("");
+	        checkInscriptionFinalisee.setSelected(false);
+	
+	        listeUESuiviesEtudiant.getItems().clear();
+	        listeUEOptionnellesFormation.getItems().clear();
+	        listeTousMessages.getItems().clear();
+	        listeMessagesNonLus.getItems().clear();
+    	} catch (NonConnecteException e) {
+        	this.afficherPopup("Erreur de connexion", AlertType.ERROR);
+        }
     }
 
     @FXML
@@ -181,18 +186,49 @@ public class EtudiantsControleur {
     }
 
     @FXML
-    void actionBoutonRafraichirListesMessages(ActionEvent event) {
-        // Implémentez cette méthode selon vos besoins
+    void actionBoutonRafraichirListesMessages(ActionEvent event){
+    	try {
+    		for(Message message : this.gestionEtudiant.getEtudiantConnecte().getMessages()) {
+            	if(this.gestionEtudiant.listeMessageNonLus().contains(message.getTitre())) {
+            		message.setLu();
+            	}
+            }
+    		
+    		ObservableList<String> messages = FXCollections.observableArrayList(this.gestionEtudiant.listeTousMessages());
+	        listeTousMessages = new ListView<>(messages);
+	        
+	        ObservableList<String> messagesNonLus = FXCollections.observableArrayList(this.gestionEtudiant.listeTousMessages());
+	        listeMessagesNonLus = new ListView<>(messagesNonLus);
+	       
+    	} catch (NonConnecteException e) {
+        	this.afficherPopup("Erreur de connexion", AlertType.ERROR);
+        }
     }
 
     @FXML
     void actionSelectionMessageListeMessagesNonLus(MouseEvent event) {
-        // Implémentez cette méthode selon vos besoins
+    	try {
+    		for(Message message : this.gestionEtudiant.getEtudiantConnecte().getMessages()) {
+            	if(this.gestionEtudiant.listeMessageNonLus().contains(message.getTitre())) {
+            		zoneTexteContenuMessage.setText(message.getContenu());
+            	}
+            }   
+    	} catch (NonConnecteException e) {
+        	this.afficherPopup("Erreur de connexion", AlertType.ERROR);
+        }
     }
 
     @FXML
     void actionSelectionMessageListeTousMessages(MouseEvent event) {
-        // Implémentez cette méthode selon vos besoins
+    	try {
+    		for(Message message : this.gestionEtudiant.getEtudiantConnecte().getMessages()) {
+            	if(this.gestionEtudiant.listeTousMessages().contains(message.getTitre())) {
+            		zoneTexteContenuMessage.setText(message.getContenu());
+            	}
+            }   
+    	} catch (NonConnecteException e) {
+        	this.afficherPopup("Erreur de connexion", AlertType.ERROR);
+        }
     }
     
     private void afficherPopup(String message, AlertType type) {
