@@ -28,16 +28,49 @@ import java.util.regex.Matcher;
 
 public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable, Cloneable {
 
+  /**
+   * Le pattern d'un email
+   */
   private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+  /**
+   * Le pattern compilé d'un email
+   */
   private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+  /**
+   * Le nom de la formation
+   */
   private String nomFormation;
+  /**
+   * Le nom du responssable de la formation
+   */
   private String nomResponsable;
+  /**
+   * L'email du responsable de formation
+   */
   private String email;
+  /**
+   * Les groupes de TD
+   */
   private final Map<Integer, Set<Etudiant>> tds = new HashMap<>();
+  /**
+   * Les groupes de TP
+   */
   private final Map<Integer, Set<Etudiant>> tps = new HashMap<>();
+  /**
+   * La gestion des étudiants
+   */
   private GestionEtudiant gestionEtudiant = new GestionEtudiant();
+  /**
+   * La taille des groupes de TD
+   */
   private int tailleGroupeDirige = -1;
+  /**
+   * La taille des groupes de TP
+   */
   private int tailleGroupePratique = -1;
+  /**
+   * Le nombre d'option que les étusiants doivent avoir
+   */
   private int NBoption = -1;
 
   /**
@@ -47,6 +80,16 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
 
   }
 
+  /**
+   * Permet de vérifier si une chaîne de caractères est une adresse e-mail valide.
+   * 
+   * @param email Chaîne de caractères représentant une adresse e-mail.
+   * @return
+   *         <ul>
+   *         <li>true si la chaîne est une adresse e-mail valide.</li>
+   *         <li>false sinon.</li>
+   *         </ul>
+   */
   public boolean isValidEmail(String email) {
     Matcher matcher = pattern.matcher(email);
     return matcher.matches();
@@ -523,7 +566,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
 
   @Override
   public void sauvegarderDonnees(String nomFichier) throws IOException {
-    try (FileOutputStream fileOut = new FileOutputStream("save"+File.separator+nomFichier);
+    try (FileOutputStream fileOut = new FileOutputStream("save" + File.separator + nomFichier);
         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
       objectOut.writeObject(this);
       System.out.println("Données sauvegardées avec succès dans le fichier " + nomFichier);
@@ -543,7 +586,6 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
           // Copier les propriétés de l'objet chargé dans l'instance courante
           this.setPropriete1(objetCharge.getPropriete1());
           this.setPropriete2(objetCharge.getPropriete2());
-          this=objetCharge.clone();
           // Répétez cela pour toutes les propriétés de votre classe
           System.out.println("Données chargées avec succès depuis " + nomFichier);
         } else {
