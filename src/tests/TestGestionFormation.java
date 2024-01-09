@@ -31,7 +31,7 @@ class TestGestionFormation {
     }
 
     @Test
-    void testConstructeur1() {
+    void testConstructeur() {
         GestionFormation ges2 = new GestionFormation();
         ges2.creerFormation("L3IFA", "jsp", "jsp@gmail.com");
         assertTrue(ges2.getNomFormation() == "L3IFA");

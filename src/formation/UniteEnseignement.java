@@ -4,11 +4,13 @@ import java.util.Objects;
 
 /**
  * Représente une Unité d'Enseignement (UE) dans le contexte d'une formation.
- * Chaque UE a un nom, un enseignant associé, un nombre de participants, un nombre de places maximales
+ * Chaque UE a un nom, un enseignant associé, un nombre de participants, un
+ * nombre de places maximales
  * et une optionnalité déterminant si l'UE est facultative ou non.
  * 
  * <p>
  * Exemple d'utilisation :
+ * 
  * <pre>{@code
  * // Création d'une Unité d'Enseignement obligatoire
  * UniteEnseignement ueObligatoire = new UniteEnseignement("Mathématiques", "Professeur A.");
@@ -21,7 +23,8 @@ import java.util.Objects;
  * // Création d'une Unité d'Enseignement facultative
  * UniteEnseignement ueFacultative = new UniteEnseignement("Informatique", "Professeur B.");
  * 
- * // Activation de l'option facultative et définition du nombre de places maximales
+ * // Activation de l'option facultative et définition du nombre de places
+ * // maximales
  * ueFacultative.setOptionnel(true);
  * ueFacultative.setNbPlacesMax(30);
  * 
@@ -53,7 +56,8 @@ public class UniteEnseignement {
 
     /**
      * Le nombre maximum de places disponibles pour l'UE.
-     * Cette valeur est utilisée uniquement si l'UE est facultative (optionnel est true).
+     * Cette valeur est utilisée uniquement si l'UE est facultative (optionnel est
+     * true).
      */
     private int nbPlacesMax = 0;
 
@@ -70,8 +74,8 @@ public class UniteEnseignement {
      * @param nomEnseignant Le nom de l'enseignant de l'Unité d'Enseignement.
      */
     public UniteEnseignement(String nomUE, String nomEnseignant) {
-        if (nomUE == null || nomEnseignant == null) {
-            throw new IllegalArgumentException("Les arguments ne peuvent pas être nuls");
+        if (nomUE == null || nomEnseignant == null || !nomUE.isEmpty() || !nomEnseignant.isEmpty()) {
+            throw new IllegalArgumentException("Les arguments ne peuvent pas être nuls ou vide");
         }
         this.nomUE = nomUE;
         this.nomEnseignant = nomEnseignant;
@@ -116,7 +120,8 @@ public class UniteEnseignement {
     }
 
     /**
-     * Définit le nombre de places maximales pour l'UE, uniquement si l'UE est facultative.
+     * Définit le nombre de places maximales pour l'UE, uniquement si l'UE est
+     * facultative.
      *
      * @param nbPlacesMax Le nombre de places maximales pour l'UE.
      */
@@ -141,7 +146,9 @@ public class UniteEnseignement {
      * @param nomEnseignant Le nom de l'enseignant.
      */
     public void setNomEnseignant(String nomEnseignant) {
-        this.nomEnseignant = nomEnseignant;
+        if (nomEnseignant != null && !nomEnseignant.isEmpty()) {
+            this.nomEnseignant = nomEnseignant;
+        }
     }
 
     /**
@@ -169,7 +176,8 @@ public class UniteEnseignement {
     // Méthodes de l'objet
 
     /**
-     * Retourne un code de hachage pour l'objet basé sur le nom de l'Unité d'Enseignement (UE).
+     * Retourne un code de hachage pour l'objet basé sur le nom de l'Unité
+     * d'Enseignement (UE).
      *
      * @return Code de hachage basé sur le nom de l'UE.
      * @see Objects#hash(Object...)
@@ -181,8 +189,10 @@ public class UniteEnseignement {
     }
 
     /**
-     * Compare cette instance d'UniteEnseignement avec un autre objet pour déterminer leur égalité.
-     * Deux instances d'UniteEnseignement sont considérées comme égales si elles ont le même nom d'unité d'enseignement (nomUE).
+     * Compare cette instance d'UniteEnseignement avec un autre objet pour
+     * déterminer leur égalité.
+     * Deux instances d'UniteEnseignement sont considérées comme égales si elles ont
+     * le même nom d'unité d'enseignement (nomUE).
      *
      * @param o L'objet avec lequel comparer cette instance d'UniteEnseignement.
      * @return True si les deux objets sont égaux, False sinon.
@@ -190,8 +200,10 @@ public class UniteEnseignement {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         UniteEnseignement that = (UniteEnseignement) o;
         return Objects.equals(nomUE, that.nomUE);
     }
