@@ -1,37 +1,60 @@
 package formation;
 
 /**
- * Les fonctionnalités offertes pour un message.
+ * Cette classe représente un message avec un titre, un contenu, et un statut de lecture.
+ * Les fonctionnalités offertes pour un message incluent la récupération du titre et du contenu,
+ * ainsi que la vérification et la modification du statut de lecture.
+ *
+ * <p>
+ * Exemple d'utilisation :
+ * <pre>{@code
+ * // Création d'un message
+ * Message monMessage = new Message("Nouvelle notification", "Vous avez un nouveau message.");
+ * 
+ * // Obtention du titre et du contenu
+ * String titre = monMessage.getTitre();
+ * String contenu = monMessage.getContenu();
+ * 
+ * // Vérification du statut de lecture
+ * boolean estLu = monMessage.estLu();
+ * 
+ * // Marquer le message comme lu
+ * monMessage.setLu();
+ * }</pre>
+ * </p>
  *
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
 public class Message {
 
-	/**
-	 * Le titre du message
-	 */
-	private final String titre;
     /**
-     * Le contenu du message
+     * Le titre du message.
+     */
+    private final String titre;
+
+    /**
+     * Le contenu du message.
      */
     private final String contenu;
+
     /**
-     * Savoir si le message à été lu
+     * Indique si le message a été lu.
      */
     private boolean lu;
 
     /**
      * Constructeur de la classe Message.
      *
-     * @param contenu Le contenu du message.
+     * @param titre    Le titre du message.
+     * @param contenu  Le contenu du message.
      */
     public Message(String titre, String contenu) {
-    	this.titre = titre;
+        this.titre = titre;
         this.contenu = contenu;
         this.lu = false;
     }
-    
+
     /**
      * Obtient le titre du message.
      *
