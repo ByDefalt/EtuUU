@@ -403,9 +403,15 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
           .size() < this.tailleGroupeDirige) {
         if (numgroupetd != -1) {
           this.listeEtudiantsGroupeDirige(numgroupetd).remove(etudiant);
+          this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
+          etudiant.setNumeroTd(groupeDirige);
+          this.envoyermessage(etudiant, "changement de groupe :" + numgroupetd
+              + " ----> " + etudiant.getNumeroTd());
+        } else {
+          this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
+          etudiant.setNumeroTd(groupeDirige);
+          this.envoyermessage(etudiant, "nouveaux groupe :" + groupeDirige);
         }
-        this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
-        etudiant.setNumeroTd(groupeDirige);
       } else {
         res = -1;
       }
@@ -413,14 +419,16 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
     if (groupePratique > 0) {
       if (this.listeEtudiantsGroupePratique(groupePratique)
           .size() < this.tailleGroupePratique) {
-        this.tps.get(groupePratique).add(etudiant);
-        etudiant.setNumeroTp(groupePratique);
         if (numgroupetp != -1) {
           this.tps.get(numgroupetp).remove(etudiant);
-          this.envoyermessage(etudiant, "nouveaux groupe :" + numgroupetp);
-        } else {
+          this.tps.get(groupePratique).add(etudiant);
+          etudiant.setNumeroTp(groupePratique);
           this.envoyermessage(etudiant, "changement de groupe :" + numgroupetp
               + " ----> " + etudiant.getNumeroTp());
+        } else {
+          this.tps.get(groupePratique).add(etudiant);
+          etudiant.setNumeroTp(groupePratique);
+          this.envoyermessage(etudiant, "nouveaux groupe :" + groupePratique);
         }
       } else {
         if (res == -1) {
@@ -440,7 +448,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    * @param message Le message à envoyer
    */
   public void envoyermessage(Etudiant etu, String message) {
-	String titre = message.substring(0, Math.min(message.length(), 20)) + "...";  
+    String titre = message.substring(0, Math.min(message.length(), 20)) + "...";
     Message mes = new Message(titre, message);
     etu.getMessages().add(mes);
   }
@@ -545,18 +553,19 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
       }
     }
   }
+
   public void copierDepuis(GestionFormation autreFormation) {
     this.nomFormation = autreFormation.nomFormation;
     this.nomResponsable = autreFormation.nomResponsable;
     this.email = autreFormation.email;
-    this.tds.clear();  // Vous devrez peut-être implémenter une copie profonde si nécessaire
+    this.tds.clear(); // Vous devrez peut-être implémenter une copie profonde si nécessaire
     this.tds.putAll(autreFormation.tds);
-    this.tps.clear();  // Vous devrez peut-être implémenter une copie profonde si nécessaire
+    this.tps.clear(); // Vous devrez peut-être implémenter une copie profonde si nécessaire
     this.tps.putAll(autreFormation.tps);
-    this.gestionEtudiant = autreFormation.gestionEtudiant;  // Assurez-vous que GestionEtudiant a une méthode copier()
+    this.gestionEtudiant = autreFormation.gestionEtudiant; // Assurez-vous que GestionEtudiant a une méthode copier()
     this.tailleGroupeDirige = autreFormation.tailleGroupeDirige;
     this.tailleGroupePratique = autreFormation.tailleGroupePratique;
     this.NBoption = autreFormation.NBoption;
-}
+  }
 
 }
