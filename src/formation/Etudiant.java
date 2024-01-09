@@ -12,7 +12,7 @@ import java.util.*;
 public class Etudiant implements Serializable {
 	// ******************************* ATTRIBUT D'INSTANCES
 	private static final long serialVersionUID = -4629219965918701551L;
-	private final InformationPersonnelle informationPersonnelle;
+	private InformationPersonnelle informationPersonnelle;
     private final String motDePasse;
     private int numero;
     private int nbOption = -1;
@@ -172,6 +172,23 @@ public class Etudiant implements Serializable {
 				+ numero + ", nbOption=" + nbOption + ", numeroTp=" + numeroTp + ", numeroTd=" + numeroTd
 				+ ", listeUEsuivies=" + listeUEsuivies + ", messages=" + messages + "]";
 	}
-    
-    
+	
+	@Override
+    public Etudiant clone() throws CloneNotSupportedException {
+        Etudiant clone = (Etudiant) super.clone();
+
+        clone.informationPersonnelle = (InformationPersonnelle) this.informationPersonnelle.clone();
+
+        clone.listeUEsuivies.clear();
+        for (UniteEnseignement ue : this.listeUEsuivies) {
+            clone.listeUEsuivies.add((UniteEnseignement) ue.clone());
+        }
+
+        clone.messages.clear();
+        for (Message message : this.messages) {
+            clone.messages.add((Message) message.clone());
+        }
+
+        return clone;
+    }
 }

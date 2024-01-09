@@ -372,5 +372,21 @@ public class GestionEtudiant implements InterEtudiant, Serializable {
         return etudiantConnecte.getNumeroTd() != -1 && etudiantConnecte.getNumeroTp() != -1
                 && this.nombreOptions() == this.nombresOptionsChoisi();
     }
+    
+    @Override
+    public GestionEtudiant clone() throws CloneNotSupportedException {
+    	GestionEtudiant clone = (GestionEtudiant) super.clone();
 
+        clone.listeEtudiants.clear();
+        for (Etudiant etudiant : this.listeEtudiants) {
+            clone.listeEtudiants.add((Etudiant) etudiant.clone());
+        }
+
+        clone.listeUE.clear();
+        for (UniteEnseignement ue : this.listeUE) {
+            clone.listeUE.add((UniteEnseignement) ue.clone());
+        }
+
+        return clone;
+    }
 }
