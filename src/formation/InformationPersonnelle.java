@@ -183,4 +183,9 @@ public final class InformationPersonnelle implements Serializable {
   public String toString() {
     return prenom + " " + nom + " d'age " + age + " ans, habite " + adresse;
   }
+
+  @Override
+  protected Object clone() throws CloneNotSupportedException {
+    return super.clone();
+  }
 }
