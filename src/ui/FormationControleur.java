@@ -289,7 +289,7 @@ public class FormationControleur {
   @FXML
   void actionMenuSauvegarder(ActionEvent event) {
     try {
-      ges.sauvegarderDonnees("");
+      ges.sauvegarderDonnees("save");
     } catch (IOException e) {
       e.printStackTrace();
     }
