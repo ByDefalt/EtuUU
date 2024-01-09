@@ -430,7 +430,8 @@ public class GestionFormation implements InterGestionFormation {
    * @param message Le message à envoyer
    */
   public void envoyermessage(Etudiant etu, String message) {
-    Message mes = new Message(message);
+	String titre = message.substring(0, Math.min(message.length(), 20)) + "...";  
+    Message mes = new Message(titre, message);
     etu.getMessages().add(mes);
   }
 

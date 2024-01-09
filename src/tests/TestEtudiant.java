@@ -29,9 +29,12 @@ class TestEtudiant {
         this.ue1.setNbPlacesMax(30);
         this.ue2 = new UniteEnseignement("UE2", "Enseignant2");
         this.ue2.setNbPlacesMax(25);
+        
+        String titre1 = "message1".substring(0, Math.min("message1".length(), 20)) + "...";  
+        this.message1 = new Message(titre1, "message1");
+        String titre2 = "message2".substring(0, Math.min("message2".length(), 20)) + "...";
+        this.message2 = new Message(titre2, "message2");
 
-        this.message1 = new Message("Message1");
-        this.message2 = new Message("Message2");
 
         this.etudiant.addUE(ue1);
         this.etudiant.addUE(ue2);
