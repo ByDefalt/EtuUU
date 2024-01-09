@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 public final class MainInterfaceUtilisateur extends Application {
   
     GestionFormation ges = new GestionFormation();
+    private Stage fenetreEtudiants;
+    private Stage fenetreFormation;
   /**
    * Affiche la fen�tre de gestion des �tudiants.
    */
@@ -31,8 +33,9 @@ public final class MainInterfaceUtilisateur extends Application {
       Scene scene = new Scene(root, 920, 500);
 
       Stage stage = new Stage();
+      fenetreEtudiants=stage;
       stage.setResizable(true);
-      stage.setTitle("Gestion des �tudiants");
+      stage.setTitle("Gestion des étudiants");
 
       stage.setScene(scene);
       stage.show();
@@ -56,7 +59,9 @@ public final class MainInterfaceUtilisateur extends Application {
       FormationControleur formationControleur = fxmlLoader.getController();
       formationControleur.setGes(ges);
       Scene scene = new Scene(root, 930, 590);
-
+      fenetreFormation=primaryStage;
+      formationControleur.setFenetreEtudiants(fenetreEtudiants);
+      formationControleur.setFenetreFormation(fenetreFormation);
       primaryStage.setScene(scene);
       primaryStage.setResizable(true);
       primaryStage.setTitle("Gestion de formation");
@@ -71,8 +76,8 @@ public final class MainInterfaceUtilisateur extends Application {
   public void start(Stage primaryStage) {
 
     // Lancement des 2 fen�tres de l'application
-    this.startFenetreFormation(primaryStage);
     this.startFenetreEtudiants();
+    this.startFenetreFormation(primaryStage);
 
     // RAJOUTER ICI OU AVANT LE CODE POUR INSTANCIER
     // LES CLASSES DE VOTRE CODE

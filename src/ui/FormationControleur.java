@@ -26,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * Le contr�leur associ� � la fen�tre d�finie dans formation.fxml.
@@ -34,6 +35,15 @@ import javafx.stage.Stage;
  */
 public class FormationControleur {
   private GestionFormation ges;
+  private Stage fenetreEtudiants;
+  private Stage FenetreFormation;
+  public void setFenetreFormation(Stage FenetreFormation) {
+    this.FenetreFormation = FenetreFormation;
+  }
+
+  public void setFenetreEtudiants(Stage fenetreEtudiants) {
+    this.fenetreEtudiants = fenetreEtudiants;
+  }
 
   public void setGes(GestionFormation ges) {
     this.ges = ges;
@@ -231,26 +241,26 @@ public class FormationControleur {
   @FXML
   void actionMenuApropos(ActionEvent event) {
     Stage nouvelleFenetre = new Stage();
-        nouvelleFenetre.setTitle("Nouvelle Fenêtre");
+    nouvelleFenetre.setTitle("Nouvelle Fenêtre");
 
-        // Ajouter un Label pour le texte centré en haut
-        Label texteLabel = new Label("Auteurs : ROUSVAL ROMAIN et LE BRAS ERWAN");
-        
-        // Ajouter un bouton pour fermer la fenêtre centré en bas
-        Button fermerButton = new Button("Fermer la Fenêtre");
-        fermerButton.setOnAction(Event -> nouvelleFenetre.close());
+    // Ajouter un Label pour le texte centré en haut
+    Label texteLabel = new Label("Auteurs : ROUSVAL ROMAIN et LE BRAS ERWAN");
 
-        // Utiliser un VBox pour disposer les éléments verticalement
-        VBox layout = new VBox(10); // 10 pixels d'espace vertical entre les éléments
-        layout.getChildren().addAll(texteLabel, fermerButton);
-        
-        // Centrer les éléments dans le VBox
-        layout.setAlignment(javafx.geometry.Pos.CENTER);
+    // Ajouter un bouton pour fermer la fenêtre centré en bas
+    Button fermerButton = new Button("Fermer la Fenêtre");
+    fermerButton.setOnAction(Event -> nouvelleFenetre.close());
 
-        Scene scene = new Scene(layout, 300, 150);
-        nouvelleFenetre.setScene(scene);
+    // Utiliser un VBox pour disposer les éléments verticalement
+    VBox layout = new VBox(10); // 10 pixels d'espace vertical entre les éléments
+    layout.getChildren().addAll(texteLabel, fermerButton);
 
-        nouvelleFenetre.show();
+    // Centrer les éléments dans le VBox
+    layout.setAlignment(javafx.geometry.Pos.CENTER);
+
+    Scene scene = new Scene(layout, 300, 150);
+    nouvelleFenetre.setScene(scene);
+
+    nouvelleFenetre.show();
   }
 
   @FXML
@@ -260,9 +270,9 @@ public class FormationControleur {
 
   @FXML
   void actionMenuQuitter(ActionEvent event) {
-
+    fenetreEtudiants.close();
+    FenetreFormation.close();
   }
-
   @FXML
   void actionMenuSauvegarder(ActionEvent event) {
 
