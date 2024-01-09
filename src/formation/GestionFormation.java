@@ -27,7 +27,7 @@ import java.util.regex.Matcher;
  * 
  */
 
-public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable{
+public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable {
 
   /**
    * Le pattern d'un email
@@ -92,8 +92,12 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    *         </ul>
    */
   public boolean isValidEmail(String email) {
-    Matcher matcher = pattern.matcher(email);
-    return matcher.matches();
+    if (email != null) {
+      Matcher matcher = pattern.matcher(email);
+      return matcher.matches();
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -120,7 +124,9 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    * @param etu
    */
   public void setNbOptionEtudiant(Etudiant etu) {
-    etu.setNbOption(this.NBoption);
+    if (etu != null) {
+      etu.setNbOption(this.NBoption);
+    }
   }
 
   /**
@@ -209,10 +215,12 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public boolean ajouterEnseignementObligatoire(UniteEnseignement ue) {
-    if (!this.gestionEtudiant.getListeUE().contains(ue)) {
-      ue.setOptionnel(false);
-      this.gestionEtudiant.getListeUE().add(ue);
-      return true;
+    if (ue != null) {
+      if (!this.gestionEtudiant.getListeUE().contains(ue)) {
+        ue.setOptionnel(false);
+        this.gestionEtudiant.getListeUE().add(ue);
+        return true;
+      }
     }
     return false;
   }
@@ -228,13 +236,14 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    *         de probl�me
    */
   @Override
-  public boolean ajouterEnseignementOptionnel(UniteEnseignement ue,
-      int nbPlaces) {
-    if (!this.gestionEtudiant.getListeUE().contains(ue)) {
-      ue.setOptionnel(true);
-      ue.setNbPlacesMax(nbPlaces);
-      this.gestionEtudiant.getListeUE().add(ue);
-      return true;
+  public boolean ajouterEnseignementOptionnel(UniteEnseignement ue,int nbPlaces) {
+    if (ue != null) {
+      if (!this.gestionEtudiant.getListeUE().contains(ue)) {
+        ue.setOptionnel(true);
+        ue.setNbPlacesMax(nbPlaces);
+        this.gestionEtudiant.getListeUE().add(ue);
+        return true;
+      }
     }
     return false;
   }
@@ -248,7 +257,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public void definirNombreOptions(int nombre) {
-    if (this.NBoption == -1) {
+    if (this.NBoption == -1 && nombre>=1) {
       this.NBoption = nombre;
     }
   }
@@ -262,7 +271,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public void setTailleGroupeDirige(int taille) {
-    if (this.tailleGroupeDirige == -1) {
+    if (this.tailleGroupeDirige == -1 && taille>1) {
       this.tailleGroupeDirige = taille;
     }
   }
@@ -276,7 +285,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public void setTailleGroupePratique(int taille) {
-    if (this.tailleGroupePratique == -1) {
+    if (this.tailleGroupePratique == -1 && taille>1) {
       this.tailleGroupePratique = taille;
     }
   }

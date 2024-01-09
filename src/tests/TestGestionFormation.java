@@ -78,7 +78,6 @@ class TestGestionFormation {
     void testAtribuerAtaumatiquement() {
         for (int i = 0; i < 100; i++) {
             InformationPersonnelle inf = new InformationPersonnelle(i + "", i + "");
-            ;
             ges.getGestionEtudiant().inscription(inf, i + "");
         }
         ges.setTailleGroupeDirige(10);
