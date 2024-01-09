@@ -11,6 +11,9 @@ import java.util.*;
 public class Etudiant {
     // ******************************* ATTRIBUT D'INSTANCES
     private final InformationPersonnelle informationPersonnelle;
+    /*
+     * lo
+     */
     public InformationPersonnelle getInformationPersonnelle() {
         return informationPersonnelle;
     }

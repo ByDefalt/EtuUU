@@ -14,6 +14,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -21,6 +23,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * Le contr�leur associ� � la fen�tre d�finie dans formation.fxml.
@@ -225,7 +230,27 @@ public class FormationControleur {
 
   @FXML
   void actionMenuApropos(ActionEvent event) {
+    Stage nouvelleFenetre = new Stage();
+        nouvelleFenetre.setTitle("Nouvelle Fenêtre");
 
+        // Ajouter un Label pour le texte centré en haut
+        Label texteLabel = new Label("Auteurs : ROUSVAL ROMAIN et LE BRAS ERWAN");
+        
+        // Ajouter un bouton pour fermer la fenêtre centré en bas
+        Button fermerButton = new Button("Fermer la Fenêtre");
+        fermerButton.setOnAction(Event -> nouvelleFenetre.close());
+
+        // Utiliser un VBox pour disposer les éléments verticalement
+        VBox layout = new VBox(10); // 10 pixels d'espace vertical entre les éléments
+        layout.getChildren().addAll(texteLabel, fermerButton);
+        
+        // Centrer les éléments dans le VBox
+        layout.setAlignment(javafx.geometry.Pos.CENTER);
+
+        Scene scene = new Scene(layout, 300, 150);
+        nouvelleFenetre.setScene(scene);
+
+        nouvelleFenetre.show();
   }
 
   @FXML
@@ -262,7 +287,8 @@ public class FormationControleur {
       if (etu.getNumeroTp() != -1) {
         entreeGroupeTPEtudiant.setText(Integer.toString(etu.getNumeroTp()));
       }
-      if (etu.getNumeroTd() != -1 && etu.getNumeroTp() != -1 && etu.getNbOption() == ges.getNBoption()) {
+      if (etu.getNumeroTd() != -1 && etu.getNumeroTp() != -1
+          && etu.getListeUEsuivies().stream().filter(UniteEnseignement::getOptionnel).count() == ges.getNBoption()) {
         checkInscriptionFinalisee.setSelected(true);
       }
     }
