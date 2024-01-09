@@ -74,7 +74,7 @@ public class UniteEnseignement {
      * @param nomEnseignant Le nom de l'enseignant de l'Unité d'Enseignement.
      */
     public UniteEnseignement(String nomUE, String nomEnseignant) {
-        if (nomUE == null || nomEnseignant == null || !nomUE.isEmpty() || !nomEnseignant.isEmpty()) {
+        if (nomUE == null || nomEnseignant == null || nomUE.isEmpty() || nomEnseignant.isEmpty()) {
             throw new IllegalArgumentException("Les arguments ne peuvent pas être nuls ou vide");
         }
         this.nomUE = nomUE;

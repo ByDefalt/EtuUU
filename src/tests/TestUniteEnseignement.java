@@ -73,11 +73,36 @@ class TestInformationUniteEnseignement {
         assertEquals(ue.getNomEnseignant(), "richard");
         ue.setNomEnseignant("alex");
         assertEquals(ue.getNomEnseignant(), "alex");
+        ue.setNomEnseignant(null);
+        assertNotEquals(ue.getNomEnseignant(), null);
+        ue.setNomEnseignant("");
+        assertNotEquals(ue.getNomEnseignant(), "");
     }
     @Test
-    void testsetNomEnseignant(){
-        assertEquals(ue.getNomEnseignant(), "richard");
-        ue.setNomEnseignant("alex");
-        assertEquals(ue.getNomEnseignant(), "alex");
+    void testgetnbParticipant(){
+        assertEquals(ue.getnbParticipant(), 0);
+    }
+    @Test
+    void testsetnbParticipant(){
+        assertEquals(ue.getnbParticipant(), 0);
+        ue.setnbParticipant();
+        assertNotEquals(ue.getnbParticipant(), 1);
+        ue.setOptionnel(true);
+        ue.setnbParticipant();
+        assertEquals(ue.getnbParticipant(), 1);
+    }
+    @Test
+    void testhashCode(){
+        UniteEnseignement ue2=new UniteEnseignement("prog", "lk");
+        UniteEnseignement ue3=new UniteEnseignement("ocaml", "lk");
+        assertEquals(ue.hashCode(), ue2.hashCode());
+        assertNotEquals(ue.hashCode(), ue3.hashCode());
+    }
+    @Test
+    void testequals(){
+        UniteEnseignement ue2=new UniteEnseignement("prog", "lk");
+        UniteEnseignement ue3=new UniteEnseignement("ocaml", "lk");
+        assertTrue(ue.equals(ue2));
+        assertFalse(ue.equals(ue3));
     }
 }
