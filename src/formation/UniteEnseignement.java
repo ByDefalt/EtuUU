@@ -38,7 +38,7 @@ import java.util.Objects;
  * </p>
  * 
  */
-public class UniteEnseignement implements Serializable {
+public class UniteEnseignement implements Serializable,Cloneable {
 	
     /**
 	 * 
@@ -212,5 +212,10 @@ public class UniteEnseignement implements Serializable {
             return false;
         UniteEnseignement that = (UniteEnseignement) o;
         return Objects.equals(nomUE, that.nomUE);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

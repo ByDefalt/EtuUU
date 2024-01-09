@@ -95,4 +95,9 @@ public class Message implements Serializable {
     public void setLu() {
         this.lu = true;
     }
+    
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
