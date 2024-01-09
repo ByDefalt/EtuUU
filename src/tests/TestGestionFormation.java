@@ -30,12 +30,67 @@ class TestGestionFormation {
     }
 
     @Test
-    void testConstructeur() {
+    void testConstructeur1() {
         GestionFormation ges2 = new GestionFormation();
         ges2.creerFormation("L3IFA", "jsp", "jsp@gmail.com");
         assertTrue(ges2.getNomFormation() == "L3IFA");
         assertTrue(ges2.getNomResponsableFormation() == "jsp");
         assertTrue(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
+    }
+
+    @Test
+    void testConstructeur2() {
+        GestionFormation ges2 = new GestionFormation();
+        ges2.creerFormation("", "jsp", "jsp@gmail.com");
+        assertTrue(ges2.getNomFormation() == null);
+        assertFalse(ges2.getNomResponsableFormation() == "jsp");
+        assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
+    }
+
+    @Test
+    void testConstructeur3() {
+        GestionFormation ges2 = new GestionFormation();
+        ges2.creerFormation(null, "jsp", "jsp@gmail.com");
+        assertTrue(ges2.getNomFormation() == null);
+        assertFalse(ges2.getNomResponsableFormation() == "jsp");
+        assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
+    }
+
+    @Test
+    void testConstructeur4() {
+        GestionFormation ges2 = new GestionFormation();
+        ges2.creerFormation("L3IFA", "", "jsp@gmail.com");
+        assertTrue(ges2.getNomFormation() == null);
+        assertFalse(ges2.getNomResponsableFormation() == "jsp");
+        assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
+    }
+    @Test
+    void testConstructeur5() {
+        GestionFormation ges2 = new GestionFormation();
+        ges2.creerFormation("L3IFA", null, "jsp@gmail.com");
+        assertTrue(ges2.getNomFormation() == null);
+        assertFalse(ges2.getNomResponsableFormation() == "jsp");
+        assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
+    }
+    @Test
+    void testConstructeur6() {
+        GestionFormation ges2 = new GestionFormation();
+        ges2.creerFormation("L3IFA", "fds", "");
+        assertTrue(ges2.getNomFormation() == null);
+        assertFalse(ges2.getNomResponsableFormation() == "jsp");
+        assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
+    }
+    @Test
+    void testConstructeur7() {
+        GestionFormation ges2 = new GestionFormation();
+        ges2.creerFormation("L3IFA", "fds", null);
+        assertTrue(ges2.getNomFormation() == null);
+        assertFalse(ges2.getNomResponsableFormation() == "jsp");
+        assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
+        ges2.creerFormation("L3IFA", "ergr", "jhger");
+        assertTrue(ges2.getNomFormation() == null);
+        assertFalse(ges2.getNomResponsableFormation() == "jsp");
+        assertFalse(ges2.getEmailResponsableFormation() == "jsp@gmail.com");
     }
 
     @Test
@@ -166,10 +221,10 @@ class TestGestionFormation {
         ges.definirNombreOptions(5);
         UniteEnseignement ue = new UniteEnseignement("l", "l");
         assertTrue(ges.ajouterEnseignementOptionnel(ue, 12));
-        assertTrue(ges.listeEtudiantsOption(ue).size()==0);
+        assertTrue(ges.listeEtudiantsOption(ue).size() == 0);
         UniteEnseignement ue2 = new UniteEnseignement("m", "m");
         assertTrue(ges.ajouterEnseignementOptionnel(ue2, 10));
-        assertTrue(ges.listeEtudiantsOption(ue2).size()==0);
+        assertTrue(ges.listeEtudiantsOption(ue2).size() == 0);
         for (int i = 0; i < 50; i++) {
             ges.getGestionEtudiant().connexion(i, i + "");
             try {
@@ -190,11 +245,11 @@ class TestGestionFormation {
             e.printStackTrace();
         }
         try {
-                ges.getGestionEtudiant().deconnexion();
-            } catch (NonConnecteException e) {
-                e.printStackTrace();
-            }
-        assertTrue(ges.listeEtudiantsOption(ue2).size()==1);
-        assertTrue(ges.listeEtudiantsOption(ue).size()==12);
+            ges.getGestionEtudiant().deconnexion();
+        } catch (NonConnecteException e) {
+            e.printStackTrace();
+        }
+        assertTrue(ges.listeEtudiantsOption(ue2).size() == 1);
+        assertTrue(ges.listeEtudiantsOption(ue).size() == 12);
     }
 }
