@@ -1,5 +1,5 @@
 serialisation |
-clone	        |---> pour charger données/sauvgarder
+clone	      |---> pour charger données/sauvgarder
 comentaire des methodes et instances
 vérifier l'orthographe
 reverifier le code
