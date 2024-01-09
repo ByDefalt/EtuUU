@@ -606,8 +606,11 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
         if (objet instanceof GestionFormation) {
           GestionFormation objetCharge = (GestionFormation) objet;
           // Copier les propriétés de l'objet chargé dans l'instance courante
-          this.setPropriete1(objetCharge.getPropriete1());
-          this.setPropriete2(objetCharge.getPropriete2());
+          try {
+            this.copierDepuis(objetCharge);
+          } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+          }
           // Répétez cela pour toutes les propriétés de votre classe
           System.out.println("Données chargées avec succès depuis " + nomFichier);
         } else {
@@ -619,7 +622,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
     }
   }
 
-  public void copierDepuis(GestionFormation autreFormation) {
+  public void copierDepuis(GestionFormation autreFormation) throws CloneNotSupportedException {
     this.nomFormation = autreFormation.getNomFormation();
     this.nomResponsable = autreFormation.getNomResponsableFormation();
     this.email = autreFormation.getEmailResponsableFormation();
