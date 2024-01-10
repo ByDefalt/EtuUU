@@ -14,10 +14,30 @@ import java.util.Set;
  */
 public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
 	// ******************************* ATTRIBUT D'INSTANCES
+	
+	/**
+	 * Identifiant de sérialisation.
+	 */
 	private static final long serialVersionUID = -6680817996802511324L;
+	
+	/**
+	 * Le nombre d'étudiants.
+	 */
     private int nbEtudiant = 0;
+    
+    /**
+	 * La liste de tous les étudiants.
+	 */
     private final Set<Etudiant> listeEtudiants = new HashSet<>();
+    
+    /**
+	 * La liste de toutes les unités d'enseignements.
+	 */
     private Set<UniteEnseignement> listeUE = new HashSet<>();
+    
+    /**
+	 * L'etudiant connecté.
+	 */
     private Etudiant etudiantConnecte = null;
 
     /**
@@ -374,7 +394,9 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
     }
     
     /**
-     * @return une copie de l'objet.
+     * Crée et renvoie une copie en profondeur de l'instance courante.
+     * 
+     * @return une copie de l'instance courante.
      */
     @Override
     public GestionEtudiant clone() throws CloneNotSupportedException {

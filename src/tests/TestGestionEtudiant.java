@@ -8,31 +8,71 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Tests JUnit de la classe {@link formation.GestionEtudiant
- * GestionEtudiant}.
+ * Tests JUnit de la classe {@link formation.GestionEtudiant}.
+ *
+ * Cette classe contient des méthodes de test pour vérifier le bon fonctionnement
+ * des fonctionnalités de la classe {@link formation.GestionEtudiant}.
  *
  * @author LE BRAS Erwan
- * @see formation.GestionEtudiant
+ * @see formation.Message
  */
 class TestGestionEtudiant {
 
+	/**
+	 * Une Gestion Etudiant.
+	 */
     private GestionEtudiant gestionEtudiant;
+    
+    /**
+	 * Des informations Personnelles.
+	 */
     private InformationPersonnelle infoPerso1;
+    
+    /**
+	 * Une information Personnelle.
+	 */
     private InformationPersonnelle infoPerso2;
+    
+    /**
+     * Une liste d'unités d'enseignements.
+     */
     private final Set<UniteEnseignement> listeUE = new HashSet<>();
+    
+    /**
+     * Une liste d'unités d'enseignements obligatoire.
+     */
     private final Set<UniteEnseignement> listeUEO = new HashSet<>();
+    
+    /**
+     * Une liste d'unités d'enseignements optionnelle.
+     */
     private final Set<UniteEnseignement> listeUEF = new HashSet<>();
+    
+    /**
+	 * Une uniteEnseignement optionnelle.
+	 */
     private UniteEnseignement ue1;
+    
+    /**
+	 * Une uniteEnseignement optionnelle.
+	 */
     private UniteEnseignement ue2;
+    
+    /**
+	 * Une uniteEnseignement obligatoire.
+	 */
     private UniteEnseignement ue3;
+    
+    /**
+	 * Une uniteEnseignement obligatoire.
+	 */
+    private UniteEnseignement ue4;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -48,6 +88,10 @@ class TestGestionEtudiant {
         this.ue2.setNbPlacesMax(25);
         this.ue3 = new UniteEnseignement("UE3", "Enseignant3"); 
         this.ue3.setOptionnel(false);
+        this.ue3.setNbPlacesMax(26);
+        this.ue4 = new UniteEnseignement("UE3", "Enseignant3"); 
+        this.ue4.setOptionnel(false);
+        this.ue4.setNbPlacesMax(26);
 
         this.listeUE.add(this.ue1);
         this.listeUE.add(this.ue2);
