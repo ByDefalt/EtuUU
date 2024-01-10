@@ -103,6 +103,11 @@ public class Message implements Serializable, Cloneable {
         this.lu = true;
     }
 
+    /**
+     * Crée et renvoie une copie en profondeur de l'instance courante.
+     * 
+     * @return une copie de l'instance courante.
+     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();

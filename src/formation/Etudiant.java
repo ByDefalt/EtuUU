@@ -71,7 +71,7 @@ public class Etudiant implements Serializable,Cloneable {
     /**
      * Obtient le nombre d'options que l'étudiant doit choisir.
      *
-     * @return Le nombre d'options que l'étudiant doit choisir ou -1 si ce nombre n'a pas été défini.
+     * @return Le nombre d'options que l'étudiant doit choisir, il sera -1 si ce nombre n'a pas été défini.
      */
     public int getNbOption() {
         return nbOption;
@@ -168,7 +168,9 @@ public class Etudiant implements Serializable,Cloneable {
     }
 
     /**
-     * @return une copie de l'objet.
+     * Crée et renvoie une copie en profondeur de l'instance courante.
+     * 
+     * @return une copie de l'instance courante.
      */
 	@Override
     public Etudiant clone() throws CloneNotSupportedException {
@@ -190,7 +192,9 @@ public class Etudiant implements Serializable,Cloneable {
     }
 	
 	/**
-     * @return retourne une représentation graphique de l'objet.
+	 * Renvoie une représentation sous forme de chaîne de caractères de l'objet Etudiant.
+	 * 
+     * @return une représentation graphique de l'objet.
      */
 	@Override
 	public String toString() {

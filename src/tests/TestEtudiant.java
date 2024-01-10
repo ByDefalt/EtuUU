@@ -16,6 +16,9 @@ import java.util.Set;
 /**
  * Tests JUnit de la classe {@link formation.Etudiant
  * Etudiant}.
+ * 
+ * Cette classe contient des méthodes de test pour vérifier le bon fonctionnement
+ * des fonctionnalités de la classe {@link formation.Etudiant}.
  *
  * @author LE BRAS Erwan
  * @see formation.Etudiant
@@ -26,26 +29,32 @@ class TestEtudiant {
 	 * Un étudiant.
 	 */
     private Etudiant etudiant;
+    
     /**
 	 * Un message.
 	 */
     private Message message1;
+    
     /**
 	 * Un message.
 	 */
     private Message message2;
+    
     /**
 	 * Une uniteEnseignement optionnelle.
 	 */
     private UniteEnseignement ue1;
+    
     /**
 	 * Une uniteEnseignement optionnelle.
 	 */
     private UniteEnseignement ue2;
+    
     /**
 	 * Une uniteEnseignement obligatoire.
 	 */
     private UniteEnseignement ue3;
+    
     /**
 	 * Une uniteEnseignement obligatoire.
 	 */
@@ -83,11 +92,15 @@ class TestEtudiant {
         this.etudiant.getMessages().add(message2);
     }
 
+    /**
+     * Méthode de nettoyage après chaque test.
+     */
     @AfterEach
     void tearDown() {
     }
 
     /**
+     * Test de la méthode {@link Etudiant#setNumero(int)} et {@link Etudiant#getNumero()}.
      * Vérifie que l'on peut positionner le numero 123.
      */
     @Test
@@ -97,6 +110,7 @@ class TestEtudiant {
     }
 
     /**
+     * Test de la méthode {@link Etudiant#setNbOption(int)} et {@link Etudiant#getNbOption()}.
      * Vérifie que l'on peut positionner le nombre d'options à 2.
      */
     @Test
@@ -106,6 +120,7 @@ class TestEtudiant {
     }
 
     /**
+     * Test de la méthode {@link Etudiant#setNumeroTp(int)} et {@link Etudiant#getNumeroTp()}.
      * Vérifie que l'on peut positionner le numero de Tp à 1.
      */
     @Test
@@ -115,7 +130,8 @@ class TestEtudiant {
     }
 
     /**
-     * Vérifie que l'on peut positionner le numero de Tp à 3.
+     * Test de la méthode {@link Etudiant#setNumeroTd(int)} et {@link Etudiant#getNumeroTd()}.
+     * Vérifie que l'on peut positionner le numero de Td à 3.
      */
     @Test
     void testNumeroTd() {
@@ -124,6 +140,7 @@ class TestEtudiant {
     }
 
     /**
+     * Test de la méthode {@link Etudiant#addUE(UniteEnseignement)}.
      * Vérifie que l'on peut ajouter une ue optionnelle.
      */
     @Test
@@ -133,7 +150,8 @@ class TestEtudiant {
     }
     
     /**
-     * Vérifie que l'on peut ajouter une ue obliagtoire.
+     * Test de la méthode {@link Etudiant#addUE(UniteEnseignement)}.
+     * Vérifie que l'on peut ajouter une ue obligatoire.
      */
     @Test
     void testAddUEObligatoire() {
@@ -142,6 +160,7 @@ class TestEtudiant {
     }
     
     /**
+     * Test de la méthode {@link Etudiant#getListeUEsuivies()}.
      * Vérifie que l'on récupère bien toutes les ue suivies d'un etudiant.
      */
     @Test
@@ -153,6 +172,7 @@ class TestEtudiant {
     }
 
     /**
+     * Test de la méthode {@link Etudiant#getMessages()}.
      * Vérifie que l'on récupère bien tout les messages d'un etudiant.
      */
     @Test
@@ -164,7 +184,10 @@ class TestEtudiant {
     }
     
     /**
+     * Test de la méthode {@link Etudiant#clone()}.
      * Vérifie que l'on clone bien l'objet etudiant et que la méthode equals fonctionne.
+     * 
+     * @throws CloneNotSupportedException si le clone n'est pas pris en charge.
      */
     @Test
     void testClone() throws CloneNotSupportedException {
