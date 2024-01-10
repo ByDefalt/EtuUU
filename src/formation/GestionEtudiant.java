@@ -21,8 +21,20 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     // ******************************* ATTRIBUT D'INSTANCES
     private static final long serialVersionUID = -6680817996802511324L;
     private int nbEtudiant = 0;
+    
+    /**
+	 * La liste de tous les étudiants.
+	 */
     private final Set<Etudiant> listeEtudiants = new HashSet<>();
+    
+    /**
+	 * La liste de toutes les unités d'enseignements.
+	 */
     private Set<UniteEnseignement> listeUE = new HashSet<>();
+    
+    /**
+	 * L'etudiant connecté.
+	 */
     private Etudiant etudiantConnecte = null;
 
     /**
@@ -77,7 +89,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     }
 
     /**
-     * D�connecte l'�tudiant actuellement connect� au syst�me.
+     * Déconnecte l'étudiant actuellement connecté au systéme.
      *
      * @throws NonConnecteException si aucun �tudiant n'�tait connect�
      */
@@ -104,7 +116,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     }
 
     /**
-     * L'ensemble des étudiants de l'ann�e de formation.
+     * L'ensemble des étudiants de l'année de formation.
      *
      * @return l'ensemble des étudiants
      */
@@ -113,7 +125,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     }
 
     /**
-     * L'ensemble des unit�s d'enseignement obligatoires de l'ann�e de formation.
+     * L'ensemble des unités d'enseignement obligatoires de l'année de formation.
      *
      * @return l'ensemble des UE obligatoires
      */
@@ -129,7 +141,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     }
 
     /**
-     * L'ensemble des unit�s d'enseignement optionnelles de l'ann�e de formation.
+     * L'ensemble des unités d'enseignement optionnelles de l'année de formation.
      *
      * @return l'ensemble des UE optionnelles
      */
@@ -145,7 +157,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     }
 
     /**
-     * L'ensemble des unit�s d'enseignement l'ann�e de formation.
+     * L'ensemble des unités d'enseignement l'année de formation.
      *
      * @return l'ensemble des UE
      */
@@ -164,7 +176,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     }
 
     /**
-     * Retourne le nombre d'options que l'�tudiant doit choisir au total.
+     * Retourne le nombre d'options que l'étudiant doit choisir au total.
      *
      * @return le nombre d'options que l'�tudiant doit choisir ou -1 si ce nombre
      *         n'a pas �t� encore d�fini.
@@ -219,7 +231,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
      * Renvoie le nombre d'options choisi par l'étudiant.
      *
      * @return le nombre d'options choisi par l'étudiant
-     * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
+     * @throws NonConnecteException si la méthode est appelée alors que l'�tudiant
      *                              n'est pas connect�
      */
     public int nombresOptionsChoisi() throws NonConnecteException {
@@ -234,7 +246,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     }
 
     /**
-     * Renvoie le num�ro de groupe de TD de l'�tudiant s'il a �t� d�fini.
+     * Renvoie le numéro de groupe de TD de l'étudiant s'il a été défini.
      *
      * @return le num�ro de groupe de TD s'il a �t� d�fini ou -1 si �a n'est pas
      *         encore le cas
@@ -379,7 +391,9 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     }
 
     /**
-     * @return une copie de l'objet.
+     * Crée et renvoie une copie en profondeur de l'instance courante.
+     * 
+     * @return une copie de l'instance courante.
      */
     @Override
     public GestionEtudiant clone() throws CloneNotSupportedException {

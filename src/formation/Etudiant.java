@@ -4,21 +4,57 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Les fonctionnalit�s offertes � un �tudiant.
+ * Les fonctionnalités offertes à un étudiant.
  *
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
-public class Etudiant implements Serializable, Cloneable {
-    // ******************************* ATTRIBUT D'INSTANCES
-    private static final long serialVersionUID = -4629219965918701551L;
-    private InformationPersonnelle informationPersonnelle;
+public class Etudiant implements Serializable,Cloneable {
+	// ******************************* ATTRIBUT D'INSTANCES
+	
+	/**
+	 * Identifiant de sérialisation.
+	 */
+	private static final long serialVersionUID = -4629219965918701551L;
+	
+	/**
+	 * Les informations personnelle.
+	 */
+	private InformationPersonnelle informationPersonnelle;
+	
+	/**
+	 * Le mot de passe.
+	 */
     private final String motDePasse;
+    
+    /**
+     * Le numero.
+     */
     private int numero;
+    
+    /**
+     * Le nombre d'options
+     */
     private int nbOption = -1;
+    
+    /**
+     * Le numéro de Tp.
+     */
     private int numeroTp = -1;
+    
+    /**
+     * Le numéro de Td.
+     */
     private int numeroTd = -1;
+    
+    /**
+     * La liste des enseignements suivies.
+     */
     private final Set<UniteEnseignement> listeUEsuivies = new HashSet<>();
+    
+    /**
+     * La liste des messages.
+     */
     private final List<Message> messages = new ArrayList<>();
 
     /**
@@ -72,8 +108,7 @@ public class Etudiant implements Serializable, Cloneable {
     /**
      * Obtient le nombre d'options que l'étudiant doit choisir.
      *
-     * @return Le nombre d'options que l'étudiant doit choisir ou -1 si ce nombre
-     *         n'a pas été défini.
+     * @return Le nombre d'options que l'étudiant doit choisir, il sera -1 si ce nombre n'a pas été défini.
      */
     public int getNbOption() {
         return nbOption;
@@ -170,7 +205,9 @@ public class Etudiant implements Serializable, Cloneable {
     }
 
     /**
-     * @return une copie de l'objet.
+     * Crée et renvoie une copie en profondeur de l'instance courante.
+     * 
+     * @return une copie de l'instance courante.
      */
     @Override
     public Etudiant clone() throws CloneNotSupportedException {
