@@ -172,9 +172,12 @@ public class Etudiant implements Serializable,Cloneable {
      * Ajoute une unité d'enseignement à la liste des UE suivies par l'étudiant.
      *
      * @param ue L'unité d'enseignement à ajouter.
+     * 
+     * @return true si l'ue a été ajouté false sinon.
      */
-    public void addUE(UniteEnseignement ue) {
-        this.listeUEsuivies.add(ue);
+    public boolean addUE(UniteEnseignement ue) {
+    	boolean res = this.listeUEsuivies.add(ue);
+        return res;
     }
 
     /**
@@ -190,7 +193,7 @@ public class Etudiant implements Serializable,Cloneable {
      * Vérifie l'égalité d'un objet.
      *
      * @param obj l'objet à vérifier.
-     * @return true si c'est l'étudiant sinon false.
+     * @return true si l'objet est l'instance courante sinon false.
      */
     @Override
     public boolean equals(Object obj) {
@@ -229,7 +232,9 @@ public class Etudiant implements Serializable,Cloneable {
     }
 
     /**
-     * @return retourne une représentation graphique de l'objet.
+     * Renvoie une représentation sous forme de chaîne de caractères de l'instance courante.
+     * 
+     * @return retourne une représentation graphique de l'instance courante.
      */
     @Override
     public String toString() {

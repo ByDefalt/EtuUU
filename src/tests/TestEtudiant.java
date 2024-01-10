@@ -96,8 +96,7 @@ class TestEtudiant {
      * Méthode de nettoyage après chaque test.
      */
     @AfterEach
-    void tearDown() {
-    }
+    void tearDown() { }
 
     /**
      * Test de la méthode {@link Etudiant#setNumero(int)} et {@link Etudiant#getNumero()}.
@@ -196,4 +195,5 @@ class TestEtudiant {
     	assertTrue(this.etudiant.equals(clone));
     }
 }
+
 

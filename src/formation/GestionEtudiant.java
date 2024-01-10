@@ -132,12 +132,14 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     @Override
     public Set<UniteEnseignement> enseignementsObligatoires() {
         Set<UniteEnseignement> uniteEnseignementsO = new HashSet<>();
-        for (UniteEnseignement ue : this.listeUE)
+        for (UniteEnseignement ue : this.listeUE) {
             if (!ue.getOptionnel()) {
                 uniteEnseignementsO.add(ue);
             }
+        }
 
         return uniteEnseignementsO;
+        
     }
 
     /**
@@ -148,10 +150,11 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     @Override
     public Set<UniteEnseignement> enseignementsOptionnels() {
         Set<UniteEnseignement> uniteEnseignementsF = new HashSet<>();
-        for (UniteEnseignement ue : this.listeUE)
+        for (UniteEnseignement ue : this.listeUE) {
             if (ue.getOptionnel()) {
                 uniteEnseignementsF.add(ue);
             }
+        }
 
         return uniteEnseignementsF;
     }
@@ -220,9 +223,12 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
             throw new NonConnecteException();
         }
         if (ue.getnbParticipant() < ue.getNbPlacesMax() && ue.getOptionnel()) {
-            this.etudiantConnecte.addUE(ue);
-            ue.setnbParticipant();
-            return true;
+            boolean res = this.etudiantConnecte.addUE(ue);
+            if(res) {
+            	ue.setnbParticipant();
+            	return true;
+            }
+            return false;
         }
         return false;
     }
@@ -411,12 +417,12 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
         }
     }
 
-    @Override
-    public String toString() {
-        return "GestionEtudiant [nbEtudiant=" + nbEtudiant + ", listeEtudiants=" + listeEtudiants + ", listeUE="
-                + listeUE + ", etudiantConnecte=" + etudiantConnecte + "]";
-    }
-
+    /**
+     * Vérifie l'égalité d'un objet.
+     *
+     * @param obj l'objet à vérifier.
+     * @return true si l'objet est l'instance courante sinon false.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -444,6 +450,17 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
         } else if (!etudiantConnecte.equals(other.etudiantConnecte))
             return false;
         return true;
+    }
+    
+    /**
+     * Renvoie une représentation sous forme de chaîne de caractères de l'instance courante.
+     * 
+     * @return retourne une représentation graphique de l'instance courante.
+     */
+    @Override
+    public String toString() {
+        return "GestionEtudiant [nbEtudiant=" + nbEtudiant + ", listeEtudiants=" + listeEtudiants + ", listeUE="
+                + listeUE + ", etudiantConnecte=" + etudiantConnecte + "]";
     }
 
 }
