@@ -3,12 +3,15 @@ package formation;
 import java.io.Serializable;
 
 /**
- * Cette classe représente un message avec un titre, un contenu, et un statut de lecture.
- * Les fonctionnalités offertes pour un message incluent la récupération du titre et du contenu,
+ * Cette classe représente un message avec un titre, un contenu, et un statut de
+ * lecture.
+ * Les fonctionnalités offertes pour un message incluent la récupération du
+ * titre et du contenu,
  * ainsi que la vérification et la modification du statut de lecture.
  *
  * <p>
  * Exemple d'utilisation :
+ * 
  * <pre>{@code
  * // Création d'un message
  * Message monMessage = new Message("Nouvelle notification", "Vous avez un nouveau message.");
@@ -28,14 +31,14 @@ import java.io.Serializable;
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
-public class Message implements Serializable,Cloneable {
+public class Message implements Serializable, Cloneable {
 
     /**
-	 * Identifiant de s�rialisation.
-	 */
-	private static final long serialVersionUID = 6196868605030678324L;
+     * Identifiant de s�rialisation.
+     */
+    private static final long serialVersionUID = 6196868605030678324L;
 
-	/**
+    /**
      * Le titre du message.
      */
     private final String titre;
@@ -53,13 +56,17 @@ public class Message implements Serializable,Cloneable {
     /**
      * Constructeur de la classe Message.
      *
-     * @param titre    Le titre du message.
-     * @param contenu  Le contenu du message.
+     * @param titre   Le titre du message.
+     * @param contenu Le contenu du message.
      */
     public Message(String titre, String contenu) {
-        this.titre = titre;
-        this.contenu = contenu;
-        this.lu = false;
+        if (titre != null && !titre.isEmpty() && contenu != null && !contenu.isEmpty()) {
+            this.titre = titre;
+            this.contenu = contenu;
+            this.lu = false;
+        }else{
+            throw new IllegalArgumentException("Les arguments ne peuvent pas être nuls ou vide");
+        }
     }
 
     /**
@@ -95,7 +102,7 @@ public class Message implements Serializable,Cloneable {
     public void setLu() {
         this.lu = true;
     }
-    
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
