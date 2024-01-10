@@ -16,6 +16,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -132,46 +134,76 @@ public class FormationControleur {
 
   @FXML
   void actionBoutonAffectationAutomatique(ActionEvent event) {
-    ges.attribuerAutomatiquementGroupes();
-    labelNbGroupesTD.setText(Integer.toString(ges.nombreGroupesTravauxDiriges()));
-    labelNbGroupesTP.setText(Integer.toString(ges.nombreGroupesTravauxPratiques()));
+    if (ges.getNomFormation() != null) {
+      ges.attribuerAutomatiquementGroupes();
+      labelNbGroupesTD.setText(Integer.toString(ges.nombreGroupesTravauxDiriges()));
+      labelNbGroupesTP.setText(Integer.toString(ges.nombreGroupesTravauxPratiques()));
+    } else {
+      this.afficherPopup("Aucune Formation", AlertType.ERROR);
+    }
   }
 
   @FXML
   void actionBoutonAffectationManuelleGroupes(ActionEvent event) {
-    Etudiant etu = ges.getGestionEtudiant().getListeEtudiants().stream()
-        .filter(etudiant -> Integer.toString(etudiant.getNumero())
-            .equals(listeEtudiants.getSelectionModel().getSelectedItem()))
-        .findFirst()
-        .orElse(null);
-    ges.changerGroupe(
-        etu,
-        Integer.parseInt(entreeGroupeTDEtudiant.getText()),
-        Integer.parseInt(entreeGroupeTPEtudiant.getText()));
+    if (ges.getNomFormation() != null) {
+      Etudiant etu = ges.getGestionEtudiant().getListeEtudiants().stream()
+          .filter(etudiant -> Integer.toString(etudiant.getNumero())
+              .equals(listeEtudiants.getSelectionModel().getSelectedItem()))
+          .findFirst()
+          .orElse(null);
+      ges.changerGroupe(
+          etu,
+          Integer.parseInt(entreeGroupeTDEtudiant.getText()),
+          Integer.parseInt(entreeGroupeTPEtudiant.getText()));
+    } else {
+      this.afficherPopup("Aucune Formation", AlertType.ERROR);
+    }
   }
 
   @FXML
   void actionBoutonAfficherEtudiantsGroupeTD(ActionEvent event) {
-    ObservableList<String> observableEtudiants = FXCollections.observableArrayList(
-        Optional.ofNullable(ges.listeEtudiantsGroupeDirige(Integer.parseInt(entreeGroupeTDEtudiant.getText())))
-            .map(liste -> liste.stream()
-                .map(etudiant -> Integer.toString(etudiant.getNumero()))
-                .collect(Collectors.toList()))
-            .orElse(Collections.emptyList()));
-    listeEtudiants.setItems(observableEtudiants);
-    labelListeEtudiants.setText("Les étudiants du groupe de TD " + entreeGroupeTDEtudiant.getText());
+    if (ges.getNomFormation() != null) {
+      ObservableList<String> observableEtudiants = FXCollections.observableArrayList(
+          Optional.ofNullable(ges.listeEtudiantsGroupeDirige(Integer.parseInt(entreeGroupeTDEtudiant.getText())))
+              .map(liste -> liste.stream()
+                  .map(etudiant -> Integer.toString(etudiant.getNumero()))
+                  .collect(Collectors.toList()))
+              .orElse(Collections.emptyList()));
+      listeEtudiants.setItems(observableEtudiants);
+      labelListeEtudiants.setText("Les étudiants du groupe de TD " + entreeGroupeTDEtudiant.getText());
+    } else {
+      this.afficherPopup("Aucune Formation", AlertType.ERROR);
+    }
   }
 
   @FXML
   void actionBoutonAfficherEtudiantsGroupeTP(ActionEvent event) {
-    ObservableList<String> observableEtudiants = FXCollections.observableArrayList(
-        Optional.ofNullable(ges.listeEtudiantsGroupePratique(Integer.parseInt(entreeGroupeTPEtudiant.getText())))
-            .map(liste -> liste.stream()
-                .map(etudiant -> Integer.toString(etudiant.getNumero()))
-                .collect(Collectors.toList()))
-            .orElse(Collections.emptyList()));
-    listeEtudiants.setItems(observableEtudiants);
-    labelListeEtudiants.setText("Les étudiants du groupe de TP " + entreeGroupeTPEtudiant.getText());
+    if (ges.getNomFormation() != null) {
+      if (entreeGroupeTPEtudiant.getText() != null && !entreeGroupeTPEtudiant.getText().isEmpty()) {
+        try {
+          int a = Integer.parseInt(entreeGroupeTPEtudiant.getText());
+          if (a > 0 && a <= ges.nombreGroupesTravauxPratiques()) {
+            ObservableList<String> observableEtudiants = FXCollections.observableArrayList(
+                Optional
+                    .ofNullable(ges.listeEtudiantsGroupePratique(a))
+                    .map(liste -> liste.stream()
+                        .map(etudiant -> Integer.toString(etudiant.getNumero()))
+                        .collect(Collectors.toList()))
+                    .orElse(Collections.emptyList()));
+            listeEtudiants.setItems(observableEtudiants);
+            labelListeEtudiants.setText("Les étudiants du groupe de TP " + entreeGroupeTPEtudiant.getText());
+          }else{
+            this.afficherPopup("Le groupe n'existe pas, les groupe existant son compris entre 1 et "+ ges.nombreGroupesTravauxPratiques(), AlertType.ERROR);
+          }
+        } catch (NumberFormatException e) {
+          this.afficherPopup("Le champ doit être un entier", AlertType.ERROR);
+        }
+      } else {
+        this.afficherPopup("Le champ est vide", AlertType.ERROR);
+      }
+    } else {
+      this.afficherPopup("Aucune Formation", AlertType.ERROR);
+    }
   }
 
   @FXML
@@ -186,18 +218,25 @@ public class FormationControleur {
           .map(etudiant -> Integer.toString(etudiant.getNumero()))
           .collect(Collectors.toSet()));
       listeEtudiants.setItems(observableEtudiants);
-      labelListeEtudiants.setText("Les étudiants inscrits à " + listeUEOptionnelles.getSelectionModel().getSelectedItem());
+      labelListeEtudiants
+          .setText("Les étudiants inscrits à " + listeUEOptionnelles.getSelectionModel().getSelectedItem());
+    } else {
+      this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
 
   @FXML
   void actionBoutonAfficherTousEtudiants(ActionEvent event) {
-    ObservableList<String> observableEtudiants = FXCollections
-        .observableArrayList(ges.getGestionEtudiant().getListeEtudiants().stream()
-            .map(etudiant -> Integer.toString(etudiant.getNumero()))
-            .collect(Collectors.toList()));
-    listeEtudiants.setItems(observableEtudiants);
-    labelListeEtudiants.setText("Tous les étudiants de la formation");
+    if (ges.getNomFormation() != null) {
+      ObservableList<String> observableEtudiants = FXCollections
+          .observableArrayList(ges.getGestionEtudiant().getListeEtudiants().stream()
+              .map(etudiant -> Integer.toString(etudiant.getNumero()))
+              .collect(Collectors.toList()));
+      listeEtudiants.setItems(observableEtudiants);
+      labelListeEtudiants.setText("Tous les étudiants de la formation");
+    } else {
+      this.afficherPopup("Aucune Formation", AlertType.ERROR);
+    }
   }
 
   @FXML
@@ -223,28 +262,64 @@ public class FormationControleur {
       entreeGroupeTDEtudiant.setText("");
       entreeGroupeTPEtudiant.setText("");
       checkInscriptionFinalisee.setSelected(false);
+    } else {
+      if (entreeNomResponsableFormation.getText() == null || entreeEmailResponsableFormation.getText().isEmpty()) {
+        this.afficherPopup("Les champs nécessaire ne sont pas tous remplis !", AlertType.ERROR);
+      } else {
+        this.afficherPopup("Le champ Email est incorecte !", AlertType.ERROR);
+      }
     }
   }
 
   @FXML
   void actionBoutonNombreChoixOptions(ActionEvent event) {
     if (ges.getNomFormation() != null) {
-      ges.definirNombreOptions(Integer.parseInt(entreeNombreChoixOptions.getText()));
-      ges.getGestionEtudiant().getListeEtudiants().forEach(etudiant -> ges.setNbOptionEtudiant(etudiant));
+      if (entreeNombreChoixOptions.getText() != null && !entreeNombreChoixOptions.getText().isEmpty()) {
+        try {
+          ges.definirNombreOptions(Integer.parseInt(entreeNombreChoixOptions.getText()));
+          ges.getGestionEtudiant().getListeEtudiants().forEach(etudiant -> ges.setNbOptionEtudiant(etudiant));
+        } catch (NumberFormatException e) {
+          this.afficherPopup("Le champ est incorecte !", AlertType.ERROR);
+        }
+      } else {
+        this.afficherPopup("Le champ est vide !", AlertType.ERROR);
+      }
+    } else {
+      this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
 
   @FXML
   void actionBoutonSetTailleGroupeTD(ActionEvent event) {
     if (ges.getNomFormation() != null) {
-      ges.setTailleGroupeDirige(Integer.parseInt(entreeTailleGroupeTD.getText()));
+      if (entreeTailleGroupeTD.getText() != null && !entreeTailleGroupeTD.getText().isEmpty()) {
+        try {
+          ges.setTailleGroupeDirige(Integer.parseInt(entreeTailleGroupeTD.getText()));
+        } catch (NumberFormatException e) {
+          this.afficherPopup("Le champ est incorecte !", AlertType.ERROR);
+        }
+      } else {
+        this.afficherPopup("Le champ est vide !", AlertType.ERROR);
+      }
+    } else {
+      this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
 
   @FXML
   void actionBoutonSetTailleGroupeTP(ActionEvent event) {
     if (ges.getNomFormation() != null) {
-      ges.setTailleGroupePratique(Integer.parseInt(entreeTailleGroupeTP.getText()));
+      if (entreeTailleGroupeTP.getText() != null && !entreeTailleGroupeTP.getText().isEmpty()) {
+        try {
+          ges.setTailleGroupePratique(Integer.parseInt(entreeTailleGroupeTP.getText()));
+        } catch (NumberFormatException e) {
+          this.afficherPopup("Le champ est incorecte !", AlertType.ERROR);
+        }
+      } else {
+        this.afficherPopup("Le champ est vide !", AlertType.ERROR);
+      }
+    } else {
+      this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
 
@@ -300,26 +375,28 @@ public class FormationControleur {
 
   @FXML
   void actionSelectionEtudiant(MouseEvent event) {
-    Etudiant etu = ges.getGestionEtudiant().getListeEtudiants().stream()
-        .filter(etudiant -> Integer.toString(etudiant.getNumero())
-            .equals(listeEtudiants.getSelectionModel().getSelectedItem()))
-        .findFirst()
-        .orElse(null);
-    if (etu != null) {
-      InformationPersonnelle info = etu.getInformationPersonnelle();
-      entreeNomEtudiant.setText(info.getNom());
-      entreePrenomEtudiant.setText(info.getPrenom());
-      entreeAdresseEtudiant.setText(info.getAdresse());
-      entreeAgeEtudiant.setText(Integer.toString(info.getAge()));
-      if (etu.getNumeroTd() != -1) {
-        entreeGroupeTDEtudiant.setText(Integer.toString(etu.getNumeroTd()));
-      }
-      if (etu.getNumeroTp() != -1) {
-        entreeGroupeTPEtudiant.setText(Integer.toString(etu.getNumeroTp()));
-      }
-      if (etu.getNumeroTd() != -1 && etu.getNumeroTp() != -1
-          && etu.getListeUEsuivies().stream().filter(UniteEnseignement::getOptionnel).count() == ges.getNBoption()) {
-        checkInscriptionFinalisee.setSelected(true);
+    if (ges.getNomFormation() != null) {
+      Etudiant etu = ges.getGestionEtudiant().getListeEtudiants().stream()
+          .filter(etudiant -> Integer.toString(etudiant.getNumero())
+              .equals(listeEtudiants.getSelectionModel().getSelectedItem()))
+          .findFirst()
+          .orElse(null);
+      if (etu != null) {
+        InformationPersonnelle info = etu.getInformationPersonnelle();
+        entreeNomEtudiant.setText(info.getNom());
+        entreePrenomEtudiant.setText(info.getPrenom());
+        entreeAdresseEtudiant.setText(info.getAdresse());
+        entreeAgeEtudiant.setText(Integer.toString(info.getAge()));
+        if (etu.getNumeroTd() != -1) {
+          entreeGroupeTDEtudiant.setText(Integer.toString(etu.getNumeroTd()));
+        }
+        if (etu.getNumeroTp() != -1) {
+          entreeGroupeTPEtudiant.setText(Integer.toString(etu.getNumeroTp()));
+        }
+        if (etu.getNumeroTd() != -1 && etu.getNumeroTp() != -1
+            && etu.getListeUEsuivies().stream().filter(UniteEnseignement::getOptionnel).count() == ges.getNBoption()) {
+          checkInscriptionFinalisee.setSelected(true);
+        }
       }
     }
   }
@@ -357,27 +434,48 @@ public class FormationControleur {
   @FXML
   void actionBoutonCreerNouvelleUE(ActionEvent event) {
     if (ges.getNomFormation() != null) {
-      UniteEnseignement ue = new UniteEnseignement(entreeNomUE.getText(), entreeNomResponsableUE.getText());
-      try {
-        if (radioBoutonObligatoire.isSelected()) {
-          if (ges.ajouterEnseignementObligatoire(ue)) {
-            listeUEObligatoires.getItems().add(ue.getNomUE());
+      if (entreeNomUE.getText() != null && !entreeNomUE.getText().isEmpty() && entreeNomResponsableUE.getText() != null
+          && !entreeNomResponsableUE.getText().isEmpty()) {
+        UniteEnseignement ue = new UniteEnseignement(entreeNomUE.getText(), entreeNomResponsableUE.getText());
+        try {
+          if (radioBoutonObligatoire.isSelected()) {
+            if (ges.ajouterEnseignementObligatoire(ue)) {
+              listeUEObligatoires.getItems().add(ue.getNomUE());
+            }
+          } else if (radioBoutonOptionnelle.isSelected()) {
+            int capaciteAccueil = Integer.parseInt(entreeCapaciteAccueil.getText());
+            if (ges.ajouterEnseignementOptionnel(ue, capaciteAccueil)) {
+              listeUEOptionnelles.getItems().add(ue.getNomUE());
+            }
           }
-        } else if (radioBoutonOptionnelle.isSelected()) {
-          int capaciteAccueil = Integer.parseInt(entreeCapaciteAccueil.getText());
-          if (ges.ajouterEnseignementOptionnel(ue, capaciteAccueil)) {
-            listeUEOptionnelles.getItems().add(ue.getNomUE());
-          }
+        } catch (NumberFormatException e) {
+          this.afficherPopup("La capacité d'accueil doit être un entier", AlertType.ERROR);
         }
-      } catch (NumberFormatException e) {
-        System.err.println("Erreur : La capacité d'accueil doit être un entier.");
+        entreeNomResponsableUE.setText("");
+        entreeCapaciteAccueil.setText("");
+        entreeNomUE.setText("");
+      } else {
+        this.afficherPopup("Les champs nécessaire ne sont pas tous remplis !", AlertType.ERROR);
       }
-      entreeNomResponsableUE.setText("");
-      entreeCapaciteAccueil.setText("");
-      entreeNomUE.setText("");
+    } else {
+      this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
 
+  private void afficherPopup(String message, AlertType type) {
+    Alert alert = new Alert(type);
+    if (type == AlertType.ERROR) {
+      alert.setTitle("Erreur");
+    } else {
+      alert.setTitle("Information");
+    }
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.setResizable(true);
+    alert.showAndWait();
+  }
+
+  // this.afficherPopup("Aucune Formation", AlertType.ERROR);
   @FXML
   void initialize() {
 

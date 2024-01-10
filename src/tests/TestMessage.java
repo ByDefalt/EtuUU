@@ -1,5 +1,6 @@
 package tests;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -38,14 +39,48 @@ class TestMessage {
     void tearDown() {
         // Ajoutez les nettoyages nécessaires après chaque test si nécessaire.
     }
-
+    /**
+     * Teste la méthode {@link formation.Message#getTitre()}.
+     */
+    @Test
+    public void testConstructeur() {
+        Message monMessage = new Message("Titre de test", "Contenu de test");
+        assertEquals("Titre de test", monMessage.getTitre());
+    }
+    /**
+     * Teste la méthode {@link formation.Message#getTitre()}.
+     */
+    @Test
+    public void testConstructeurTitrevide() {
+        assertThrows(IllegalArgumentException.class,()->new Message("", "Contenu de test"));
+    }
+    /**
+     * Teste la méthode {@link formation.Message#getTitre()}.
+     */
+    @Test
+    public void testConstructeurTitreNull() {
+        assertThrows(IllegalArgumentException.class,()->new Message(null, "Contenu de test"));
+    }
+    /**
+     * Teste la méthode {@link formation.Message#getTitre()}.
+     */
+    @Test
+    public void testConstructeurContenuVide() {
+        assertThrows(IllegalArgumentException.class,()->new Message("titre", ""));
+    }
+    /**
+     * Teste la méthode {@link formation.Message#getTitre()}.
+     */
+    @Test
+    public void testConstructeurContenuNull() {
+        assertThrows(IllegalArgumentException.class,()->new Message("titre", null));
+    }
     /**
      * Teste la méthode {@link formation.Message#getTitre()}.
      */
     @Test
     public void testGetTitre() {
-        Message monMessage = new Message("Titre de test", "Contenu de test");
-        assertEquals("Titre de test", monMessage.getTitre());
+        assertThrows(IllegalArgumentException.class,()->new Message("", "Contenu de test"));
     }
 
     /**
