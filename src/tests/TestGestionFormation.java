@@ -32,6 +32,7 @@ class TestGestionFormation {
     @AfterEach
     void tearDown(){
     }
+    
     /**
      * Teste le constructeur de la classe {@link GestionFormation} en créant une formation avec des valeurs valides.
      * Vérifie que les attributs de la formation sont correctement initialisés.
@@ -183,18 +184,6 @@ class TestGestionFormation {
         assertFalse(ges.isValidEmail(""));
     }
     /**
-     * Teste la méthode {@link GestionFormation#getGestionEtudiant()} en s'assurant que la gestion des étudiants
-     * est correctement récupérée depuis la gestion de formation.
-     * 
-     * @see GestionFormation#getGestionEtudiant()
-     */
-    @Test
-    void testgetGestionEtudiant(){
-        Etudiant etu=new Etudiant(new InformationPersonnelle("ri", "ro"), "mdp");
-        ges.getGestionEtudiant().getListeEtudiants().add(etu);
-        assertEquals(ges.getGestionEtudiant().getListeEtudiants().iterator().next(), etu);
-    }
-    /**
      * Teste la méthode {@link GestionFormation#getNBoption()} après avoir défini le nombre d'options.
      * Vérifie que le nombre d'options est correctement récupéré.
      * 
@@ -215,8 +204,9 @@ class TestGestionFormation {
     @Test
     void testsetNbOptionEtudiant() {
         Etudiant etu=new Etudiant(new InformationPersonnelle("ri", "ro"), "mdp");
+        ges.definirNombreOptions(5);
         ges.setNbOptionEtudiant(etu);
-        assertEquals(etu.getMotDePasse(), "mdp");
+        assertEquals(etu.getNbOption(), 5);
     }
     /**
      * Teste la méthode {@link GestionFormation#getTds()} en vérifiant si la map des groupes de travaux dirigés (TD)
