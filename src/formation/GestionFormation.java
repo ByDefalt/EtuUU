@@ -27,13 +27,13 @@ import java.util.regex.Matcher;
  * 
  */
 
-public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable,Cloneable {
-  
+public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable, Cloneable {
+
   /**
-	 * 
-	 */
-	private static final long serialVersionUID = 2231338258512306498L;
-/**
+   * 
+   */
+  private static final long serialVersionUID = 2231338258512306498L;
+  /**
    * Le pattern d'un email
    */
   private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -241,7 +241,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public boolean ajouterEnseignementOptionnel(UniteEnseignement ue, int nbPlaces) {
-    if (ue != null) {
+    if (ue != null && nbPlaces > 1) {
       if (!this.gestionEtudiant.getListeUE().contains(ue)) {
         ue.setOptionnel(true);
         ue.setNbPlacesMax(nbPlaces);
@@ -456,54 +456,51 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public int changerGroupe(Etudiant etudiant, int groupeDirige, int groupePratique) {
+    boolean td = false;
+    boolean tp = false;
     if (etudiant != null) {
-      int res = 0;
       int numgroupetp = etudiant.getNumeroTp();
       int numgroupetd = etudiant.getNumeroTd();
-      if (groupeDirige > 0) {
-        if (this.listeEtudiantsGroupeDirige(groupeDirige)
-            .size() < this.tailleGroupeDirige) {
-          if (numgroupetd != -1) {
-            this.listeEtudiantsGroupeDirige(numgroupetd).remove(etudiant);
-            this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
-            etudiant.setNumeroTd(groupeDirige);
-            this.envoyermessage(etudiant, "changement de groupe","changement de groupe :" + numgroupetd
-                + " ----> " + etudiant.getNumeroTd());
-          } else {
-            this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
-            etudiant.setNumeroTd(groupeDirige);
-            this.envoyermessage(etudiant, "nouveaux groupe","nouveaux groupe :" + groupeDirige);
+      if (groupeDirige != 0) {
+        if (groupeDirige > 0 && groupeDirige <= this.getTds().size()) {
+          if (this.listeEtudiantsGroupeDirige(groupeDirige).size() < this.tailleGroupeDirige) {
+            td = true;
+            if (numgroupetd != -1) {
+              this.listeEtudiantsGroupeDirige(numgroupetd).remove(etudiant);
+              this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
+              etudiant.setNumeroTd(groupeDirige);
+              this.envoyermessage(etudiant, "changement de groupe", "changement de groupe :" + numgroupetd
+                  + " ----> " + etudiant.getNumeroTd());
+            } else {
+              this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
+              etudiant.setNumeroTd(groupeDirige);
+              this.envoyermessage(etudiant, "nouveaux groupe", "nouveaux groupe :" + groupeDirige);
+            }
           }
-        } else {
-          res = -1;
         }
       }
 
-      if (groupePratique > 0) {
-        if (this.listeEtudiantsGroupePratique(groupePratique)
-            .size() < this.tailleGroupePratique) {
-          if (numgroupetp != -1) {
-            this.tps.get(numgroupetp).remove(etudiant);
-            this.tps.get(groupePratique).add(etudiant);
-            etudiant.setNumeroTp(groupePratique);
-            this.envoyermessage(etudiant,"changement de groupe" ,"changement de groupe :" + numgroupetp
-                + " ----> " + etudiant.getNumeroTp());
-          } else {
-            this.tps.get(groupePratique).add(etudiant);
-            etudiant.setNumeroTp(groupePratique);
-            this.envoyermessage(etudiant, "changement de groupe","nouveaux groupe :" + groupePratique);
-          }
-        } else {
-          if (res == -1) {
-            res = -3;
-          } else {
-            res = -2;
+      if (groupePratique != 0) {
+        if (groupePratique > 0 && groupePratique <= this.getTps().size()) {
+          if (this.listeEtudiantsGroupePratique(groupePratique).size() < this.tailleGroupePratique) {
+            tp = false;
+            if (numgroupetp != -1) {
+              this.tps.get(numgroupetp).remove(etudiant);
+              this.tps.get(groupePratique).add(etudiant);
+              etudiant.setNumeroTp(groupePratique);
+              this.envoyermessage(etudiant, "changement de groupe", "changement de groupe :" + numgroupetp
+                  + " ----> " + etudiant.getNumeroTp());
+            } else {
+              this.tps.get(groupePratique).add(etudiant);
+              etudiant.setNumeroTp(groupePratique);
+              this.envoyermessage(etudiant, "changement de groupe", "nouveaux groupe :" + groupePratique);
+            }
           }
         }
       }
-      return res;
     }
-    return -3;
+
+    return (td && tp) ? 0 : (!td && tp) ? -1 : (td && !tp) ? -2 : -3;
   }
 
   /**
@@ -512,7 +509,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    * @param etu     L'Étudiant à qui envoyer le message
    * @param message Le message à envoyer
    */
-  public void envoyermessage(Etudiant etu, String titre,String message) {
+  public void envoyermessage(Etudiant etu, String titre, String message) {
     if (etu != null && message != null && !message.isEmpty() && titre != null && !titre.isEmpty()) {
       Message mes = new Message(titre, message);
       etu.getMessages().add(mes);

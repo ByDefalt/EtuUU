@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
  * Cette classe contient des méthodes de test pour vérifier le bon fonctionnement
  * des fonctionnalités de la classe {@link formation.Message}.
  *
- * @author Eric Cariou
+ * @author ROUSVAL ROMAIN
  * @see formation.Message
  */
 class TestMessage {
