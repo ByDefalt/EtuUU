@@ -12,14 +12,22 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Les services de gestion d'une ann�e de formation.
+ * Les services de gestion d'un étudiant.
  *
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
 public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     // ******************************* ATTRIBUT D'INSTANCES
+	
+	/**
+	 * Identifiant de s�rialisation.
+	 */
     private static final long serialVersionUID = -6680817996802511324L;
+    
+    /**
+     * Le nombre d'étudiant
+     */
     private int nbEtudiant = 0;
     
     /**

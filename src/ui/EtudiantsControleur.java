@@ -3,7 +3,6 @@ package ui;
 import java.util.stream.Collectors;
 
 import formation.Etudiant;
-import formation.GestionEtudiant;
 import formation.GestionFormation;
 import formation.InformationPersonnelle;
 import formation.Message;
@@ -191,10 +190,10 @@ public class EtudiantsControleur {
             	}
             }
             if(resInscription != -1) {
-            	entreeNomEtudiant.setText("");
+            	/*entreeNomEtudiant.setText("");
             	entreePrenomEtudiant.setText("");
             	entreeAdresseEtudiant.setText("");
-            	entreeAgeEtudiant.setText("");
+            	entreeAgeEtudiant.setText("");*/
             	entreeNumeroEtudiant.setText(String.valueOf(resInscription));
             }
     	} else {
