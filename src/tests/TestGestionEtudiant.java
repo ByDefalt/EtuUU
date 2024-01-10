@@ -1,5 +1,6 @@
 package tests;
 
+import formation.Etudiant;
 import formation.GestionEtudiant;
 import formation.InformationPersonnelle;
 import formation.NonConnecteException;
@@ -25,9 +26,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestGestionEtudiant {
 
 	/**
-	 * Une Gestion Etudiant.
+	 * Une gestion d'étudiants.
 	 */
     private GestionEtudiant gestionEtudiant;
+    
+    /**
+     * Un numéro étudiant.
+     */
+    private int numero;
     
     /**
 	 * Des informations Personnelles.
@@ -74,78 +80,133 @@ class TestGestionEtudiant {
 	 */
     private UniteEnseignement ue4;
 
+    /**
+     * Instancie une gestion d'étudiants, différentes informations personnelles, divers unité ensignements, 
+     * la liste d'unité enseignement obligatoire et optionnelle.
+     *
+     */
     @BeforeEach
     void setUp() throws Exception {
         this.gestionEtudiant = new GestionEtudiant();
+        
         this.infoPerso1 = new InformationPersonnelle("Skywalker", "Luke");
         this.infoPerso2 = new InformationPersonnelle("Skywalker", "Luke", "Planète Tatooine", 20);
-
+        
+        // Initialisation des unités enseignements
         this.ue1 = new UniteEnseignement("UE1", "Enseignant1");
         this.ue1.setOptionnel(true);
-        this.ue1.setNbPlacesMax(30);
+        this.ue1.setNbPlacesMax(24);    
         this.ue2 = new UniteEnseignement("UE2", "Enseignant2");
         this.ue2.setOptionnel(true);
-        this.ue2.setNbPlacesMax(25);
+        this.ue2.setNbPlacesMax(25);      
         this.ue3 = new UniteEnseignement("UE3", "Enseignant3"); 
         this.ue3.setOptionnel(false);
         this.ue3.setNbPlacesMax(26);
-        this.ue4 = new UniteEnseignement("UE3", "Enseignant3"); 
+        this.ue4 = new UniteEnseignement("UE4", "Enseignant4"); 
         this.ue4.setOptionnel(false);
-        this.ue4.setNbPlacesMax(26);
+        this.ue4.setNbPlacesMax(27);
 
+        // Initialisation de la liste d'unité enseignement
         this.listeUE.add(this.ue1);
         this.listeUE.add(this.ue2);
         this.listeUE.add(this.ue3);
+        this.listeUE.add(this.ue4);
 
-        this.listeUEO.add(this.ue3);
+        // Initialisation de la liste d'unité enseignement obligatoire et optionnelle
         this.listeUEF.add(this.ue1);
         this.listeUEF.add(this.ue2);
+        this.listeUEO.add(this.ue3);
+        this.listeUEO.add(this.ue4);
 
         this.gestionEtudiant.setListeUE(listeUE);
-        this.gestionEtudiant.inscription(infoPerso1, "Sk1525mlds");
+        this.numero = gestionEtudiant.inscription(infoPerso1, "Sk1525mlds");
         this.gestionEtudiant.inscription(infoPerso2, "azerty");
     }
 
+    /**
+     * Méthode de nettoyage après chaque test.
+     */
     @AfterEach
-    void tearDown() throws Exception {
-    }
+    void tearDown() throws Exception { }
 
+    /**
+     * Test de la méthode inscription {@link GestionEtudiant#inscription(InformationPersonnelle, String)} avec des valeurs basiques.
+     * Vérifie que la méthode renvoie bien le numéro de l'étudiant crée.
+     * 
+     * @see GestionEtudiant#inscription(InformationPersonnelle, String)
+     */
     @Test
     void testInscriptionBasique() {
-        int inscription = this.gestionEtudiant.inscription(infoPerso1, "Sk1525mlds");
+        int inscription = this.gestionEtudiant.inscription(infoPerso1, "motDePasseDeLuke");
         assertEquals(2, inscription);
     }
 
+    /**
+     * Test de la méthode inscription {@link GestionEtudiant#inscription(InformationPersonnelle, String)} des informations personnelles null.
+     * Vérifie que la méthode renvoie bien -1.
+     * 
+     * @see GestionEtudiant#inscription(InformationPersonnelle, String)
+     */
     @Test
     void testInscriptionInfoPersoVide() {
         int inscription = this.gestionEtudiant.inscription(null, "Sk1525mlds");
         assertEquals(-1, inscription);
     }
 
+    /**
+     * Test de la méthode inscription {@link GestionEtudiant#inscription(InformationPersonnelle, String)} avec un mot de passe vide.
+     * Vérifie que la méthode renvoie bien -1.
+     * 
+     * @see GestionEtudiant#inscription(InformationPersonnelle, String)
+     */
     @Test
     void testInscriptionMotDePasseVide() {
         int inscription = this.gestionEtudiant.inscription(infoPerso1, "");
         assertEquals(-1, inscription);
     }
 
+    /**
+     * Test de la méthode connexion {@link GestionEtudiant#connexion(int, String)} avec des valeurs basiques.
+     * Vérifie que la méthode renvoie bien true.
+     * 
+     * @see GestionEtudiant#connexion(int, String)
+     */
     @Test
     void testConnexionBasique() {
         boolean connexion = this.gestionEtudiant.connexion(0, "Sk1525mlds");
         assertTrue(connexion);
     }
 
+    /**
+     * Test de la méthode connexion {@link GestionEtudiant#connexion(int, String)} avec un mot de passe incorrect.
+     * Vérifie que la méthode renvoie bien false.
+     * 
+     * @see GestionEtudiant#connexion(int, String)
+     */
     @Test
     void testConnexionMotDePasseIncorrect() {
-        boolean connexion = this.gestionEtudiant.connexion(0, "Lucepassword");
+        boolean connexion = this.gestionEtudiant.connexion(0, "Lukepassword");
         assertFalse(connexion);
     }
 
+    /**
+     * Test de la méthode connexion {@link GestionEtudiant#connexion(int, String)} avec un numero incorrect.
+     * Vérifie que la méthode renvoie bien false.
+     * 
+     * @see GestionEtudiant#connexion(int, String)
+     */
     @Test
     void testConnexionNumeroIncorrect() {
         boolean connexion = this.gestionEtudiant.connexion(15, "Sk1525mlds");
         assertFalse(connexion);
     }
-
+    
+    /**
+     * Test de la méthode deconnexion {@link GestionEtudiant#deconnexion()} avec un utilisateur connecté.
+     * Vérifie que la méthode déconnecte bien l'utilisateur.
+     * 
+     * @see GestionEtudiant#deconnexion()
+     */
     @Test
     void testDeconnexionBasique() {
         try {
@@ -157,6 +218,12 @@ class TestGestionEtudiant {
         }
     }
 
+    /**
+     * Test de la méthode deconnexion {@link GestionEtudiant#deconnexion()} sans utilisateur connecté.
+     * Vérifie que la méthode renvoie bien NonConnecteException.
+     * 
+     * @see GestionEtudiant#deconnexion()
+     */
     @Test
     void testDeconnexionSansUtilisateurConnecte() {
         try {
@@ -166,23 +233,116 @@ class TestGestionEtudiant {
             assertTrue(true);
         }
     }
+    
+    /**
+     * Test de la méthode getEtudiantConnecte {@link GestionEtudiant#getEtudiantConnecte()} avec un utilisateur connecté.
+     * Vérifie que la méthode renvoie bien l'etudiant.
+     * 
+     * @see GestionEtudiant#getEtudiantConnecte()
+     */
+    @Test
+    void testEtudiantConnecteBasique() {
+        try {
+        	this.gestionEtudiant.connexion(this.numero, "Sk1525mlds");
+        	Etudiant etudiant = this.gestionEtudiant.getEtudiantConnecte();
+            assertTrue(etudiant.getNumero() == this.numero && etudiant.getInformationPersonnelle().equals(this.infoPerso1));
+        } catch (NonConnecteException e) {
+        	fail("La déconnexion ne devrait pas lever d'exception ici.");
+        }
+    }
+    
+    /**
+     * Test de la méthode getEtudiantConnecte {@link GestionEtudiant#getEtudiantConnecte()} avec un utilisateur pas connecté.
+     * Vérifie que la méthode renvoie NonConnecteException.
+     * 
+     * @see GestionEtudiant#getEtudiantConnecte()
+     */
+    @Test
+    void testEtudiantConnecteSansUtilisateurConnecte() {
+        try {
+        	this.gestionEtudiant.getEtudiantConnecte();
+        	assertTrue(false);
+        } catch (NonConnecteException e) {
+        	assertTrue(true);
+        }
+    }
+    
+    /**
+     * Test de la méthode getListeEtudiants {@link GestionEtudiant#getListeEtudiants()} avec deux étudiants dans la liste.
+     * Vérifie que la méthode renvoie bien la liste des étudiants.
+     * 
+     * @see GestionEtudiant#getListeEtudiants()
+     */
+    @Test
+    void testListeEtudiants() {
+        Set<Etudiant> lsEtudiants = this.gestionEtudiant.getListeEtudiants();
+        assertEquals(lsEtudiants.size(), 2);
+    }
 
+    /**
+     * Test de la méthode enseignementsObligatoires {@link GestionEtudiant#enseignementsObligatoires()} avec 2 ue obligatoires dans la liste.
+     * Vérifie que la méthode renvoie bien la liste des ue obligatoires.
+     * 
+     * @see GestionEtudiant#enseignementsObligatoires()
+     */
     @Test
     void testEnseignementObligatoires() {
         Set<UniteEnseignement> lsUEO = this.gestionEtudiant.enseignementsObligatoires();
         assertEquals(this.listeUEO, lsUEO);
     }
 
+    /**
+     * Test de la méthode enseignementsOptionnels {@link GestionEtudiant#enseignementsOptionnels()} avec 2 ue optionnels dans la liste.
+     * Vérifie que la méthode renvoie bien la liste des ue optionnels.
+     * 
+     * @see GestionEtudiant#enseignementsOptionnels()
+     */
     @Test
     void testEnseignementOptionnels() {
         Set<UniteEnseignement> lsUEF = this.gestionEtudiant.enseignementsOptionnels();
         assertEquals(this.listeUEF, lsUEF);
     }
+    
+    /**
+     * Test de la méthode getListeUE {@link GestionEtudiant#getListeUE()} avec 4 ue dans la liste.
+     * Vérifie que la méthode renvoie bien la liste des ue.
+     * 
+     * @see GestionEtudiant#getListeUE()
+     */
+    @Test
+    void testGetListeUE() {
+        Set<UniteEnseignement> lsUE = this.gestionEtudiant.getListeUE();
+        assertEquals(this.listeUE, lsUE);
+    }
+    
+    /**
+     * Test de la méthode setListeUE {@link GestionEtudiant#setListeUE()} avec 3 ue dans la liste.
+     * Vérifie que la méthode ajoute bien les 3 ue dans la liste.
+     * 
+     * @see GestionEtudiant#setListeUE()
+     */
+    @Test
+    void testSetListeUE() {
+    	Set<UniteEnseignement> listeUE = new HashSet<>();
+        listeUE.add(this.ue1);
+        listeUE.add(this.ue2);
+        listeUE.add(this.ue3);
+        this.gestionEtudiant.setListeUE(listeUE);
+        assertEquals(listeUE, this.gestionEtudiant.getListeUE());
+    }
 
+    /**
+     * Test de la méthode setNbOption {@link GestionEtudiant#setNbOption()} avec une valeur de 2 et
+     * la méthode nombreOptions {@link GestionEtudiant#nombreOptions()}.
+     * Vérifie que la méthode setNbOption définis bien 2 et que nombreOptions renvoie 2.
+     * 
+     * @see GestionEtudiant#setNbOption()
+     * @see GestionEtudiant#nombreOptions()
+     */
     @Test
     void testNombreOptionsBasique() {
         try {
-            this.gestionEtudiant.connexion(0, "Sk1525mlds");
+            this.gestionEtudiant.connexion(this.numero, "Sk1525mlds");
             this.gestionEtudiant.setNbOption(2);
             int nbOptions = this.gestionEtudiant.nombreOptions();
             assertEquals(2, nbOptions);
@@ -191,10 +351,16 @@ class TestGestionEtudiant {
         }
     }
 
+    /**
+     * Test la méthode nombreOptions {@link GestionEtudiant#nombreOptions()} avec une valeur non définis.
+     * Vérifie que la méthode renvoie bien -1.
+     * 
+     * @see GestionEtudiant#nombreOptions()
+     */
     @Test
     void testNombreOptionsPasDefinis() {
         try {
-            this.gestionEtudiant.connexion(0, "Sk1525mlds");
+            this.gestionEtudiant.connexion(this.numero, "Sk1525mlds");
             int nbOptions = this.gestionEtudiant.nombreOptions();
             assertEquals(-1, nbOptions);
         } catch (NonConnecteException e) {
@@ -202,10 +368,16 @@ class TestGestionEtudiant {
         }
     }
 
+    /**
+     * Test la méthode choisirOption {@link GestionEtudiant#choisirOption()} avec ue basique optionnel.
+     * Vérifie que la méthode renvoie true.
+     * 
+     * @see GestionEtudiant#choisirOption()
+     */
     @Test
     void testChoisirOptionBasique() {
         try {
-            this.gestionEtudiant.connexion(0, "Sk1525mlds");
+            this.gestionEtudiant.connexion(this.numero, "Sk1525mlds");
             boolean res = this.gestionEtudiant.choisirOption(this.ue1);
             assertTrue(res);
         } catch (NonConnecteException e) {
@@ -213,21 +385,53 @@ class TestGestionEtudiant {
         }
     }
 
+    /**
+     * Test la méthode choisirOption {@link GestionEtudiant#choisirOption()} avec une ue obligatoire.
+     * Vérifie que la méthode renvoie false.
+     * 
+     * @see GestionEtudiant#choisirOption()
+     */
     @Test
     void testChoisirOptionUeObligatoire() {
         try {
-            this.gestionEtudiant.connexion(0, "Sk1525mlds");
-            boolean res = this.gestionEtudiant.choisirOption(this.ue3);
+            this.gestionEtudiant.connexion(this.numero, "Sk1525mlds");
+            boolean res = this.gestionEtudiant.choisirOption(this.ue4);
+            assertFalse(res);
+        } catch (NonConnecteException e) {
+            fail("La méthode choisirOption ne devrait pas lever d'exception ici.");
+        }
+    }
+    
+    /**
+     * Test la méthode choisirOption {@link GestionEtudiant#choisirOption()} avec une ue optionnel déja présente.
+     * Vérifie que la méthode renvoie false.
+     * 
+     * @see GestionEtudiant#choisirOption()
+     */
+    @Test
+    void testChoisirOptionDejaPresente() {
+        try {
+            this.gestionEtudiant.connexion(this.numero, "Sk1525mlds");
+            this.gestionEtudiant.choisirOption(this.ue1);
+            boolean res = this.gestionEtudiant.choisirOption(this.ue1);
             assertFalse(res);
         } catch (NonConnecteException e) {
             fail("La méthode choisirOption ne devrait pas lever d'exception ici.");
         }
     }
 
+    /**
+     * Test basique de la méthode getNumeroGroupeTravauxDiriges {@link GestionEtudiant#getNumeroGroupeTravauxDiriges()}
+     * et de la méthode setNumeroTd {@link GestionEtudiant#setNumeroTd()}.
+     * Vérifie que la méthode renvoie le bon numéro de td.
+     * 
+     * @see GestionEtudiant#getNumeroGroupeTravauxDiriges()
+     * @see GestionEtudiant#setNumeroTd()
+     */
     @Test
-    void testNumeroGroupeTd() {
+    void testNumeroGroupeTdBasique() {
         try {
-            this.gestionEtudiant.connexion(0, "Sk1525mlds");
+            this.gestionEtudiant.connexion(this.numero, "Sk1525mlds");
             this.gestionEtudiant.setNumeroTd(2);
             int res = this.gestionEtudiant.getNumeroGroupeTravauxDiriges();
             assertEquals(2, res);
@@ -236,8 +440,16 @@ class TestGestionEtudiant {
         }
     }
 
+    /**
+     * Test basique de la méthode getNumeroGroupeTravauxPratiques {@link GestionEtudiant#getNumeroGroupeTravauxPratiques()}
+     * et de la méthode setNumeroTp {@link GestionEtudiant#setNumeroTp()}.
+     * Vérifie que la méthode renvoie le bon numéro de tp.
+     * 
+     * @see GestionEtudiant#getNumeroGroupeTravauxPratiques()
+     * @see GestionEtudiant#setNumeroTp()
+     */
     @Test
-    void testNumeroGroupeTp() {
+    void testNumeroGroupeTpBasique() {
         try {
             this.gestionEtudiant.connexion(1, "azerty");
             this.gestionEtudiant.setNumeroTp(3);
@@ -247,23 +459,69 @@ class TestGestionEtudiant {
             fail("La méthode setNumeroTp et getNumeroGroupeTravauxPratiques ne devrait pas lever d'exception ici.");
         }
     }
+    
+    /**
+     * Test de la méthode getNumeroGroupeTravauxDiriges {@link GestionEtudiant#getNumeroGroupeTravauxDiriges()}
+     * avec le numéro non défini.
+     * Vérifie que la méthode renvoie -1.
+     * 
+     * @see GestionEtudiant#getNumeroGroupeTravauxDiriges()
+     */
+    @Test
+    void testNumeroGroupeTdNonDefini() {
+        try {
+            this.gestionEtudiant.connexion(this.numero, "Sk1525mlds");
+            int res = this.gestionEtudiant.getNumeroGroupeTravauxDiriges();
+            assertEquals(-1, res);
+        } catch (NonConnecteException e) {
+            fail("La méthode setNumeroTd et getNumeroGroupeTravauxDiriges ne devrait pas lever d'exception ici.");
+        }
+    }
 
+    /**
+     * Test basique de la méthode getNumeroGroupeTravauxPratiques {@link GestionEtudiant#getNumeroGroupeTravauxPratiques()}
+     * avec le numéro non défini.
+     * Vérifie que la méthode renvoie -1.
+     * 
+     * @see GestionEtudiant#getNumeroGroupeTravauxPratiques()
+     */
+    @Test
+    void testNumeroGroupeTpNonDefini() {
+        try {
+            this.gestionEtudiant.connexion(1, "azerty");
+            int res = this.gestionEtudiant.getNumeroGroupeTravauxPratiques();
+            assertEquals(-1, res);
+        } catch (NonConnecteException e) {
+            fail("La méthode setNumeroTp et getNumeroGroupeTravauxPratiques ne devrait pas lever d'exception ici.");
+        }
+    }
+
+    /**
+     * Test basique de la méthode enseignementsSuivis {@link GestionEtudiant#enseignementsSuivis()}.
+     * Vérifie que la méthode renvoie les enseignements suivies.
+     * 
+     * @see GestionEtudiant#enseignementsSuivis()
+     */
     @Test
     void testEnseignementsSuivisBasique() {
         try {
             this.gestionEtudiant.connexion(1, "azerty");
-            Set<UniteEnseignement> ueRes = new HashSet<>();
-            ueRes.add(this.ue1);
-            ueRes.add(this.ue2);
-
             this.gestionEtudiant.choisirOption(this.ue1);
             this.gestionEtudiant.choisirOption(this.ue2);
-            assertEquals(ueRes, this.gestionEtudiant.enseignementsSuivis());
+            this.gestionEtudiant.getEtudiantConnecte().addUE(this.ue3);
+            this.gestionEtudiant.getEtudiantConnecte().addUE(this.ue4);
+            assertEquals(this.listeUE, this.gestionEtudiant.enseignementsSuivis());
         } catch (NonConnecteException e) {
             fail("La méthode enseignementsSuivis ne devrait pas lever d'exception ici.");
         }
     }
 
+    /**
+     * Test liste vide de la méthode enseignementsSuivis {@link GestionEtudiant#enseignementsSuivis()}.
+     * Vérifie que la méthode renvoie bien une liste vide.
+     * 
+     * @see GestionEtudiant#enseignementsSuivis()
+     */
     @Test
     void testEnseignementsSuivisVide() {
         try {
