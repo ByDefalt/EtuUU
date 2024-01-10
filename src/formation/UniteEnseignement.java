@@ -41,7 +41,7 @@ import java.util.Objects;
 public class UniteEnseignement implements Serializable,Cloneable {
 	
     /**
-	 * 
+	 * Identifiant de s�rialisation.
 	 */
 	private static final long serialVersionUID = 4246360324259682345L;
 

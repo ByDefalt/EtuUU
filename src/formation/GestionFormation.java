@@ -30,7 +30,7 @@ import java.util.regex.Matcher;
 public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable, Cloneable {
 
   /**
-   * 
+   * Identifiant de s�rialisation.
    */
   private static final long serialVersionUID = 2231338258512306498L;
   /**

@@ -31,7 +31,7 @@ import java.io.Serializable;
 public class Message implements Serializable,Cloneable {
 
     /**
-	 * 
+	 * Identifiant de s�rialisation.
 	 */
 	private static final long serialVersionUID = 6196868605030678324L;
 
