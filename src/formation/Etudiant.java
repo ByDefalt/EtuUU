@@ -152,6 +152,7 @@ public class Etudiant implements Serializable,Cloneable {
 	/**
 	 * Vérifie l'égalité d'un objet.
 	 *
+	 * @param obj l'objet à vérifier.
 	 * @return true si c'est l'étudiant sinon false.
 	 */
     @Override
@@ -166,13 +167,9 @@ public class Etudiant implements Serializable,Cloneable {
         return numero == other.numero;
     }
 
-	@Override
-	public String toString() {
-		return "Etudiant [informationPersonnelle=" + informationPersonnelle + ", motDePasse=" + motDePasse + ", numero="
-				+ numero + ", nbOption=" + nbOption + ", numeroTp=" + numeroTp + ", numeroTd=" + numeroTd
-				+ ", listeUEsuivies=" + listeUEsuivies + ", messages=" + messages + "]";
-	}
-	
+    /**
+     * @return une copie de l'objet.
+     */
 	@Override
     public Etudiant clone() throws CloneNotSupportedException {
         Etudiant clone = (Etudiant) super.clone();
@@ -191,5 +188,15 @@ public class Etudiant implements Serializable,Cloneable {
 
         return clone;
     }
+	
+	/**
+     * @return retourne une représentation graphique de l'objet.
+     */
+	@Override
+	public String toString() {
+		return "Etudiant [informationPersonnelle=" + informationPersonnelle + ", motDePasse=" + motDePasse + ", numero="
+				+ numero + ", nbOption=" + nbOption + ", numeroTp=" + numeroTp + ", numeroTd=" + numeroTd
+				+ ", listeUEsuivies=" + listeUEsuivies + ", messages=" + messages + "]";
+	}
     
 }

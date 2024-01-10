@@ -15,6 +15,13 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests JUnit de la classe {@link formation.GestionEtudiant
+ * GestionEtudiant}.
+ *
+ * @author LE BRAS Erwan
+ * @see formation.GestionEtudiant
+ */
 class TestGestionEtudiant {
 
     private GestionEtudiant gestionEtudiant;

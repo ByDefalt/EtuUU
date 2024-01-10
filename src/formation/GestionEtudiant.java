@@ -373,6 +373,9 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
                 && this.nombreOptions() == this.nombresOptionsChoisi();
     }
     
+    /**
+     * @return une copie de l'objet.
+     */
     @Override
     public GestionEtudiant clone() throws CloneNotSupportedException {
     	GestionEtudiant clone = (GestionEtudiant) super.clone();

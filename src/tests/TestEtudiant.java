@@ -11,15 +11,50 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import java.util.Set;
 
+/**
+ * Tests JUnit de la classe {@link formation.Etudiant
+ * Etudiant}.
+ *
+ * @author LE BRAS Erwan
+ * @see formation.Etudiant
+ */
 class TestEtudiant {
 
+	/**
+	 * Un étudiant.
+	 */
     private Etudiant etudiant;
+    /**
+	 * Un message.
+	 */
     private Message message1;
+    /**
+	 * Un message.
+	 */
     private Message message2;
+    /**
+	 * Une uniteEnseignement optionnelle.
+	 */
     private UniteEnseignement ue1;
+    /**
+	 * Une uniteEnseignement optionnelle.
+	 */
     private UniteEnseignement ue2;
-
+    /**
+	 * Une uniteEnseignement obligatoire.
+	 */
+    private UniteEnseignement ue3;
+    /**
+	 * Une uniteEnseignement obligatoire.
+	 */
+    private UniteEnseignement ue4;
+    
+    /**
+     * Instancie un etudiant basique, différentes UE et des messages.
+     *
+     */
     @BeforeEach
     void setUp() {
         InformationPersonnelle infoPerso = new InformationPersonnelle("Doe", "John");
@@ -27,17 +62,23 @@ class TestEtudiant {
 
         this.ue1 = new UniteEnseignement("UE1", "Enseignant1");
         this.ue1.setNbPlacesMax(30);
+        this.ue1.setOptionnel(true);
         this.ue2 = new UniteEnseignement("UE2", "Enseignant2");
         this.ue2.setNbPlacesMax(25);
+        this.ue2.setOptionnel(true);
+        this.ue3 = new UniteEnseignement("UE3", "Enseignant3");
+        this.ue3.setNbPlacesMax(26);
+        this.ue3.setOptionnel(false);
+        this.ue4 = new UniteEnseignement("UE4", "Enseignant4");
+        this.ue4.setNbPlacesMax(27);
+        this.ue4.setOptionnel(false);
         
-        String titre1 = "message1".substring(0, Math.min("message1".length(), 20)) + "...";  
-        this.message1 = new Message(titre1, "message1");
-        String titre2 = "message2".substring(0, Math.min("message2".length(), 20)) + "...";
-        this.message2 = new Message(titre2, "message2");
+        this.message1 = new Message("msg1", "message1");
+        this.message2 = new Message("msg2", "message2");
 
 
         this.etudiant.addUE(ue1);
-        this.etudiant.addUE(ue2);
+        this.etudiant.addUE(ue3);
         this.etudiant.getMessages().add(message1);
         this.etudiant.getMessages().add(message2);
     }
@@ -46,37 +87,74 @@ class TestEtudiant {
     void tearDown() {
     }
 
+    /**
+     * Vérifie que l'on peut positionner le numero 123.
+     */
     @Test
-    void testSetNumero() {
-        etudiant.setNumero(123);
-        assertEquals(123, etudiant.getNumero());
+    void testNumero() {
+        this.etudiant.setNumero(123);
+        assertEquals(123, this.etudiant.getNumero());
     }
 
+    /**
+     * Vérifie que l'on peut positionner le nombre d'options à 2.
+     */
     @Test
-    void testSetNbOption() {
-        etudiant.setNbOption(2);
-        assertEquals(2, etudiant.getNbOption());
+    void testNbOption() {
+    	this.etudiant.setNbOption(2);
+        assertEquals(2, this.etudiant.getNbOption());
     }
 
+    /**
+     * Vérifie que l'on peut positionner le numero de Tp à 1.
+     */
     @Test
-    void testSetNumeroTp() {
-        etudiant.setNumeroTp(1);
-        assertEquals(1, etudiant.getNumeroTp());
+    void testNumeroTp() {
+    	this.etudiant.setNumeroTp(1);
+        assertEquals(1, this.etudiant.getNumeroTp());
     }
 
+    /**
+     * Vérifie que l'on peut positionner le numero de Tp à 3.
+     */
     @Test
-    void testSetNumeroTd() {
-        etudiant.setNumeroTd(3);
-        assertEquals(3, etudiant.getNumeroTd());
+    void testNumeroTd() {
+    	this.etudiant.setNumeroTd(3);
+        assertEquals(3, this.etudiant.getNumeroTd());
     }
 
+    /**
+     * Vérifie que l'on peut ajouter une ue optionnelle.
+     */
     @Test
-    void testAddUE() {
-        UniteEnseignement newUE = new UniteEnseignement("UE3", "Enseignant3");
-        etudiant.addUE(newUE);
-        assertTrue(etudiant.getListeUEsuivies().contains(newUE));
+    void testAddUEOptionnelle() {
+    	this.etudiant.addUE(this.ue2);
+        assertTrue(this.etudiant.getListeUEsuivies().contains(this.ue2));
+    }
+    
+    /**
+     * Vérifie que l'on peut ajouter une ue obliagtoire.
+     */
+    @Test
+    void testAddUEObligatoire() {
+    	this.etudiant.addUE(this.ue4);
+        assertTrue(this.etudiant.getListeUEsuivies().contains(this.ue4));
+    }
+    
+    /**
+     * Vérifie que l'on récupère bien toutes les ue suivies d'un etudiant.
+     */
+    @Test
+    void testListeUEsuivies() {
+        Set<UniteEnseignement> ue = this.etudiant.getListeUEsuivies();
+        assertEquals(2, ue.size());
+        assertTrue(ue.contains(this.ue1));
+        assertTrue(ue.contains(this.ue3));
     }
 
+    /**
+     * Vérifie que l'on récupère bien tout les messages d'un etudiant.
+     */
     @Test
     void testGetMessages() {
         List<Message> messages = etudiant.getMessages();
@@ -84,12 +162,15 @@ class TestEtudiant {
         assertTrue(messages.contains(message1));
         assertTrue(messages.contains(message2));
     }
-
+    
+    /**
+     * Vérifie que l'on clone bien l'objet etudiant et que la méthode equals fonctionne.
+     */
     @Test
-    void testMessageLu() {
-        assertFalse(message1.estLu());
-        message1.setLu();
-        assertTrue(message1.estLu());
+    void testClone() throws CloneNotSupportedException {
+    	Etudiant clone = this.etudiant.clone();
+    	assertEquals(this.etudiant, clone);
+    	assertTrue(this.etudiant.equals(clone));
     }
 }
 
