@@ -158,4 +158,15 @@ class TestInformationUniteEnseignement {
         assertTrue(ue.equals(ue2));
         assertFalse(ue.equals(ue3));
     }
+    @Test
+    void testClone(){
+        UniteEnseignement ue2=new UniteEnseignement("prog", "lk");
+        UniteEnseignement ue3=new UniteEnseignement("ocaml", "lk");
+        try {
+            ue3=(UniteEnseignement) ue2.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(ue2,ue3);
+    }
 }

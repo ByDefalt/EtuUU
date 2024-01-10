@@ -110,5 +110,15 @@ class TestInformationPersonnelle {
     assertTrue(inf.getAdresse() != null);
     assertTrue(inf.getAge() >= 0);
   }
-
+  @Test
+  void testClone(){
+    InformationPersonnelle inf = new InformationPersonnelle("Vador", "Dark", "greger", 30);
+    InformationPersonnelle inf2=new InformationPersonnelle("hrhth", "htrdxg", "gergsdfg", 30);
+    try {
+      inf2=(InformationPersonnelle) inf.clone();
+    } catch (CloneNotSupportedException e) {
+      e.printStackTrace();
+    }
+    inf.equals(inf2);
+  }
 }

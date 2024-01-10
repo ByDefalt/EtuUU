@@ -8,12 +8,14 @@ import java.util.Objects;
  * son identité (nom et prénom), son âge et son adresse.
  *
  * <p>
- * La classe est immuable, ce qui signifie que les propriétés nom, prénom, âge et
+ * La classe est immuable, ce qui signifie que les propriétés nom, prénom, âge
+ * et
  * adresse ne peuvent pas être modifiées après la création de l'objet.
  * </p>
  *
  * <p>
  * Exemple d'utilisation :
+ * 
  * <pre>{@code
  * // Création d'une instance avec les informations obligatoires
  * InformationPersonnelle personne1 = new InformationPersonnelle("Doe", "John");
@@ -25,7 +27,7 @@ import java.util.Objects;
  *
  * @author Eric Cariou
  */
-public final class InformationPersonnelle implements Serializable,Cloneable {
+public final class InformationPersonnelle implements Serializable, Cloneable {
 
   /**
    * Identifiant de s�rialisation.
@@ -185,7 +187,7 @@ public final class InformationPersonnelle implements Serializable,Cloneable {
   }
 
   @Override
-  public Object clone() throws CloneNotSupportedException {
-    return super.clone();
-  }
+    public Object clone() throws CloneNotSupportedException {
+        return new InformationPersonnelle(this.nom, this.prenom,this.adresse,this.age);
+    }
 }

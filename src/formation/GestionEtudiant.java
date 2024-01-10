@@ -1,5 +1,10 @@
 package formation;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,9 +17,9 @@ import java.util.Set;
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
-public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
-	// ******************************* ATTRIBUT D'INSTANCES
-	private static final long serialVersionUID = -6680817996802511324L;
+public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
+    // ******************************* ATTRIBUT D'INSTANCES
+    private static final long serialVersionUID = -6680817996802511324L;
     private int nbEtudiant = 0;
     private final Set<Etudiant> listeEtudiants = new HashSet<>();
     private Set<UniteEnseignement> listeUE = new HashSet<>();
@@ -57,8 +62,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
      * @param numero     le num�ro de l'�tudiant
      * @param motDePasse le mot de passe de l'�tudiant
      * @return <code>true</code> si le couple num�ro/mot de passe est correct
-     * (l'�tudiant est alors consid�r� comme connect� au syst�me),
-     * <code>false</code> si le couple est incorrect
+     *         (l'�tudiant est alors consid�r� comme connect� au syst�me),
+     *         <code>false</code> si le couple est incorrect
      */
     @Override
     public boolean connexion(int numero, String motDePasse) {
@@ -84,17 +89,17 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
 
         this.etudiantConnecte = null;
     }
-    
+
     /**
      * Obtient l'étudiant connecté.
      *
      * @return L'étudiant connecté
      */
     public Etudiant getEtudiantConnecte() throws NonConnecteException {
-    	if (this.etudiantConnecte == null) {
+        if (this.etudiantConnecte == null) {
             throw new NonConnecteException();
         }
-    	
+
         return this.etudiantConnecte;
     }
 
@@ -162,7 +167,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
      * Retourne le nombre d'options que l'�tudiant doit choisir au total.
      *
      * @return le nombre d'options que l'�tudiant doit choisir ou -1 si ce nombre
-     * n'a pas �t� encore d�fini.
+     *         n'a pas �t� encore d�fini.
      * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
      *                              n'est pas connect�
      */
@@ -192,8 +197,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
      *
      * @param ue l'UE que l'�tudiant veut choisir
      * @return <code>true</code> si l'�tudiant a �t� inscrit � l'UE,
-     * <code>false</code> si l'inscription n'a pas pu se faire (manque de
-     * places dans l'UE ou l'UE n'est pas une option)
+     *         <code>false</code> si l'inscription n'a pas pu se faire (manque de
+     *         places dans l'UE ou l'UE n'est pas une option)
      * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
      *                              n'est pas connect�
      */
@@ -232,7 +237,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
      * Renvoie le num�ro de groupe de TD de l'�tudiant s'il a �t� d�fini.
      *
      * @return le num�ro de groupe de TD s'il a �t� d�fini ou -1 si �a n'est pas
-     * encore le cas
+     *         encore le cas
      * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
      *                              n'est pas connect�
      */
@@ -261,7 +266,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
      * Renvoie le num�ro de groupe de TP de l'�tudiant s'il a �t� d�fini.
      *
      * @return le num�ro de groupe de TP s'il a �t� d�fini ou -1 si �a n'est pas
-     * encore le cas
+     *         encore le cas
      * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
      *                              n'est pas connect�
      */
@@ -334,15 +339,15 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
      */
     @Override
     public List<String> listeMessageNonLus() throws NonConnecteException {
-    	if (this.etudiantConnecte == null) {
-    		System.out.println(this.etudiantConnecte);
+        if (this.etudiantConnecte == null) {
+            System.out.println(this.etudiantConnecte);
             throw new NonConnecteException();
         }
 
         List<String> titres = new ArrayList<>();
         for (Message message : this.etudiantConnecte.getMessages()) {
             if (message.estLu()) {
-            	titres.add(message.getTitre());
+                titres.add(message.getTitre());
             }
         }
         return titres;
@@ -360,7 +365,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
      * finalis� son inscription.
      *
      * @return <code>true</code> si l'inscription de l'�tudiant est finalis�e,
-     * <code>false</code> sinon
+     *         <code>false</code> sinon
      * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
      *                              n'est pas connect�
      */
@@ -372,24 +377,59 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
         return etudiantConnecte.getNumeroTd() != -1 && etudiantConnecte.getNumeroTp() != -1
                 && this.nombreOptions() == this.nombresOptionsChoisi();
     }
-    
+
     /**
      * @return une copie de l'objet.
      */
     @Override
     public GestionEtudiant clone() throws CloneNotSupportedException {
-    	GestionEtudiant clone = (GestionEtudiant) super.clone();
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(this);
 
-        clone.listeEtudiants.clear();
-        for (Etudiant etudiant : this.listeEtudiants) {
-            clone.listeEtudiants.add((Etudiant) etudiant.clone());
+            ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bis);
+
+            return (GestionEtudiant) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new CloneNotSupportedException("Erreur lors de la copie profonde : " + e.getMessage());
         }
-
-        clone.listeUE.clear();
-        for (UniteEnseignement ue : this.listeUE) {
-            clone.listeUE.add((UniteEnseignement) ue.clone());
-        }
-
-        return clone;
     }
+
+    @Override
+    public String toString() {
+        return "GestionEtudiant [nbEtudiant=" + nbEtudiant + ", listeEtudiants=" + listeEtudiants + ", listeUE="
+                + listeUE + ", etudiantConnecte=" + etudiantConnecte + "]";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        GestionEtudiant other = (GestionEtudiant) obj;
+        if (nbEtudiant != other.nbEtudiant)
+            return false;
+        if (listeEtudiants == null) {
+            if (other.listeEtudiants != null)
+                return false;
+        } else if (!listeEtudiants.equals(other.listeEtudiants))
+            return false;
+        if (listeUE == null) {
+            if (other.listeUE != null)
+                return false;
+        } else if (!listeUE.equals(other.listeUE))
+            return false;
+        if (etudiantConnecte == null) {
+            if (other.etudiantConnecte != null)
+                return false;
+        } else if (!etudiantConnecte.equals(other.etudiantConnecte))
+            return false;
+        return true;
+    }
+
 }

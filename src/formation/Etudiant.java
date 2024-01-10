@@ -9,10 +9,10 @@ import java.util.*;
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
-public class Etudiant implements Serializable,Cloneable {
-	// ******************************* ATTRIBUT D'INSTANCES
-	private static final long serialVersionUID = -4629219965918701551L;
-	private InformationPersonnelle informationPersonnelle;
+public class Etudiant implements Serializable, Cloneable {
+    // ******************************* ATTRIBUT D'INSTANCES
+    private static final long serialVersionUID = -4629219965918701551L;
+    private InformationPersonnelle informationPersonnelle;
     private final String motDePasse;
     private int numero;
     private int nbOption = -1;
@@ -25,13 +25,14 @@ public class Etudiant implements Serializable,Cloneable {
      * Constructeur de la classe Etudiant.
      *
      * @param informationPersonnelle Les informations personnelles de l'étudiant.
-     * @param motDePasse             Le mot de passe de l'étudiant pour se connecter (la chaîne doit être non vide).
+     * @param motDePasse             Le mot de passe de l'étudiant pour se connecter
+     *                               (la chaîne doit être non vide).
      */
     public Etudiant(InformationPersonnelle informationPersonnelle, String motDePasse) {
         this.informationPersonnelle = informationPersonnelle;
         this.motDePasse = motDePasse;
     }
-    
+
     /**
      * Obtient les informations personnelles de l'étudiant.
      *
@@ -71,7 +72,8 @@ public class Etudiant implements Serializable,Cloneable {
     /**
      * Obtient le nombre d'options que l'étudiant doit choisir.
      *
-     * @return Le nombre d'options que l'étudiant doit choisir ou -1 si ce nombre n'a pas été défini.
+     * @return Le nombre d'options que l'étudiant doit choisir ou -1 si ce nombre
+     *         n'a pas été défini.
      */
     public int getNbOption() {
         return nbOption;
@@ -149,12 +151,12 @@ public class Etudiant implements Serializable,Cloneable {
         return messages;
     }
 
-	/**
-	 * Vérifie l'égalité d'un objet.
-	 *
-	 * @param obj l'objet à vérifier.
-	 * @return true si c'est l'étudiant sinon false.
-	 */
+    /**
+     * Vérifie l'égalité d'un objet.
+     *
+     * @param obj l'objet à vérifier.
+     * @return true si c'est l'étudiant sinon false.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -170,7 +172,7 @@ public class Etudiant implements Serializable,Cloneable {
     /**
      * @return une copie de l'objet.
      */
-	@Override
+    @Override
     public Etudiant clone() throws CloneNotSupportedException {
         Etudiant clone = (Etudiant) super.clone();
 
@@ -188,15 +190,15 @@ public class Etudiant implements Serializable,Cloneable {
 
         return clone;
     }
-	
-	/**
+
+    /**
      * @return retourne une représentation graphique de l'objet.
      */
-	@Override
-	public String toString() {
-		return "Etudiant [informationPersonnelle=" + informationPersonnelle + ", motDePasse=" + motDePasse + ", numero="
-				+ numero + ", nbOption=" + nbOption + ", numeroTp=" + numeroTp + ", numeroTd=" + numeroTd
-				+ ", listeUEsuivies=" + listeUEsuivies + ", messages=" + messages + "]";
-	}
-    
+    @Override
+    public String toString() {
+        return "Etudiant [informationPersonnelle=" + informationPersonnelle + ", motDePasse=" + motDePasse + ", numero="
+                + numero + ", nbOption=" + nbOption + ", numeroTp=" + numeroTp + ", numeroTd=" + numeroTd
+                + ", listeUEsuivies=" + listeUEsuivies + ", messages=" + messages + "]";
+    }
+
 }

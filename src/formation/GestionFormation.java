@@ -10,7 +10,6 @@ import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -56,11 +55,11 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
   /**
    * Les groupes de TD
    */
-  private final Map<Integer, Set<Etudiant>> tds = new HashMap<>();
+  private Map<Integer, Set<Etudiant>> tds = new HashMap<>();
   /**
    * Les groupes de TP
    */
-  private final Map<Integer, Set<Etudiant>> tps = new HashMap<>();
+  private Map<Integer, Set<Etudiant>> tps = new HashMap<>();
   /**
    * La gestion des étudiants
    */
@@ -378,7 +377,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
         / this.nombreGroupesTravauxPratiques();
     int numeroGroupeTailleMin = 1;
     int numeroGroupeTailleMax = 1;
-    while (!interval(nombreEtudiantParGroupeTd, this.tds)) {
+    while (!interval(nombreEtudiantParGroupeTd, this.tds) && this.getGestionEtudiant().getListeEtudiants().size()<nombreEtudiantParGroupeTd) {
       for (Map.Entry<Integer, Set<Etudiant>> entry : this.tds.entrySet()) {
         int key = entry.getKey();
         Set<Etudiant> value = entry.getValue();
@@ -389,10 +388,9 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
           numeroGroupeTailleMax = key;
         }
       }
-      Iterator<Etudiant> it = this.tds.get(numeroGroupeTailleMax).iterator();
-      changerGroupe(it.next(), numeroGroupeTailleMin, 0);
+      changerGroupe(this.tds.get(numeroGroupeTailleMax).stream().findFirst().orElse(null), numeroGroupeTailleMin, 0);
     }
-    while (!interval(nombreEtudiantParGroupeTp, this.tps)) {
+    while (!interval(nombreEtudiantParGroupeTp, this.tps) && this.getGestionEtudiant().getListeEtudiants().size()<nombreEtudiantParGroupeTp) {
       for (Map.Entry<Integer, Set<Etudiant>> entry : this.tps.entrySet()) {
         int key = entry.getKey();
         Set<Etudiant> value = entry.getValue();
@@ -403,8 +401,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
           numeroGroupeTailleMax = key;
         }
       }
-      Iterator<Etudiant> it = this.tps.get(numeroGroupeTailleMax).iterator();
-      changerGroupe(it.next(), 0, numeroGroupeTailleMin);
+      changerGroupe(this.tps.get(numeroGroupeTailleMax).stream().findFirst().orElse(null), 0, numeroGroupeTailleMin);
     }
   }
 
@@ -456,50 +453,59 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public int changerGroupe(Etudiant etudiant, int groupeDirige, int groupePratique) {
-    boolean td = false;
-    boolean tp = false;
+    boolean td = true;
+    boolean tp = true;
     if (etudiant != null) {
       int numgroupetp = etudiant.getNumeroTp();
       int numgroupetd = etudiant.getNumeroTd();
       if (groupeDirige != 0) {
         if (groupeDirige > 0 && groupeDirige <= this.getTds().size()) {
-          if (this.listeEtudiantsGroupeDirige(groupeDirige).size() < this.tailleGroupeDirige) {
-            td = true;
-            if (numgroupetd != -1) {
-              this.listeEtudiantsGroupeDirige(numgroupetd).remove(etudiant);
-              this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
-              etudiant.setNumeroTd(groupeDirige);
-              this.envoyermessage(etudiant, "changement de groupe", "changement de groupe :" + numgroupetd
-                  + " ----> " + etudiant.getNumeroTd());
+          if (groupeDirige != numgroupetd) {
+            if (this.listeEtudiantsGroupeDirige(groupeDirige).size() < this.tailleGroupeDirige) {
+              if (numgroupetd != -1) {
+                this.listeEtudiantsGroupeDirige(numgroupetd).remove(etudiant);
+                this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
+                etudiant.setNumeroTd(groupeDirige);
+                this.envoyermessage(etudiant, "changement de groupe", "changement de groupe :" + numgroupetd
+                    + " ----> " + etudiant.getNumeroTd());
+              } else {
+                this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
+                etudiant.setNumeroTd(groupeDirige);
+                this.envoyermessage(etudiant, "nouveaux groupe", "nouveaux groupe :" + groupeDirige);
+              }
             } else {
-              this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
-              etudiant.setNumeroTd(groupeDirige);
-              this.envoyermessage(etudiant, "nouveaux groupe", "nouveaux groupe :" + groupeDirige);
+              td = false;
             }
           }
+        } else {
+          td = false;
         }
       }
 
       if (groupePratique != 0) {
         if (groupePratique > 0 && groupePratique <= this.getTps().size()) {
-          if (this.listeEtudiantsGroupePratique(groupePratique).size() < this.tailleGroupePratique) {
-            tp = false;
-            if (numgroupetp != -1) {
-              this.tps.get(numgroupetp).remove(etudiant);
-              this.tps.get(groupePratique).add(etudiant);
-              etudiant.setNumeroTp(groupePratique);
-              this.envoyermessage(etudiant, "changement de groupe", "changement de groupe :" + numgroupetp
-                  + " ----> " + etudiant.getNumeroTp());
+          if (groupePratique != numgroupetp) {
+            if (this.listeEtudiantsGroupePratique(groupePratique).size() < this.tailleGroupePratique) {
+              if (numgroupetp != -1) {
+                this.tps.get(numgroupetp).remove(etudiant);
+                this.tps.get(groupePratique).add(etudiant);
+                etudiant.setNumeroTp(groupePratique);
+                this.envoyermessage(etudiant, "changement de groupe", "changement de groupe :" + numgroupetp
+                    + " ----> " + etudiant.getNumeroTp());
+              } else {
+                this.tps.get(groupePratique).add(etudiant);
+                etudiant.setNumeroTp(groupePratique);
+                this.envoyermessage(etudiant, "changement de groupe", "nouveaux groupe :" + groupePratique);
+              }
             } else {
-              this.tps.get(groupePratique).add(etudiant);
-              etudiant.setNumeroTp(groupePratique);
-              this.envoyermessage(etudiant, "changement de groupe", "nouveaux groupe :" + groupePratique);
+              tp = false;
             }
           }
+        } else {
+          tp = false;
         }
       }
     }
-
     return (td && tp) ? 0 : (!td && tp) ? -1 : (td && !tp) ? -2 : -3;
   }
 
@@ -569,7 +575,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
    */
   @Override
   public Set<Etudiant> listeEtudiantsOption(UniteEnseignement option) {
-    if (option == null || !this.gestionEtudiant.getListeUE().contains(option)) {
+    if (option == null || !this.gestionEtudiant.getListeUE().contains(option) || !option.getOptionnel()) {
       return null;
     }
     Set<Etudiant> listeetu = new HashSet<>();
@@ -588,7 +594,6 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
     try (FileOutputStream fileOut = new FileOutputStream("save" + File.separator + nomFichier);
         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
       objectOut.writeObject(this);
-      System.out.println("Données sauvegardées avec succès dans le fichier " + nomFichier);
     } catch (IOException e) {
       System.err.println("Erreur lors de la sauvegarde des données : " + e.getMessage());
       throw e;
@@ -608,8 +613,6 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
           } catch (CloneNotSupportedException e) {
             e.printStackTrace();
           }
-          // Répétez cela pour toutes les propriétés de votre classe
-          System.out.println("Données chargées avec succès depuis " + nomFichier);
         } else {
           System.err.println("Le fichier ne contient pas une instance de VotreClasse");
         }
@@ -623,29 +626,41 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
     this.nomFormation = autreFormation.getNomFormation();
     this.nomResponsable = autreFormation.getNomResponsableFormation();
     this.email = autreFormation.getEmailResponsableFormation();
-    this.tds.clear();
-    this.tps.clear();
-    this.gestionEtudiant = autreFormation.getGestionEtudiant().clone();
     this.tailleGroupeDirige = autreFormation.getTailleGroupeDirige();
     this.tailleGroupePratique = autreFormation.getTailleGroupePratique();
     this.NBoption = autreFormation.getNBoption();
-    // Copie profonde des ensembles d'Etudiants
-    for (Map.Entry<Integer, Set<Etudiant>> entry : this.tds.entrySet()) {
-      Set<Etudiant> etudiants = entry.getValue();
-      Set<Etudiant> copieEtudiants = new HashSet<>();
-      for (Etudiant etudiant : etudiants) {
-        copieEtudiants.add((Etudiant) etudiant.clone());
+    this.gestionEtudiant = autreFormation.getGestionEtudiant().clone();
+    Map<Integer, Set<Etudiant>> clonedTds = new HashMap<>();
+    for(Etudiant etu : this.getGestionEtudiant().getListeEtudiants()){
+      if(etu.getNumeroTd()!=-1){
+        if(clonedTds.containsKey(etu.getNumeroTd())){
+          clonedTds.get(etu.getNumeroTd()).add(etu);
+        }else{
+          clonedTds.put(etu.getNumeroTd(), new HashSet<>());
+          clonedTds.get(etu.getNumeroTd()).add(etu);
+        }
       }
-      this.tds.put(entry.getKey(), copieEtudiants);
     }
-    for (Map.Entry<Integer, Set<Etudiant>> entry : this.tps.entrySet()) {
-      Set<Etudiant> etudiants = entry.getValue();
-      Set<Etudiant> copieEtudiants = new HashSet<>();
-      for (Etudiant etudiant : etudiants) {
-        copieEtudiants.add((Etudiant) etudiant.clone());
+    this.tds=clonedTds;
+    Map<Integer, Set<Etudiant>> clonedTps = new HashMap<>();
+    for(Etudiant etu : this.getGestionEtudiant().getListeEtudiants()){
+      if(etu.getNumeroTp()!=-1){
+        if(clonedTps.containsKey(etu.getNumeroTp())){
+          clonedTps.get(etu.getNumeroTp()).add(etu);
+        }else{
+          clonedTps.put(etu.getNumeroTp(), new HashSet<>());
+          clonedTps.get(etu.getNumeroTp()).add(etu);
+        }
       }
-      this.tps.put(entry.getKey(), copieEtudiants);
     }
+    this.tps=clonedTps;
+  }
+
+  @Override
+  public String toString() {
+    return "GestionFormation [nomFormation=" + nomFormation + ", nomResponsable=" + nomResponsable + ", email=" + email
+        + ", tds=" + tds + ", tps=" + tps + ", gestionEtudiant=" + gestionEtudiant + ", tailleGroupeDirige="
+        + tailleGroupeDirige + ", tailleGroupePratique=" + tailleGroupePratique + ", NBoption=" + NBoption + "]";
   }
 
 }
