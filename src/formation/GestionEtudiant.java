@@ -92,7 +92,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
     }
 
     /**
-     * D�connecte l'�tudiant actuellement connect� au syst�me.
+     * Déconnecte l'étudiant actuellement connecté au systéme.
      *
      * @throws NonConnecteException si aucun �tudiant n'�tait connect�
      */
@@ -119,7 +119,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
     }
 
     /**
-     * L'ensemble des étudiants de l'ann�e de formation.
+     * L'ensemble des étudiants de l'année de formation.
      *
      * @return l'ensemble des étudiants
      */
@@ -128,7 +128,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
     }
 
     /**
-     * L'ensemble des unit�s d'enseignement obligatoires de l'ann�e de formation.
+     * L'ensemble des unités d'enseignement obligatoires de l'année de formation.
      *
      * @return l'ensemble des UE obligatoires
      */
@@ -144,7 +144,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
     }
 
     /**
-     * L'ensemble des unit�s d'enseignement optionnelles de l'ann�e de formation.
+     * L'ensemble des unités d'enseignement optionnelles de l'année de formation.
      *
      * @return l'ensemble des UE optionnelles
      */
@@ -160,7 +160,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
     }
 
     /**
-     * L'ensemble des unit�s d'enseignement l'ann�e de formation.
+     * L'ensemble des unités d'enseignement l'année de formation.
      *
      * @return l'ensemble des UE
      */
@@ -179,12 +179,12 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
     }
 
     /**
-     * Retourne le nombre d'options que l'�tudiant doit choisir au total.
+     * Retourne le nombre d'options que l'étudiant doit choisir au total.
      *
-     * @return le nombre d'options que l'�tudiant doit choisir ou -1 si ce nombre
-     * n'a pas �t� encore d�fini.
-     * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
-     *                              n'est pas connect�
+     * @return le nombre d'options que l'étudiant doit choisir ou -1 si ce nombre
+     * n'a pas été encore d�fini.
+     * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
+     *                              n'est pas connecté
      */
     @Override
     public int nombreOptions() throws NonConnecteException {
@@ -210,12 +210,12 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
     /**
      * Choix d'une UE optionnelle par l'�tudiant.
      *
-     * @param ue l'UE que l'�tudiant veut choisir
-     * @return <code>true</code> si l'�tudiant a �t� inscrit � l'UE,
+     * @param ue l'UE que l'étudiant veut choisir
+     * @return <code>true</code> si l'étudiant a été inscrit à l'UE,
      * <code>false</code> si l'inscription n'a pas pu se faire (manque de
      * places dans l'UE ou l'UE n'est pas une option)
-     * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
-     *                              n'est pas connect�
+     * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
+     *                              n'est pas connecté
      */
     @Override
     public boolean choisirOption(UniteEnseignement ue) throws NonConnecteException {
@@ -234,7 +234,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
      * Renvoie le nombre d'options choisi par l'étudiant.
      *
      * @return le nombre d'options choisi par l'étudiant
-     * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
+     * @throws NonConnecteException si la méthode est appelée alors que l'�tudiant
      *                              n'est pas connect�
      */
     public int nombresOptionsChoisi() throws NonConnecteException {
@@ -249,12 +249,12 @@ public class GestionEtudiant implements InterEtudiant, Serializable,Cloneable {
     }
 
     /**
-     * Renvoie le num�ro de groupe de TD de l'�tudiant s'il a �t� d�fini.
+     * Renvoie le numéro de groupe de TD de l'étudiant s'il a été défini.
      *
-     * @return le num�ro de groupe de TD s'il a �t� d�fini ou -1 si �a n'est pas
+     * @return le numéro de groupe de TD s'il a été défini ou -1 si �a n'est pas
      * encore le cas
-     * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
-     *                              n'est pas connect�
+     * @throws NonConnecteException si la méthode est appelée alors que l'étudiant
+     *                              n'est pas connecté
      */
     @Override
     public int getNumeroGroupeTravauxDiriges() throws NonConnecteException {
