@@ -108,12 +108,30 @@ class TestInformationPersonnelle {
     assertTrue(inf.getAdresse() != null);
     assertTrue(inf.getAge() >= 0);
   }
+
+  /**
+   * Teste la méthode de clonage pour l'objet {@code InformationPersonnelle}.
+   * 
+   * <p>
+   * Crée deux instances distinctes de {@code InformationPersonnelle}, puis tente
+   * de cloner l'une
+   * d'entre elles en utilisant la méthode {@code clone()}. Vérifie ensuite si les
+   * deux objets sont égaux
+   * en utilisant la méthode {@code equals()}.
+   * </p>
+   * 
+   * @throws CloneNotSupportedException Si le clonage n'est pas pris en charge
+   *                                    pour l'objet.
+   * 
+   * @see InformationPersonnelle#clone()
+   * @see InformationPersonnelle#equals(Object)
+   */
   @Test
-  void testClone(){
+  void testClone() {
     InformationPersonnelle inf = new InformationPersonnelle("Vador", "Dark", "greger", 30);
-    InformationPersonnelle inf2=new InformationPersonnelle("hrhth", "htrdxg", "gergsdfg", 30);
+    InformationPersonnelle inf2 = new InformationPersonnelle("hrhth", "htrdxg", "gergsdfg", 30);
     try {
-      inf2=(InformationPersonnelle) inf.clone();
+      inf2 = (InformationPersonnelle) inf.clone();
     } catch (CloneNotSupportedException e) {
       e.printStackTrace();
     }

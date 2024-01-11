@@ -38,14 +38,14 @@ import java.util.Objects;
  * </p>
  * 
  */
-public class UniteEnseignement implements Serializable,Cloneable {
-	
-    /**
-	 * Identifiant de s�rialisation.
-	 */
-	private static final long serialVersionUID = 4246360324259682345L;
+public class UniteEnseignement implements Serializable, Cloneable {
 
-	/**
+    /**
+     * Identifiant de s�rialisation.
+     */
+    private static final long serialVersionUID = 4246360324259682345L;
+
+    /**
      * Le nom de l'Unité d'Enseignement (UE).
      */
     private final String nomUE;
@@ -214,11 +214,36 @@ public class UniteEnseignement implements Serializable,Cloneable {
         return Objects.equals(nomUE, that.nomUE);
     }
 
+    /**
+     * Crée et renvoie une copie de cet objet {@code UniteEnseignement}.
+     * 
+     * Cette méthode implémente l'interface {@code Cloneable}. La copie est
+     * superficielle,
+     * ce qui signifie que les objets internes ne sont pas clonés, mais simplement
+     * référencés
+     * par la nouvelle instance. Si une copie profonde est nécessaire, il peut être
+     * nécessaire
+     * d'implémenter une méthode de clonage personnalisée.
+     * 
+     * @return Une copie de cet objet {@code UniteEnseignement}.
+     * @throws CloneNotSupportedException Si la clonage n'est pas pris en charge
+     *                                    pour cet objet.
+     * @see Cloneable
+     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
+    /**
+     * Retourne une représentation sous forme de chaîne de caractères de cet objet
+     * {@code UniteEnseignement}.
+     * 
+     * @return Une chaîne de caractères représentant l'objet, avec les détails tels
+     *         que le nom de l'UE,
+     *         le nom de l'enseignant, le nombre de participants, le nombre de
+     *         places maximum et l'optionnalité.
+     */
     @Override
     public String toString() {
         return "UniteEnseignement [nomUE=" + nomUE + ", nomEnseignant=" + nomEnseignant + ", nbParticipant="
