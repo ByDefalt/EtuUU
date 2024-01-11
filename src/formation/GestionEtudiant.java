@@ -372,7 +372,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
 
         List<String> titres = new ArrayList<>();
         for (Message message : this.etudiantConnecte.getMessages()) {
-            if (message.estLu()) {
+            if (!message.estLu()) {
                 titres.add(message.getTitre());
             }
         }

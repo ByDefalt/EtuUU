@@ -3,13 +3,16 @@ package tests;
 import formation.Etudiant;
 import formation.GestionEtudiant;
 import formation.InformationPersonnelle;
+import formation.Message;
 import formation.NonConnecteException;
 import formation.UniteEnseignement;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -531,6 +534,249 @@ class TestGestionEtudiant {
         } catch (NonConnecteException e) {
             fail("La méthode enseignementsSuivis ne devrait pas lever d'exception ici.");
         }
+    }
+    
+    /**
+     * Test basique méthode listeTousMessages {@link GestionEtudiant#listeTousMessages()}.
+     * Vérifie que la méthode renvoie bien la liste des messages.
+     * 
+     * @see GestionEtudiant#listeTousMessages()
+     */
+    @Test
+    void testlisteTousMessages() {
+        try {
+            this.gestionEtudiant.connexion(1, "azerty");
+            List<Message> messages = new ArrayList<>();
+            for(int i = 0; i < 20; i++) {
+            	Message message = new Message("Titre" + i, "Contenu");
+            	this.gestionEtudiant.getEtudiantConnecte().getMessages().add(message);
+            	messages.add(message);
+            }
+            
+            List<String> titres = new ArrayList<>();
+            for (Message message : messages) {
+            	titres.add(message.getTitre());
+            }
+            
+            assertEquals(titres, this.gestionEtudiant.listeTousMessages());
+        } catch (NonConnecteException e) {
+            fail("La méthode listeTousMessages ne devrait pas lever d'exception ici.");
+        }
+    }
+    
+    /**
+     * Test méthode listeTousMessages {@link GestionEtudiant#listeTousMessages()}, suppression d'un element.
+     * Vérifie que la méthode renvoie une liste différente de celle qui n'as pas été modifié.
+     * 
+     * @see GestionEtudiant#listeTousMessages()
+     */
+    @Test
+    void testlisteTousMessagesDifferent() {
+        try {
+            this.gestionEtudiant.connexion(1, "azerty");
+            List<Message> messages = new ArrayList<>();
+            for(int i = 0; i < 20; i++) {
+            	Message message = new Message("Titre" + i, "Contenu");
+            	this.gestionEtudiant.getEtudiantConnecte().getMessages().add(message);
+            	messages.add(message);
+            }
+            
+            List<String> titres = new ArrayList<>();
+            for (Message message : messages) {
+            	titres.add(message.getTitre());
+            }
+            
+            this.gestionEtudiant.getEtudiantConnecte().getMessages().remove(5);
+            assertNotEquals(titres, this.gestionEtudiant.listeTousMessages());
+            assertNotEquals(titres.size(), this.gestionEtudiant.listeTousMessages());
+        } catch (NonConnecteException e) {
+            fail("La méthode listeTousMessages ne devrait pas lever d'exception ici.");
+        }
+    }
+    
+    /**
+     * Test basique de la méthode listeMessageNonLus {@link GestionEtudiant#listeMessageNonLus()}.
+     * Vérifie que la méthode renvoie bien la liste des messages non lus.
+     * 
+     * @see GestionEtudiant#listeMessageNonLus()
+     */
+    @Test
+    void testlisteMessageNonLus() {
+        try {
+            this.gestionEtudiant.connexion(1, "azerty");
+            List<Message> messages = new ArrayList<>();
+            for(int i = 0; i < 20; i++) {
+            	Message message = new Message("Titre" + i, "Contenu");
+            	this.gestionEtudiant.getEtudiantConnecte().getMessages().add(message);
+            	if(i % 2 == 0) {
+            		message.setLu();
+            	} else {
+            		messages.add(message);
+            	}
+            	
+            }
+            
+            List<String> titres = new ArrayList<>();
+            for (Message message : messages) {
+            	titres.add(message.getTitre());
+            }
+            
+            assertEquals(titres, this.gestionEtudiant.listeMessageNonLus());
+        } catch (NonConnecteException e) {
+            fail("La méthode listeMessageNonLus ne devrait pas lever d'exception ici.");
+        }
+    }
+    
+    /**
+     * Test de la méthode listeMessageNonLus {@link GestionEtudiant#listeMessageNonLus()}.
+     * Vérifie que la méthode renvoie bien une liste de messages différente de l'autre liste.
+     * 
+     * @see GestionEtudiant#listeMessageNonLus()
+     */
+    @Test
+    void testlisteMessageNonLusDifferent() {
+        try {
+            this.gestionEtudiant.connexion(1, "azerty");
+            List<Message> messages = new ArrayList<>();
+            for(int i = 0; i < 20; i++) {
+            	Message message = new Message("Titre" + i, "Contenu");
+            	this.gestionEtudiant.getEtudiantConnecte().getMessages().add(message);
+            	if(i % 2 == 0) {
+            		message.setLu();
+            	} else {
+            		messages.add(message);
+            	}
+            	
+            }
+            
+            List<String> titres = new ArrayList<>();
+            for (Message message : messages) {
+            	titres.add(message.getTitre());
+            }
+            
+            titres.remove(2);
+            
+            assertNotEquals(titres, this.gestionEtudiant.listeMessageNonLus());
+        } catch (NonConnecteException e) {
+            fail("La méthode listeMessageNonLus ne devrait pas lever d'exception ici.");
+        }
+    }
+    
+    /**
+     * Test d'inscriptionFinalisee {@link GestionEtudiant#inscriptionFinalisee()}, 
+     * finalisation d'un etudiant basique.
+     * Vérifie que la méthode renvoie true.
+     * 
+     * @see GestionEtudiant#inscriptionFinalisee()
+     */
+    @Test
+    void testInscriptionFinaliseeBasique() {
+        try {
+            this.gestionEtudiant.connexion(1, "azerty");
+            this.gestionEtudiant.getEtudiantConnecte().setNbOption(2);
+            this.gestionEtudiant.getEtudiantConnecte().setNumeroTd(1);
+            this.gestionEtudiant.getEtudiantConnecte().setNumeroTp(3);
+            this.gestionEtudiant.choisirOption(ue1);
+            this.gestionEtudiant.choisirOption(ue2);
+            assertTrue(this.gestionEtudiant.inscriptionFinalisee());
+        } catch (NonConnecteException e) {
+            fail("La méthode inscriptionFinalisee ne devrait pas lever d'exception ici.");
+        }
+    }
+    
+    /**
+     * Test d'inscriptionFinalisee {@link GestionEtudiant#inscriptionFinalisee()}, 
+     * finalisation d'un etudiant sans le nombre d'options.
+     * Vérifie que la méthode renvoie false.
+     * 
+     * @see GestionEtudiant#inscriptionFinalisee()
+     */
+    @Test
+    void testInscriptionFinaliseeSansNbOptions() {
+        try {
+            this.gestionEtudiant.connexion(1, "azerty");
+            this.gestionEtudiant.getEtudiantConnecte().setNumeroTd(1);
+            this.gestionEtudiant.getEtudiantConnecte().setNumeroTp(3);
+            this.gestionEtudiant.choisirOption(ue1);
+            this.gestionEtudiant.choisirOption(ue2);
+            assertFalse(this.gestionEtudiant.inscriptionFinalisee());
+        } catch (NonConnecteException e) {
+            fail("La méthode inscriptionFinalisee ne devrait pas lever d'exception ici.");
+        }
+    }
+    
+    /**
+     * Test d'inscriptionFinalisee {@link GestionEtudiant#inscriptionFinalisee()}, 
+     * finalisation d'un etudiant avec le numéro de td pas défini.
+     * Vérifie que la méthode renvoie false.
+     * 
+     * @see GestionEtudiant#inscriptionFinalisee()
+     */
+    @Test
+    void testInscriptionFinaliseeSansNumeroTd() {
+        try {
+            this.gestionEtudiant.connexion(1, "azerty");
+            this.gestionEtudiant.getEtudiantConnecte().setNbOption(2);
+            this.gestionEtudiant.getEtudiantConnecte().setNumeroTp(3);
+            this.gestionEtudiant.choisirOption(ue1);
+            this.gestionEtudiant.choisirOption(ue2);
+            assertFalse(this.gestionEtudiant.inscriptionFinalisee());
+        } catch (NonConnecteException e) {
+            fail("La méthode inscriptionFinalisee ne devrait pas lever d'exception ici.");
+        }
+    }
+    
+    /**
+     * Test d'inscriptionFinalisee {@link GestionEtudiant#inscriptionFinalisee()}, 
+     * finalisation d'un etudiant avec le numéro de tp pas défini.
+     * Vérifie que la méthode renvoie false.
+     * 
+     * @see GestionEtudiant#inscriptionFinalisee()
+     */
+    @Test
+    void testInscriptionFinaliseeSansNumeroTp() {
+        try {
+            this.gestionEtudiant.connexion(1, "azerty");
+            this.gestionEtudiant.getEtudiantConnecte().setNbOption(2);
+            this.gestionEtudiant.getEtudiantConnecte().setNumeroTd(1);
+            this.gestionEtudiant.choisirOption(ue1);
+            this.gestionEtudiant.choisirOption(ue2);
+            assertFalse(this.gestionEtudiant.inscriptionFinalisee());
+        } catch (NonConnecteException e) {
+            fail("La méthode inscriptionFinalisee ne devrait pas lever d'exception ici.");
+        }
+    }
+    
+    /**
+     * Test d'inscriptionFinalisee {@link GestionEtudiant#inscriptionFinalisee()}, 
+     * finalisation d'un etudiant qui n'as pas choisie toutes ses options.
+     * Vérifie que la méthode renvoie false.
+     * 
+     * @see GestionEtudiant#inscriptionFinalisee()
+     */
+    @Test
+    void testInscriptionFinaliseeManqueOption() {
+        try {
+            this.gestionEtudiant.connexion(1, "azerty");
+            this.gestionEtudiant.getEtudiantConnecte().setNbOption(2);
+            this.gestionEtudiant.getEtudiantConnecte().setNumeroTd(1);
+            this.gestionEtudiant.choisirOption(ue1);
+            assertFalse(this.gestionEtudiant.inscriptionFinalisee());
+        } catch (NonConnecteException e) {
+            fail("La méthode inscriptionFinalisee ne devrait pas lever d'exception ici.");
+        }
+    }
+    
+    /**
+     * Test de la méthode clone {@link GestionEtudiant#clone()}
+     * vérifie que la méthode clone copie bien l'instance courante.
+     * 
+     * @see GestionEtudian#clone()
+     */
+    @Test
+    void testClone() throws CloneNotSupportedException {
+    	GestionEtudiant clone = this.gestionEtudiant.clone();
+    	assertTrue(this.gestionEtudiant.equals(clone));
     }
 }
 

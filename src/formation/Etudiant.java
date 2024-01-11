@@ -9,7 +9,7 @@ import java.util.*;
  * @author LE BRAS Erwan
  * @author ROUSVAL Romain
  */
-public class Etudiant implements Serializable,Cloneable {
+public class Etudiant implements Serializable, Cloneable {
 	// ******************************* ATTRIBUT D'INSTANCES
 	
 	/**
@@ -229,6 +229,18 @@ public class Etudiant implements Serializable,Cloneable {
         }
 
         return clone;
+    }
+    
+    /**
+     * Retourne un code de hachage pour l'objet basé sur le numero de L'Etudiant.
+     *
+     * @return Code de hachage basé sur le nom de l'UE.
+     * @see Objects#hash(Object...)
+     * @see #equals(Object)
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.numero);
     }
 
     /**
