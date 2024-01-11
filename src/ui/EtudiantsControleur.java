@@ -200,14 +200,6 @@ public class EtudiantsControleur {
 						Integer.parseInt(entreeAgeEtudiant.getText()));
 				int resInscription = this.gestionFormation.getGestionEtudiant().inscription(info,
 						entreeMotDePasseEtudiant.getText());
-
-				for (Etudiant etudiant : this.gestionFormation.getGestionEtudiant().getListeEtudiants()) {
-					if (etudiant.getNumero() == resInscription) {
-						if (this.gestionFormation.getNBoption() != -1) {
-							this.gestionFormation.setNbOptionEtudiant(etudiant);
-						}
-					}
-				}
 				if (resInscription != -1) {
 					/*
 					 * entreeNomEtudiant.setText("");
