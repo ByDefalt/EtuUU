@@ -11,6 +11,7 @@ import formation.Etudiant;
 import formation.GestionFormation;
 import formation.InformationPersonnelle;
 import formation.UniteEnseignement;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
