@@ -497,7 +497,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
               } else {
                 this.tps.get(groupePratique).add(etudiant);
                 etudiant.setNumeroTp(groupePratique);
-                this.envoyermessage(etudiant, "changement de groupe de TP", "nouveaux groupe de TP :" + groupePratique);
+                this.envoyermessage(etudiant, "nouveaux groupe de TP", "nouveaux groupe de TP :" + groupePratique);
               }
             } else {
               tp = false;
