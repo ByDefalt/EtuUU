@@ -377,7 +377,8 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
         / this.nombreGroupesTravauxPratiques();
     int numeroGroupeTailleMin = 1;
     int numeroGroupeTailleMax = 1;
-    while (!interval(nombreEtudiantParGroupeTd, this.tds) && this.getGestionEtudiant().getListeEtudiants().size()<nombreEtudiantParGroupeTd) {
+    while (!interval(nombreEtudiantParGroupeTd, this.tds)
+        && this.getGestionEtudiant().getListeEtudiants().size() < nombreEtudiantParGroupeTd) {
       for (Map.Entry<Integer, Set<Etudiant>> entry : this.tds.entrySet()) {
         int key = entry.getKey();
         Set<Etudiant> value = entry.getValue();
@@ -390,7 +391,8 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
       }
       changerGroupe(this.tds.get(numeroGroupeTailleMax).stream().findFirst().orElse(null), numeroGroupeTailleMin, 0);
     }
-    while (!interval(nombreEtudiantParGroupeTp, this.tps) && this.getGestionEtudiant().getListeEtudiants().size()<nombreEtudiantParGroupeTp) {
+    while (!interval(nombreEtudiantParGroupeTp, this.tps)
+        && this.getGestionEtudiant().getListeEtudiants().size() < nombreEtudiantParGroupeTp) {
       for (Map.Entry<Integer, Set<Etudiant>> entry : this.tps.entrySet()) {
         int key = entry.getKey();
         Set<Etudiant> value = entry.getValue();
@@ -589,6 +591,13 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
     return listeetu;
   }
 
+  /**
+   * Sauvegarde toutes les donn�es de la formation : liste des UEs, des
+   * �tudiants et des groupes.
+   *
+   * @param nomFichier le fichier dans lequel sauvegarder les donn�es
+   * @throws IOException en cas de probl�me de sauvegarde
+   */
   @Override
   public void sauvegarderDonnees(String nomFichier) throws IOException {
     try (FileOutputStream fileOut = new FileOutputStream("save" + File.separator + nomFichier);
@@ -600,6 +609,13 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
     }
   }
 
+  /**
+   * Charge les donn�es de la formation (UEs, �tudiants, groupes) � partir d'un
+   * fichier.
+   *
+   * @param nomFichier le fichier dans lequel les donn�es ont �t� sauvegard�es
+   * @throws IOException en cas de probl�me de chargement
+   */
   @Override
   public void chargerDonnees(String nomFichier) throws IOException {
     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("save" + File.separator + nomFichier))) {
@@ -622,6 +638,12 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
     }
   }
 
+  /**
+   * Copie un autre formation et la remplace dans this (clonage inverse)
+   * 
+   * @param autreFormation Une autre Formation
+   * @throws CloneNotSupportedException en cas de problème de clonage
+   */
   public void copierDepuis(GestionFormation autreFormation) throws CloneNotSupportedException {
     this.nomFormation = autreFormation.getNomFormation();
     this.nomResponsable = autreFormation.getNomResponsableFormation();
@@ -631,31 +653,42 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
     this.NBoption = autreFormation.getNBoption();
     this.gestionEtudiant = autreFormation.getGestionEtudiant().clone();
     Map<Integer, Set<Etudiant>> clonedTds = new HashMap<>();
-    for(Etudiant etu : this.getGestionEtudiant().getListeEtudiants()){
-      if(etu.getNumeroTd()!=-1){
-        if(clonedTds.containsKey(etu.getNumeroTd())){
+    for (Etudiant etu : this.getGestionEtudiant().getListeEtudiants()) {
+      if (etu.getNumeroTd() != -1) {
+        if (clonedTds.containsKey(etu.getNumeroTd())) {
           clonedTds.get(etu.getNumeroTd()).add(etu);
-        }else{
+        } else {
           clonedTds.put(etu.getNumeroTd(), new HashSet<>());
           clonedTds.get(etu.getNumeroTd()).add(etu);
         }
       }
     }
-    this.tds=clonedTds;
+    this.tds = clonedTds;
     Map<Integer, Set<Etudiant>> clonedTps = new HashMap<>();
-    for(Etudiant etu : this.getGestionEtudiant().getListeEtudiants()){
-      if(etu.getNumeroTp()!=-1){
-        if(clonedTps.containsKey(etu.getNumeroTp())){
+    for (Etudiant etu : this.getGestionEtudiant().getListeEtudiants()) {
+      if (etu.getNumeroTp() != -1) {
+        if (clonedTps.containsKey(etu.getNumeroTp())) {
           clonedTps.get(etu.getNumeroTp()).add(etu);
-        }else{
+        } else {
           clonedTps.put(etu.getNumeroTp(), new HashSet<>());
           clonedTps.get(etu.getNumeroTp()).add(etu);
         }
       }
     }
-    this.tps=clonedTps;
+    this.tps = clonedTps;
   }
 
+  /**
+   * Retourne une représentation textuelle de l'objet GestionFormation.
+   * Cette représentation inclut les détails tels que le nom de la formation, le
+   * nom du responsable,
+   * l'adresse e-mail, les travaux dirigés (tds), les travaux pratiques (tps),
+   * la gestion des étudiants, la taille du groupe dirigé, la taille du groupe
+   * pratique
+   * et le nombre d'options disponibles.
+   *
+   * @return Une chaîne de caractères représentant l'objet GestionFormation.
+   */
   @Override
   public String toString() {
     return "GestionFormation [nomFormation=" + nomFormation + ", nomResponsable=" + nomResponsable + ", email=" + email

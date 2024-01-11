@@ -132,6 +132,23 @@ public class FormationControleur {
   @FXML
   private RadioButton radioBoutonOptionnelle;
 
+  /**
+   * Réagit au clic sur le bouton d'affectation automatique en vérifiant d'abord
+   * si une formation est sélectionnée.
+   * Si une formation est sélectionnée et que les tailles de groupe dirigé et
+   * pratique sont spécifiées,
+   * la méthode attribue automatiquement les groupes de travaux dirigés et
+   * pratiques via l'appel de la méthode
+   * {@link GestionFormation#attribuerAutomatiquementGroupes()}.
+   * Ensuite, met à jour les labels affichant le nombre de groupes de travaux
+   * dirigés et pratiques affectés.
+   * En cas d'absence de formation, affiche une alerte d'erreur indiquant "Aucune
+   * Formation".
+   * Si les tailles des groupes ne sont pas définies, affiche une alerte d'erreur
+   * indiquant "Les tailles des groupes non définies".
+   *
+   * @param event L'événement déclenché par le clic sur le bouton.
+   */
   @FXML
   void actionBoutonAffectationAutomatique(ActionEvent event) {
     if (ges.getNomFormation() != null) {
@@ -147,6 +164,16 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Gère l'action déclenchée lorsqu'un bouton d'affectation manuelle de groupes
+   * est activé.
+   * Vérifie si une formation est sélectionnée, puis tente de déplacer un étudiant
+   * vers un nouveau groupe de travaux dirigés (TD) et travaux pratiques (TP) en
+   * fonction des valeurs saisies dans les champs de texte.
+   * Affiche une alerte d'erreur en fonction du résultat du changement de groupe.
+   *
+   * @param event L'événement déclencheur de l'action.
+   */
   @FXML
   void actionBoutonAffectationManuelleGroupes(ActionEvent event) {
     if (ges.getNomFormation() != null) {
@@ -182,6 +209,14 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Gère l'action associée au bouton d'affichage des étudiants d'un groupe de
+   * Travaux Dirigés (TD).
+   * Affiche la liste des étudiants appartenant au groupe de TD spécifié.
+   * Affiche une alerte d'erreur en fonction des diférentes erreurs.
+   *
+   * @param event L'événement déclenché par l'utilisateur.
+   */
   @FXML
   void actionBoutonAfficherEtudiantsGroupeTD(ActionEvent event) {
     if (ges.getNomFormation() != null) {
@@ -211,6 +246,14 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Gère l'action associée au bouton d'affichage des étudiants d'un groupe de
+   * Travaux Pratiques (TP).
+   * Affiche la liste des étudiants appartenant au groupe de TP spécifié.
+   * Affiche une alerte d'erreur en fonction des diférentes erreurs.
+   *
+   * @param event L'événement déclenché par l'utilisateur.
+   */
   @FXML
   void actionBoutonAfficherEtudiantsGroupeTP(ActionEvent event) {
     if (ges.getNomFormation() != null) {
@@ -240,6 +283,13 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Gère l'action associée au bouton permettant d'afficher les étudiants inscrits
+   * à une Unité d'Enseignement (UE) optionnelle sélectionnée.
+   * Affiche une alerte d'erreur en fonction des diférentes erreurs.
+   *
+   * @param event L'événement déclencheur de l'action.
+   */
   @FXML
   void actionBoutonAfficherEtudiantsUEOptionnelle(ActionEvent event) {
     if (ges.getNomFormation() != null) {
@@ -267,6 +317,17 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Gère l'action liée au bouton d'affichage de tous les étudiants de la
+   * formation.
+   * Si le nom de la formation n'est pas nul et s'il y a des étudiants dans la
+   * formation,
+   * cette méthode crée une liste observable des numéros d'étudiants et l'assigne
+   * à un composant graphique ListView.
+   * Sinon, elle affiche un message d'erreur approprié.
+   *
+   * @param event L'événement déclenché par l'action du bouton.
+   */
   @FXML
   void actionBoutonAfficherTousEtudiants(ActionEvent event) {
     if (ges.getNomFormation() != null) {
@@ -317,6 +378,19 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Répond à l'événement déclenché par l'action sur le bouton de création de
+   * formation.
+   * Cette méthode utilise les informations fournies dans les champs de saisie
+   * pour créer une nouvelle formation
+   * via l'objet GestionFormation (ges). Si la création de la formation est
+   * réussie, les champs de saisie et
+   * les éléments associés sont réinitialisés. Sinon, des messages d'erreur
+   * appropriés sont affichés.
+   *
+   * @param event L'événement déclenché par l'action sur le bouton de création de
+   *              formation.
+   */
   @FXML
   void actionBoutonNombreChoixOptions(ActionEvent event) {
     if (ges.getNomFormation() != null) {
@@ -352,6 +426,17 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Réagit au clic sur le bouton de définition de la taille du groupe de travaux
+   * dirigés (TD).
+   * Vérifie si une formation est sélectionnée, si le champ de saisie de la taille
+   * du groupe TD n'est pas vide
+   * et s'il contient une valeur numérique valide. En cas de succès, met à jour la
+   * taille du groupe dirigé de la formation.
+   * En cas d'échec, affiche une boîte de dialogue d'erreur appropriée.
+   *
+   * @param event L'événement déclenché par le clic sur le bouton.
+   */
   @FXML
   void actionBoutonSetTailleGroupeTP(ActionEvent event) {
     if (ges.getNomFormation() != null) {
@@ -369,31 +454,45 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Gère l'action associée à l'ouverture d'une nouvelle fenêtre affichant des
+   * informations
+   * à propos des auteurs du programme.
+   *
+   * Cette méthode crée une nouvelle fenêtre avec un titre spécifique, affiche les
+   * noms des auteurs
+   * dans un Label centré en haut, et fournit un bouton permettant de fermer la
+   * fenêtre.
+   *
+   * @param event L'événement déclencheur, généralement lié à une action
+   *              utilisateur (ex. clic sur un menu).
+   */
   @FXML
   void actionMenuApropos(ActionEvent event) {
     Stage nouvelleFenetre = new Stage();
     nouvelleFenetre.setTitle("Nouvelle Fenêtre");
-
-    // Ajouter un Label pour le texte centré en haut
     Label texteLabel = new Label("Auteurs : ROUSVAL ROMAIN et LE BRAS ERWAN");
-
-    // Ajouter un bouton pour fermer la fenêtre centré en bas
     Button fermerButton = new Button("Fermer la Fenêtre");
     fermerButton.setOnAction(Event -> nouvelleFenetre.close());
-
-    // Utiliser un VBox pour disposer les éléments verticalement
-    VBox layout = new VBox(10); // 10 pixels d'espace vertical entre les éléments
+    VBox layout = new VBox(10);
     layout.getChildren().addAll(texteLabel, fermerButton);
-
-    // Centrer les éléments dans le VBox
     layout.setAlignment(javafx.geometry.Pos.CENTER);
-
     Scene scene = new Scene(layout, 300, 150);
     nouvelleFenetre.setScene(scene);
-
     nouvelleFenetre.show();
   }
 
+  /**
+   * Gère l'événement de chargement de données lorsqu'une action est déclenchée
+   * par le menu.
+   * La méthode charge les données à partir d'un fichier de sauvegarde, puis
+   * réinitialise les champs
+   * de l'interface graphique en vidant et remplissant les éléments correspondants
+   * avec les informations chargées.
+   *
+   * @param event L'événement déclencheur, généralement associé à un clic sur le
+   *              menu de chargement.
+   */
   @FXML
   void actionMenuCharger(ActionEvent event) {
     try {
@@ -421,32 +520,55 @@ public class FormationControleur {
       if (ges.nombreGroupesTravauxDiriges() != -1) {
         labelNbGroupesTD.setText(Integer.toString(ges.nombreGroupesTravauxDiriges()));
       }
-      if(ges.nombreGroupesTravauxPratiques()!=-1){
+      if (ges.nombreGroupesTravauxPratiques() != -1) {
         labelNbGroupesTP.setText(Integer.toString(ges.nombreGroupesTravauxPratiques()));
       }
-      if(ges.nombreGroupesTravauxDiriges()!=-1){
+      if (ges.nombreGroupesTravauxDiriges() != -1) {
         entreeTailleGroupeTD.setText(Integer.toString(ges.getTailleGroupeDirige()));
       }
-      if(ges.nombreGroupesTravauxDiriges()!=-1){
+      if (ges.nombreGroupesTravauxDiriges() != -1) {
         entreeTailleGroupeTP.setText(Integer.toString(ges.getTailleGroupePratique()));
       }
-      if(ges.nombreGroupesTravauxDiriges()!=-1){
+      if (ges.nombreGroupesTravauxDiriges() != -1) {
         entreeNombreChoixOptions.setText(Integer.toString(ges.getNBoption()));
       }
-      ges.getGestionEtudiant().getListeUE().stream().filter(ue -> ue.getOptionnel()).forEach(ue -> listeUEOptionnelles.getItems().add(ue.getNomUE()));
-      ges.getGestionEtudiant().getListeUE().stream().filter(ue -> !ue.getOptionnel()).forEach(ue -> listeUEObligatoires.getItems().add(ue.getNomUE()));
-      ges.getGestionEtudiant().getListeEtudiants().stream().forEach(etu -> listeEtudiants.getItems().add(Integer.toString(etu.getNumero())));
+      ges.getGestionEtudiant().getListeUE().stream().filter(ue -> ue.getOptionnel())
+          .forEach(ue -> listeUEOptionnelles.getItems().add(ue.getNomUE()));
+      ges.getGestionEtudiant().getListeUE().stream().filter(ue -> !ue.getOptionnel())
+          .forEach(ue -> listeUEObligatoires.getItems().add(ue.getNomUE()));
+      ges.getGestionEtudiant().getListeEtudiants().stream()
+          .forEach(etu -> listeEtudiants.getItems().add(Integer.toString(etu.getNumero())));
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
+  /**
+   * Gère l'événement déclenché lorsqu'un utilisateur choisit de quitter
+   * l'application depuis le menu.
+   * Cette méthode ferme les fenêtres associées aux étudiants et aux formations.
+   *
+   * @param event L'événement associé au déclenchement de l'action du menu
+   *              quitter.
+   */
   @FXML
   void actionMenuQuitter(ActionEvent event) {
     fenetreEtudiants.close();
     FenetreFormation.close();
   }
 
+  /**
+   * Gère l'événement déclenché lorsqu'une action de sauvegarde est déclenchée
+   * depuis le menu.
+   * Cette méthode appelle la méthode de sauvegarde des données de l'objet ges
+   * (Gestionnaire) avec le
+   * nom de fichier spécifié.
+   *
+   * @param event L'événement de type ActionEvent déclenché par l'action de
+   *              sauvegarde du menu.
+   * @throws IOException Si une exception d'entrée/sortie survient lors de la
+   *                     sauvegarde des données.
+   */
   @FXML
   void actionMenuSauvegarder(ActionEvent event) {
     try {
@@ -456,6 +578,18 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Gère l'événement de sélection d'un étudiant dans la liste des étudiants.
+   * Met à jour les champs d'entrée avec les informations personnelles de
+   * l'étudiant sélectionné,
+   * y compris le nom, le prénom, l'adresse, l'âge, et les groupes de travaux
+   * dirigés et pratiques.
+   * Active la case à cocher d'inscription finalisée si toutes les conditions
+   * nécessaires sont remplies.
+   *
+   * @param event L'événement de la souris déclenché lors de la sélection d'un
+   *              étudiant.
+   */
   @FXML
   void actionSelectionEtudiant(MouseEvent event) {
     if (ges.getNomFormation() != null) {
@@ -484,6 +618,17 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Gère l'action de sélection d'une Unité d'Enseignement (UE) obligatoire.
+   * Cette méthode est déclenchée en réponse à un événement de clic de souris sur
+   * un élément de la liste
+   * des UE obligatoires. Si une formation est définie, elle récupère les détails
+   * de l'UE sélectionnée,
+   * tels que le nom, le responsable et la capacité d'accueil, et les affiche dans
+   * les champs correspondants.
+   *
+   * @param event L'événement de clic de souris qui a déclenché cette action.
+   */
   @FXML
   void actionSelectionUEObligatoire(MouseEvent event) {
     if (ges.getNomFormation() != null) {
