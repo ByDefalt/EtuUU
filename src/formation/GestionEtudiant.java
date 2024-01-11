@@ -1,6 +1,5 @@
 package formation;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,38 +14,38 @@ import java.util.Set;
  */
 public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     // ******************************* ATTRIBUT D'INSTANCES
-	
-	/**
-	 * Identifiant de s�rialisation.
-	 */
+
+    /**
+     * Identifiant de s�rialisation.
+     */
     private static final long serialVersionUID = -6680817996802511324L;
-    
+
     /**
      * Le nombre d'étudiant
      */
     private int nbEtudiant = 0;
-    
+
     /**
-	 * La liste de tous les étudiants.
-	 */
+     * La liste de tous les étudiants.
+     */
     private Set<Etudiant> listeEtudiants = new HashSet<>();
-    
+
     /**
-	 * La liste de toutes les unités d'enseignements.
-	 */
+     * La liste de toutes les unités d'enseignements.
+     */
     private Set<UniteEnseignement> listeUE = new HashSet<>();
-    
+
     /**
-	 * L'etudiant connecté.
-	 */
+     * L'etudiant connecté.
+     */
     private Etudiant etudiantConnecte = null;
-    
+
     /**
-	 * Le nombre d'options.
-	 */
+     * Le nombre d'options.
+     */
     private int nbOptions;
 
-	/**
+    /**
      * Constructeur vide de la classe Etudiant.
      */
     public GestionEtudiant() {
@@ -73,7 +72,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
         etudiant.setNumero(this.nbEtudiant);
         this.nbEtudiant++;
         this.listeEtudiants.add(etudiant);
-        this.enseignementsObligatoires().forEach(ue->etudiant.addUE(ue));
+        this.enseignementsObligatoires().forEach(ue -> etudiant.addUE(ue));
         this.listeEtudiants.forEach(etu -> etu.setNbOption(nbOptions));
 
         return etudiant.getNumero();
@@ -150,7 +149,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
         }
 
         return uniteEnseignementsO;
-        
+
     }
 
     /**
@@ -188,24 +187,25 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     public void setListeUE(Set<UniteEnseignement> listeUE) {
         this.listeUE = listeUE;
     }
-    
+
     /**
-     * Renvoie le nombre d'options que les étudiants d'une formation doivent choisir.
+     * Renvoie le nombre d'options que les étudiants d'une formation doivent
+     * choisir.
      *
      * @return nombre d'options que les étudiants d'une formation doivent choisir.
      */
     public int getNbOptionsGestionEtudiant() {
-		return nbOptions;
-	}
+        return nbOptions;
+    }
 
     /**
      * Ajoute le nombre d'options que les étudiants d'une formation doivent choisir.
      *
-     * @return le nombre d'options  que les étudiants d'une formation doivent choisir
+     * @return le nombre d'options que les étudiants d'une formation doivent choisir
      */
-	public void setNbOptionsGestionEtudiant(int nbOptions) {
-		this.nbOptions = nbOptions;
-	}
+    public void setNbOptionsGestionEtudiant(int nbOptions) {
+        this.nbOptions = nbOptions;
+    }
 
     /**
      * Retourne le nombre d'options que l'étudiant doit choisir au total.
@@ -251,12 +251,13 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
         if (this.etudiantConnecte == null) {
             throw new NonConnecteException();
         }
-        if (ue.getnbParticipant() < ue.getNbPlacesMax() && ue.getOptionnel() 
-        	&& this.etudiantConnecte.getNbOptionListeUeSuivies() < this.etudiantConnecte.getNbOption() && ue != null) {
+        if (ue.getnbParticipant() < ue.getNbPlacesMax() && ue.getOptionnel()
+                && this.etudiantConnecte.getNbOptionListeUeSuivies() < this.etudiantConnecte.getNbOption()
+                && ue != null) {
             boolean res = this.etudiantConnecte.addUE(ue);
-            if(res) {
-            	ue.setnbParticipant();
-            	return true;
+            if (res) {
+                ue.setnbParticipant();
+                return true;
             }
             return false;
         }
@@ -432,20 +433,20 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
      */
     @Override
     public GestionEtudiant clone() throws CloneNotSupportedException {
-        GestionEtudiant clone=(GestionEtudiant) super.clone();
-        if(this.etudiantConnecte!=null){
-            clone.etudiantConnecte=this.etudiantConnecte.clone();
+        GestionEtudiant clone = (GestionEtudiant) super.clone();
+        if (this.etudiantConnecte != null) {
+            clone.etudiantConnecte = this.etudiantConnecte.clone();
         }
-        Set<Etudiant> listecloSet=new HashSet<>();
-        for(Etudiant etu :this.listeEtudiants){
+        Set<Etudiant> listecloSet = new HashSet<>();
+        for (Etudiant etu : this.listeEtudiants) {
             listecloSet.add(etu.clone());
         }
-        clone.listeEtudiants=listecloSet;
-        Set<UniteEnseignement> lisstecloEnseignements=new HashSet<>();
-        for(UniteEnseignement ue : this.listeUE){
+        clone.listeEtudiants = listecloSet;
+        Set<UniteEnseignement> lisstecloEnseignements = new HashSet<>();
+        for (UniteEnseignement ue : this.listeUE) {
             lisstecloEnseignements.add((UniteEnseignement) ue.clone());
         }
-        clone.listeUE=lisstecloEnseignements;
+        clone.listeUE = lisstecloEnseignements;
         return clone;
     }
 
@@ -483,9 +484,10 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
             return false;
         return true;
     }
-    
+
     /**
-     * Renvoie une représentation sous forme de chaîne de caractères de l'instance courante.
+     * Renvoie une représentation sous forme de chaîne de caractères de l'instance
+     * courante.
      * 
      * @return retourne une représentation graphique de l'instance courante.
      */

@@ -26,7 +26,7 @@ import java.util.regex.Matcher;
  * 
  */
 
-public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable{
+public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable {
 
   /**
    * Identifiant de s�rialisation.
@@ -222,7 +222,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
       if (!this.gestionEtudiant.getListeUE().contains(ue)) {
         ue.setOptionnel(false);
         this.gestionEtudiant.getListeUE().add(ue);
-        this.getGestionEtudiant().getListeEtudiants().forEach(etu->etu.addUE(ue));
+        this.getGestionEtudiant().getListeEtudiants().forEach(etu -> etu.addUE(ue));
         return true;
       }
     }
@@ -263,7 +263,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
   public void definirNombreOptions(int nombre) {
     if (this.NBoption == -1 && nombre >= 1) {
       this.NBoption = nombre;
-      this.gestionEtudiant.getListeEtudiants().forEach(etu->etu.setNbOption(nombre));
+      this.gestionEtudiant.getListeEtudiants().forEach(etu -> etu.setNbOption(nombre));
     }
   }
 
@@ -696,6 +696,20 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
         + tailleGroupeDirige + ", tailleGroupePratique=" + tailleGroupePratique + ", NBoption=" + NBoption + "]";
   }
 
+  /**
+   * Compare cet objet {@code GestionFormation} avec un autre objet pour
+   * déterminer l'égalité.
+   * 
+   * Deux objets {@code GestionFormation} sont considérés comme égaux s'ils ont
+   * les mêmes valeurs
+   * pour les attributs : nomFormation, nomResponsable, email, tds, tps,
+   * gestionEtudiant,
+   * tailleGroupeDirige, tailleGroupePratique et NBoption.
+   * 
+   * @param obj L'objet à comparer pour déterminer l'égalité.
+   * @return {@code true} si les objets sont égaux, {@code false} sinon.
+   * @see Object#equals(Object)
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
