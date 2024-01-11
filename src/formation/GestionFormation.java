@@ -468,12 +468,12 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
                 this.listeEtudiantsGroupeDirige(numgroupetd).remove(etudiant);
                 this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
                 etudiant.setNumeroTd(groupeDirige);
-                this.envoyermessage(etudiant, "changement de groupe", "changement de groupe :" + numgroupetd
+                this.envoyermessage(etudiant, "changement de groupe de TD", "changement de groupe de TD :" + numgroupetd
                     + " ----> " + etudiant.getNumeroTd());
               } else {
                 this.listeEtudiantsGroupeDirige(groupeDirige).add(etudiant);
                 etudiant.setNumeroTd(groupeDirige);
-                this.envoyermessage(etudiant, "nouveaux groupe", "nouveaux groupe :" + groupeDirige);
+                this.envoyermessage(etudiant, "nouveaux groupe de TD", "nouveaux groupe de TD :" + groupeDirige);
               }
             } else {
               td = false;
@@ -492,12 +492,12 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
                 this.tps.get(numgroupetp).remove(etudiant);
                 this.tps.get(groupePratique).add(etudiant);
                 etudiant.setNumeroTp(groupePratique);
-                this.envoyermessage(etudiant, "changement de groupe", "changement de groupe :" + numgroupetp
+                this.envoyermessage(etudiant, "changement de groupe de TP", "changement de groupe de TP :" + numgroupetp
                     + " ----> " + etudiant.getNumeroTp());
               } else {
                 this.tps.get(groupePratique).add(etudiant);
                 etudiant.setNumeroTp(groupePratique);
-                this.envoyermessage(etudiant, "changement de groupe", "nouveaux groupe :" + groupePratique);
+                this.envoyermessage(etudiant, "changement de groupe de TP", "nouveaux groupe de TP :" + groupePratique);
               }
             } else {
               tp = false;

@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import formation.Etudiant;
@@ -27,7 +29,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class EtudiantsControleur {
 	private GestionFormation gestionFormation;
-
+	Map<Integer,Integer> map=new HashMap<>();
 	public void setGes(GestionFormation gestionFormation) {
 		this.gestionFormation = gestionFormation;
 	}
@@ -173,6 +175,16 @@ public class EtudiantsControleur {
 					ObservableList<String> messagesNonLus = FXCollections
 							.observableArrayList(this.gestionFormation.getGestionEtudiant().listeMessageNonLus());
 					listeMessagesNonLus.setItems(messagesNonLus);
+					map.clear();
+					int i=0;
+					int j=0;
+					for(Message mes : this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages()){
+						if(!mes.estLu()){
+							map.put(i, j);
+							i++;
+						}
+						j++;
+					}
 				} else {
 					this.afficherPopup("Le numéro ou le mot de passe est incorrect.", AlertType.ERROR);
 				}
@@ -236,7 +248,6 @@ public class EtudiantsControleur {
 			this.afficherPopup("Les champs nécessaire a l'inscription ne sont pas tous remplis !", AlertType.ERROR);
 		}
 	}
-
 	/**
 	 * Gère l'action associée au bouton "Déconnexion".
 	 * Cette méthode est appelée lorsqu'un utilisateur souhaite se déconnecter. Elle appelle la méthode
@@ -256,6 +267,16 @@ public class EtudiantsControleur {
 			listeMessagesNonLus.setItems(messagesNonLus);
 			zoneTexteContenuMessage.setText("");
 			listeTousMessages.getSelectionModel().clearSelection();
+			map.clear();
+			int i=0;
+			int j=0;
+			for(Message mes : this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages()){
+				if(!mes.estLu()){
+					map.put(i, j);
+					i++;
+				}
+				j++;
+			}
 		} catch (NonConnecteException e) {
 			this.afficherPopup("Vous n'êtes pas connecté", AlertType.ERROR);
 		}
@@ -272,9 +293,8 @@ public class EtudiantsControleur {
 	void actionSelectionMessageListeMessagesNonLus(MouseEvent event) {
 		try {
 			String selectMessage = listeMessagesNonLus.getSelectionModel().getSelectedItem();
-			int selectIndex = listeMessagesNonLus.getSelectionModel().getSelectedIndex()+
-			this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages().
-			stream().filter(mes->mes.estLu()==true).collect(Collectors.toList()).size();
+			int a = listeMessagesNonLus.getSelectionModel().getSelectedIndex();
+			int selectIndex=map.get(a);
 			if (selectMessage != null) {
 				Message message = this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages().get(selectIndex);
 				zoneTexteContenuMessage.setText(message.getContenu());
@@ -284,7 +304,6 @@ public class EtudiantsControleur {
 			this.afficherPopup("Vous n'êtes pas connecté", AlertType.ERROR);
 		}
 	}
-
 	/**
 	 * Gère l'action associée à la sélection d'un message dans la liste de tous les messages.
 	 * Cette méthode est appelée lorsqu'un utilisateur sélectionne un message dans la liste de tous les messages.
