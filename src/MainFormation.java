@@ -1,12 +1,9 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.IOException;
 
 import formation.GestionFormation;
 import formation.InformationPersonnelle;
 import formation.NonConnecteException;
 import formation.UniteEnseignement;
-import javafx.scene.control.Alert.AlertType;
 
 public class MainFormation {
 
