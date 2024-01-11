@@ -390,7 +390,6 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     @Override
     public List<String> listeMessageNonLus() throws NonConnecteException {
         if (this.etudiantConnecte == null) {
-            System.out.println(this.etudiantConnecte);
             throw new NonConnecteException();
         }
 

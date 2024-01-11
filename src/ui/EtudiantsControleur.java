@@ -82,16 +82,16 @@ public class EtudiantsControleur {
 	void actionBoutonChoisirOption(ActionEvent event) {
 		try {
 			String ueNom = listeUEOptionnellesFormation.getSelectionModel().getSelectedItem();
-			
+
 			if (ueNom != null) {
-	            for (UniteEnseignement ue : this.gestionFormation.getGestionEtudiant().getListeUE()) {
-	                if (ue.getNomUE().equals(ueNom)) {
-	                	this.gestionFormation.getGestionEtudiant().choisirOption(ue);
-	                    break;
-	                }
-	            }
-	        }
-			
+				for (UniteEnseignement ue : this.gestionFormation.getGestionEtudiant().getListeUE()) {
+					if (ue.getNomUE().equals(ueNom)) {
+						this.gestionFormation.getGestionEtudiant().choisirOption(ue);
+						break;
+					}
+				}
+			}
+
 			ObservableList<String> listeUe = FXCollections
 					.observableArrayList(this.gestionFormation.getGestionEtudiant().enseignementsSuivis()
 							.stream().map(UniteEnseignement::getNomUE).collect(Collectors.toSet()));
@@ -107,9 +107,10 @@ public class EtudiantsControleur {
 			this.afficherPopup("Les champs nécessaire a la connexion ne sont pas tous remplis !", AlertType.ERROR);
 		} else {
 			try {
-				boolean res = this.gestionFormation.getGestionEtudiant().connexion(Integer.parseInt(entreeNumeroEtudiant.getText()),
+				boolean res = this.gestionFormation.getGestionEtudiant().connexion(
+						Integer.parseInt(entreeNumeroEtudiant.getText()),
 						entreeMotDePasseEtudiant.getText());
-				if(res) {
+				if (res) {
 					Etudiant etudiant = this.gestionFormation.getGestionEtudiant().getEtudiantConnecte();
 					entreeNomEtudiant.setText(etudiant.getInformationPersonnelle().getNom());
 					entreePrenomEtudiant.setText(etudiant.getInformationPersonnelle().getPrenom());
@@ -139,28 +140,27 @@ public class EtudiantsControleur {
 							.observableArrayList(etudiant.getListeUEsuivies()
 									.stream().map(UniteEnseignement::getNomUE).collect(Collectors.toSet()));
 					listeUESuiviesEtudiant.setItems(listeUe);
-	
+
 					ObservableList<String> listeUEOptionnelles = FXCollections
 							.observableArrayList(this.gestionFormation.getGestionEtudiant().enseignementsOptionnels()
 									.stream().map(UniteEnseignement::getNomUE).collect(Collectors.toSet()));
 					listeUEOptionnellesFormation.setItems(listeUEOptionnelles);
-	
-					
+
 					ObservableList<String> messages = FXCollections
 							.observableArrayList(this.gestionFormation.getGestionEtudiant().listeTousMessages());
 					listeTousMessages.setItems(messages);
-	
+
 					ObservableList<String> messagesNonLus = FXCollections
-							.observableArrayList(this.gestionFormation.getGestionEtudiant().listeTousMessages());
+							.observableArrayList(this.gestionFormation.getGestionEtudiant().listeMessageNonLus());
 					listeMessagesNonLus.setItems(messagesNonLus);
 				} else {
 					this.afficherPopup("Le numéro ou le mot de passe est incorrect.", AlertType.ERROR);
 				}
 			} catch (NumberFormatException e) {
-	            this.afficherPopup("Le numéro étudiant doit être un nombre.", AlertType.ERROR);
-	        } catch (NonConnecteException e) {
-	            this.afficherPopup("Erreur de connexion.", AlertType.ERROR);
-	        }
+				this.afficherPopup("Le numéro étudiant doit être un nombre.", AlertType.ERROR);
+			} catch (NonConnecteException e) {
+				this.afficherPopup("Erreur de connexion.", AlertType.ERROR);
+			}
 		}
 	}
 
@@ -190,46 +190,44 @@ public class EtudiantsControleur {
 	}
 
 	@FXML
-    void actionBoutonInscription(ActionEvent event) {
-    	if(!entreeNomEtudiant.getText().isEmpty() && !entreePrenomEtudiant.getText().isEmpty() && !entreeAdresseEtudiant.getText().isEmpty() 
-    			&& !entreeAgeEtudiant.getText().isEmpty() && !entreeMotDePasseEtudiant.getText().isEmpty()) {
-    		try {
-	    		InformationPersonnelle info = new InformationPersonnelle(entreeNomEtudiant.getText(),
-	                    entreePrenomEtudiant.getText(), entreeAdresseEtudiant.getText(),
-	                    Integer.parseInt(entreeAgeEtudiant.getText()));
-	            int resInscription = this.gestionFormation.getGestionEtudiant().inscription(info, entreeMotDePasseEtudiant.getText());
-				
-	            for(Etudiant etudiant : this.gestionFormation.getGestionEtudiant().getListeEtudiants()) {
-	            	if(etudiant.getNumero() == resInscription) {
-	            		if(this.gestionFormation.getNBoption() != -1) {
-	            			this.gestionFormation.setNbOptionEtudiant(etudiant);
-	            		}
-	            	}
-	            }
-	            if(resInscription != -1) {
-	            	/*entreeNomEtudiant.setText("");
-	            	entreePrenomEtudiant.setText("");
-	            	entreeAdresseEtudiant.setText("");
-	            	entreeAgeEtudiant.setText("");*/
-	            	entreeNumeroEtudiant.setText(String.valueOf(resInscription));
-	            }
-    		} catch(NumberFormatException e) {
-            	this.afficherPopup("L'age doit être un nombre.", AlertType.ERROR);
-            }
-    	} else {
-    		this.afficherPopup("Les champs nécessaire a l'inscription ne sont pas tous remplis !", AlertType.ERROR);
-    	}
-    }
+	void actionBoutonInscription(ActionEvent event) {
+		if (!entreeNomEtudiant.getText().isEmpty() && !entreePrenomEtudiant.getText().isEmpty()
+				&& !entreeAdresseEtudiant.getText().isEmpty()
+				&& !entreeAgeEtudiant.getText().isEmpty() && !entreeMotDePasseEtudiant.getText().isEmpty()) {
+			try {
+				InformationPersonnelle info = new InformationPersonnelle(entreeNomEtudiant.getText(),
+						entreePrenomEtudiant.getText(), entreeAdresseEtudiant.getText(),
+						Integer.parseInt(entreeAgeEtudiant.getText()));
+				int resInscription = this.gestionFormation.getGestionEtudiant().inscription(info,
+						entreeMotDePasseEtudiant.getText());
+
+				for (Etudiant etudiant : this.gestionFormation.getGestionEtudiant().getListeEtudiants()) {
+					if (etudiant.getNumero() == resInscription) {
+						if (this.gestionFormation.getNBoption() != -1) {
+							this.gestionFormation.setNbOptionEtudiant(etudiant);
+						}
+					}
+				}
+				if (resInscription != -1) {
+					/*
+					 * entreeNomEtudiant.setText("");
+					 * entreePrenomEtudiant.setText("");
+					 * entreeAdresseEtudiant.setText("");
+					 * entreeAgeEtudiant.setText("");
+					 */
+					entreeNumeroEtudiant.setText(String.valueOf(resInscription));
+				}
+			} catch (NumberFormatException e) {
+				this.afficherPopup("L'age doit être un nombre.", AlertType.ERROR);
+			}
+		} else {
+			this.afficherPopup("Les champs nécessaire a l'inscription ne sont pas tous remplis !", AlertType.ERROR);
+		}
+	}
 
 	@FXML
 	void actionBoutonRafraichirListesMessages(ActionEvent event) {
 		try {
-			for (Message message : this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages()) {
-				if (this.gestionFormation.getGestionEtudiant().listeMessageNonLus().contains(message.getTitre())) {
-					message.setLu();
-				}
-			}
-
 			ObservableList<String> messages = FXCollections
 					.observableArrayList(this.gestionFormation.getGestionEtudiant().listeTousMessages());
 			listeTousMessages.setItems(messages);
@@ -237,7 +235,6 @@ public class EtudiantsControleur {
 			ObservableList<String> messagesNonLus = FXCollections
 					.observableArrayList(this.gestionFormation.getGestionEtudiant().listeMessageNonLus());
 			listeMessagesNonLus.setItems(messagesNonLus);
-
 		} catch (NonConnecteException e) {
 			this.afficherPopup("Vous n'êtes pas connecté", AlertType.ERROR);
 		}
@@ -245,24 +242,15 @@ public class EtudiantsControleur {
 
 	@FXML
 	void actionSelectionMessageListeMessagesNonLus(MouseEvent event) {
-		
+
 		try {
-			String selectMessage = listeTousMessages.getSelectionModel().getSelectedItem();
-			int selectIndex = listeTousMessages.getSelectionModel().getSelectedIndex();
-			
-			List<Message> messages = this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages();
-			for(Message msg : messages) {
-				if(msg.estLu()) {
-					messages.remove(msg);
-				}
-			}
-			
+			String selectMessage = listeMessagesNonLus.getSelectionModel().getSelectedItem();
+			int selectIndex = listeMessagesNonLus.getSelectionModel().getSelectedIndex();
 			if (selectMessage != null) {
-				Message message = messages.get(selectIndex);
-                if (message.getTitre().equals(selectMessage)) {
-                    zoneTexteContenuMessage.setText(message.getContenu());
-                }
-	        }
+				Message message = this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages().get(selectIndex);
+				zoneTexteContenuMessage.setText(message.getContenu());
+				message.setLu();
+			}
 		} catch (NonConnecteException e) {
 			this.afficherPopup("Vous n'êtes pas connecté", AlertType.ERROR);
 		}
@@ -273,13 +261,13 @@ public class EtudiantsControleur {
 		try {
 			String selectMessage = listeTousMessages.getSelectionModel().getSelectedItem();
 			int selectIndex = listeTousMessages.getSelectionModel().getSelectedIndex();
-			
+
 			if (selectMessage != null) {
-				Message message = this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages().get(selectIndex);
-                if (message.getTitre().equals(selectMessage)) {
-                    zoneTexteContenuMessage.setText(message.getContenu());
-                }
-	        }
+				Message message = this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages()
+						.get(selectIndex);
+				zoneTexteContenuMessage.setText(message.getContenu());
+				message.setLu();
+			}
 		} catch (NonConnecteException e) {
 			this.afficherPopup("Vous n'êtes pas connecté", AlertType.ERROR);
 		}
@@ -303,4 +291,3 @@ public class EtudiantsControleur {
 		// Vous pouvez ajouter des initialisations ici si nécessaire
 	}
 }
-
