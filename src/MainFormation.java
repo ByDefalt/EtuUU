@@ -1,13 +1,16 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.IOException;
+
 import formation.GestionFormation;
 import formation.InformationPersonnelle;
 import formation.NonConnecteException;
 import formation.UniteEnseignement;
+import javafx.scene.control.Alert.AlertType;
 
 public class MainFormation {
 
-  static void test1() throws NonConnecteException {
+  static void test1() throws NonConnecteException, IOException {
     // scénario 1
     GestionFormation ges = new GestionFormation();
     ges.creerFormation("L3 informatique", "Dark Vador", "dark.vador@empire.com");
@@ -53,12 +56,37 @@ public class MainFormation {
     System.out.println(ges.getTps().get(2));
     System.out.println(ges.listeEtudiantsOption(ue4));
     System.out.println(ges.listeEtudiantsOption(ue5)+"\n\n");
-    System.out.println(ges.getGestionEtudiant().listeMessageNonLus());System.out.println(ges.getGestionEtudiant().getNumeroGroupeTravauxDiriges());
+    System.out.println(ges.getGestionEtudiant().listeMessageNonLus());
+    System.out.println(ges.getGestionEtudiant().getNumeroGroupeTravauxDiriges());
     System.out.println(ges.getGestionEtudiant().getNumeroGroupeTravauxPratiques());
     System.out.println(ges.getGestionEtudiant().getEtudiantConnecte().getListeUEsuivies());
+    int a=ges.changerGroupe(ges.getGestionEtudiant().getEtudiantConnecte(), 2, 2);
+    switch (a) {
+        case 0:
+          break;
+        case -1:
+          System.out.println("déplacement TD imposible");
+          break;
+        case -2:
+          System.out.println("déplacement TP imposible");
+          break;
+        case -3:
+          System.out.println("déplacement TP et TD imposible");
+          break;
+        default:
+          System.out.println("erreur");
+          break;
+    }
+    ges.getGestionEtudiant().inscription(new InformationPersonnelle("D2", "R2", "pas", 20), "mp");
+    ges.getGestionEtudiant().deconnexion();
+    ges.getGestionEtudiant().connexion(4, "mp");
+    ges.getGestionEtudiant().choisirOption(ue5);
+    ges.attribuerAutomatiquementGroupes();
+    System.out.println(ges.getTds().size());
+    System.out.println(ges.getTps().size());
   }
 
-  public static void main(String[] args) throws NonConnecteException {
+  public static void main(String[] args) throws NonConnecteException, IOException {
     test1();
   }
 }
