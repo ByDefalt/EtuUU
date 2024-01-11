@@ -1,5 +1,6 @@
 package ui;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import formation.Etudiant;
@@ -138,15 +139,11 @@ public class EtudiantsControleur {
 							.observableArrayList(etudiant.getListeUEsuivies()
 									.stream().map(UniteEnseignement::getNomUE).collect(Collectors.toSet()));
 					listeUESuiviesEtudiant.setItems(listeUe);
-					System.out.println("Liste UE ls origine: " + etudiant.getListeUEsuivies());
-					System.out.println("Liste UE : " + listeUe);
 	
 					ObservableList<String> listeUEOptionnelles = FXCollections
 							.observableArrayList(this.gestionFormation.getGestionEtudiant().enseignementsOptionnels()
 									.stream().map(UniteEnseignement::getNomUE).collect(Collectors.toSet()));
 					listeUEOptionnellesFormation.setItems(listeUEOptionnelles);
-					System.out.println("Liste UE Optionnelles ls origine: " + this.gestionFormation.getGestionEtudiant().enseignementsOptionnels());
-					System.out.println("Liste UE Optionnelles : " + listeUEOptionnelles);
 	
 					
 					ObservableList<String> messages = FXCollections
@@ -251,15 +248,20 @@ public class EtudiantsControleur {
 		
 		try {
 			String selectMessage = listeTousMessages.getSelectionModel().getSelectedItem();
+			int selectIndex = listeTousMessages.getSelectionModel().getSelectedIndex();
+			
+			List<Message> messages = this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages();
+			for(Message msg : messages) {
+				if(msg.estLu()) {
+					messages.remove(msg);
+				}
+			}
 			
 			if (selectMessage != null) {
-	            for (Message message : this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages()) {
-	                if (this.gestionFormation.getGestionEtudiant().listeMessageNonLus().contains(message.getTitre())
-	                	&& message.getTitre().equals(selectMessage)) {
-	                    zoneTexteContenuMessage.setText(message.getContenu());
-	                    break;
-	                }
-	            }
+				Message message = messages.get(selectIndex);
+                if (message.getTitre().equals(selectMessage)) {
+                    zoneTexteContenuMessage.setText(message.getContenu());
+                }
 	        }
 		} catch (NonConnecteException e) {
 			this.afficherPopup("Vous n'êtes pas connecté", AlertType.ERROR);
@@ -270,14 +272,13 @@ public class EtudiantsControleur {
 	void actionSelectionMessageListeTousMessages(MouseEvent event) {
 		try {
 			String selectMessage = listeTousMessages.getSelectionModel().getSelectedItem();
+			int selectIndex = listeTousMessages.getSelectionModel().getSelectedIndex();
 			
 			if (selectMessage != null) {
-	            for (Message message : this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages()) {
-	                if (message.getTitre().equals(selectMessage)) {
-	                    zoneTexteContenuMessage.setText(message.getContenu());
-	                    break;
-	                }
-	            }
+				Message message = this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages().get(selectIndex);
+                if (message.getTitre().equals(selectMessage)) {
+                    zoneTexteContenuMessage.setText(message.getContenu());
+                }
 	        }
 		} catch (NonConnecteException e) {
 			this.afficherPopup("Vous n'êtes pas connecté", AlertType.ERROR);

@@ -1,10 +1,6 @@
 package formation;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -64,7 +60,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
      */
     @Override
     public int inscription(InformationPersonnelle informationPersonnelle, String motDePasse) {
-        if (motDePasse.isEmpty() || informationPersonnelle == null) {
+        if (motDePasse != null || motDePasse.isEmpty() || informationPersonnelle == null) {
             return -1;
         }
 
@@ -72,6 +68,10 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
         etudiant.setNumero(this.nbEtudiant);
         this.nbEtudiant++;
         this.listeEtudiants.add(etudiant);
+        
+        for(UniteEnseignement ue :this.enseignementsObligatoires()) {
+        	etudiant.addUE(ue);
+        }
 
         return etudiant.getNumero();
     }
