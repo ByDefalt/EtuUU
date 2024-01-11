@@ -230,7 +230,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
         if (this.etudiantConnecte == null) {
             throw new NonConnecteException();
         }
-        if (ue.getnbParticipant() < ue.getNbPlacesMax() && ue.getOptionnel()) {
+        if (ue.getnbParticipant() < ue.getNbPlacesMax() && ue.getOptionnel() 
+        	&& this.etudiantConnecte.getNbOptionListeUeSuivies() < this.etudiantConnecte.getNbOption()) {
             boolean res = this.etudiantConnecte.addUE(ue);
             if(res) {
             	ue.setnbParticipant();

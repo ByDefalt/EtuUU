@@ -188,6 +188,22 @@ public class Etudiant implements Serializable, Cloneable {
     public List<Message> getMessages() {
         return messages;
     }
+    
+    /**
+     * Obtient nombre d'options dans la listes des ue suivies.
+     *
+     * @return nombre d'options dans la listes des ue suivies.
+     */
+    public int getNbOptionListeUeSuivies() {
+    	int res = 0;
+    	for(UniteEnseignement ue : this.listeUEsuivies) {
+    		if(ue.getOptionnel()) {
+    			res++;
+    		}
+    	}
+    	
+    	return res;
+    }
 
     /**
      * Vérifie l'égalité d'un objet.
