@@ -64,7 +64,7 @@ public class Message implements Serializable, Cloneable {
             this.titre = titre;
             this.contenu = contenu;
             this.lu = false;
-        }else{
+        } else {
             throw new IllegalArgumentException("Les arguments ne peuvent pas être nuls ou vide");
         }
     }
@@ -112,7 +112,19 @@ public class Message implements Serializable, Cloneable {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-    
+
+    /**
+     * Compare cet objet {@code Message} avec un autre objet pour déterminer
+     * l'égalité.
+     * 
+     * Deux objets {@code Message} sont considérés comme égaux si ils ont la même
+     * valeur
+     * pour les attributs : titre, contenu et lu.
+     * 
+     * @param obj L'objet à comparer pour déterminer l'égalité.
+     * @return {@code true} si les objets sont égaux, {@code false} sinon.
+     * @see Object#equals(Object)
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -137,6 +149,14 @@ public class Message implements Serializable, Cloneable {
         return true;
     }
 
+    /**
+     * Renvoie une représentation textuelle de cet objet {@code Message}.
+     * 
+     * La représentation inclut les valeurs des attributs : titre, contenu et lu.
+     * 
+     * @return Une chaîne de caractères représentant cet objet avec ses attributs.
+     * @see Object#toString()
+     */
     @Override
     public String toString() {
         return "Message [titre=" + titre + ", contenu=" + contenu + ", lu=" + lu + "]";

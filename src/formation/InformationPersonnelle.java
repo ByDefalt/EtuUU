@@ -186,8 +186,21 @@ public final class InformationPersonnelle implements Serializable, Cloneable {
     return prenom + " " + nom + " d'age " + age + " ans, habite " + adresse;
   }
 
+  /**
+   * Crée et renvoie une copie de cet objet {@code InformationPersonnelle}.
+   * 
+   * La méthode {@code clone} crée un nouvel objet avec les mêmes valeurs que
+   * l'objet
+   * actuel pour les attributs : nom, prénom, adresse et âge.
+   * 
+   * @return Une nouvelle instance de {@code InformationPersonnelle} avec les
+   *         mêmes valeurs que l'objet courant.
+   * @throws CloneNotSupportedException Si la clonage n'est pas supporté pour
+   *                                    cette classe.
+   * @see Object#clone()
+   */
   @Override
-    public Object clone() throws CloneNotSupportedException {
-        return new InformationPersonnelle(this.nom, this.prenom,this.adresse,this.age);
-    }
+  public Object clone() throws CloneNotSupportedException {
+    return new InformationPersonnelle(this.nom, this.prenom, this.adresse, this.age);
+  }
 }
