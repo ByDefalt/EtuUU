@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * des fonctionnalités de la classe {@link formation.GestionEtudiant}.
  *
  * @author LE BRAS Erwan
- * @see formation.Message
+ * @see formation.GestionEtudiant
  */
 class TestGestionEtudiant {
 
