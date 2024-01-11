@@ -112,4 +112,33 @@ public class Message implements Serializable, Cloneable {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Message other = (Message) obj;
+        if (titre == null) {
+            if (other.titre != null)
+                return false;
+        } else if (!titre.equals(other.titre))
+            return false;
+        if (contenu == null) {
+            if (other.contenu != null)
+                return false;
+        } else if (!contenu.equals(other.contenu))
+            return false;
+        if (lu != other.lu)
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Message [titre=" + titre + ", contenu=" + contenu + ", lu=" + lu + "]";
+    }
 }

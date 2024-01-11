@@ -50,12 +50,12 @@ public class Etudiant implements Serializable, Cloneable {
     /**
      * La liste des enseignements suivies.
      */
-    private final Set<UniteEnseignement> listeUEsuivies = new HashSet<>();
+    private Set<UniteEnseignement> listeUEsuivies = new HashSet<>();
     
     /**
      * La liste des messages.
      */
-    private final List<Message> messages = new ArrayList<>();
+    private List<Message> messages = new ArrayList<>();
 
     /**
      * Constructeur de la classe Etudiant.
@@ -218,15 +218,16 @@ public class Etudiant implements Serializable, Cloneable {
 
         clone.informationPersonnelle = (InformationPersonnelle) this.informationPersonnelle.clone();
 
-        clone.listeUEsuivies.clear();
+        Set<UniteEnseignement> listecloue=new HashSet<>();
         for (UniteEnseignement ue : this.listeUEsuivies) {
-            clone.listeUEsuivies.add((UniteEnseignement) ue.clone());
+            listecloue.add((UniteEnseignement) ue.clone());
         }
-
-        clone.messages.clear();
+        clone.listeUEsuivies=listecloue;
+        List<Message> listeclomess= new ArrayList<>();
         for (Message message : this.messages) {
-            clone.messages.add((Message) message.clone());
+            listeclomess.add((Message) message.clone());
         }
+        clone.messages=listeclomess;
 
         return clone;
     }

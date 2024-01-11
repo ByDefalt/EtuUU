@@ -696,4 +696,52 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
         + tailleGroupeDirige + ", tailleGroupePratique=" + tailleGroupePratique + ", NBoption=" + NBoption + "]";
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    GestionFormation other = (GestionFormation) obj;
+    if (nomFormation == null) {
+      if (other.nomFormation != null)
+        return false;
+    } else if (!nomFormation.equals(other.nomFormation))
+      return false;
+    if (nomResponsable == null) {
+      if (other.nomResponsable != null)
+        return false;
+    } else if (!nomResponsable.equals(other.nomResponsable))
+      return false;
+    if (email == null) {
+      if (other.email != null)
+        return false;
+    } else if (!email.equals(other.email))
+      return false;
+    if (tds == null) {
+      if (other.tds != null)
+        return false;
+    } else if (!tds.equals(other.tds))
+      return false;
+    if (tps == null) {
+      if (other.tps != null)
+        return false;
+    } else if (!tps.equals(other.tps))
+      return false;
+    if (gestionEtudiant == null) {
+      if (other.gestionEtudiant != null)
+        return false;
+    } else if (!gestionEtudiant.equals(other.gestionEtudiant))
+      return false;
+    if (tailleGroupeDirige != other.tailleGroupeDirige)
+      return false;
+    if (tailleGroupePratique != other.tailleGroupePratique)
+      return false;
+    if (NBoption != other.NBoption)
+      return false;
+    return true;
+  }
+
 }

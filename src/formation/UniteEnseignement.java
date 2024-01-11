@@ -218,4 +218,10 @@ public class UniteEnseignement implements Serializable,Cloneable {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+    @Override
+    public String toString() {
+        return "UniteEnseignement [nomUE=" + nomUE + ", nomEnseignant=" + nomEnseignant + ", nbParticipant="
+                + nbParticipant + ", nbPlacesMax=" + nbPlacesMax + ", Optionnel=" + Optionnel + "]";
+    }
 }

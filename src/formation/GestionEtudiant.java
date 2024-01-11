@@ -33,7 +33,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     /**
 	 * La liste de tous les étudiants.
 	 */
-    private final Set<Etudiant> listeEtudiants = new HashSet<>();
+    private Set<Etudiant> listeEtudiants = new HashSet<>();
     
     /**
 	 * La liste de toutes les unités d'enseignements.
@@ -411,18 +411,21 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
      */
     @Override
     public GestionEtudiant clone() throws CloneNotSupportedException {
-        try {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(bos);
-            oos.writeObject(this);
-
-            ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
-            ObjectInputStream ois = new ObjectInputStream(bis);
-
-            return (GestionEtudiant) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new CloneNotSupportedException("Erreur lors de la copie profonde : " + e.getMessage());
+        GestionEtudiant clone=(GestionEtudiant) super.clone();
+        if(this.etudiantConnecte!=null){
+            clone.etudiantConnecte=this.etudiantConnecte.clone();
         }
+        Set<Etudiant> listecloSet=new HashSet<>();
+        for(Etudiant etu :this.listeEtudiants){
+            listecloSet.add(etu.clone());
+        }
+        clone.listeEtudiants=listecloSet;
+        Set<UniteEnseignement> lisstecloEnseignements=new HashSet<>();
+        for(UniteEnseignement ue : this.listeUE){
+            lisstecloEnseignements.add((UniteEnseignement) ue.clone());
+        }
+        clone.listeUE=lisstecloEnseignements;
+        return clone;
     }
 
     /**

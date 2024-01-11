@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -688,5 +689,65 @@ class TestGestionFormation {
     @Test
     void testlisteEtudiantsOptionNotInList() {
         assertTrue(ges.listeEtudiantsOption(new UniteEnseignement("gfde", "tre")) == null);
+    }
+    @Test
+    void testsauvegarderDonnees(){
+        for (int i = 0; i < 101; i++) {
+            InformationPersonnelle inf = new InformationPersonnelle(i + "", i + "");
+            ;
+            ges.getGestionEtudiant().inscription(inf, i + "");
+        }
+        ges.setTailleGroupeDirige(10);
+        ges.setTailleGroupePratique(10);
+        ges.attribuerAutomatiquementGroupes();
+        ges.definirNombreOptions(5);
+        UniteEnseignement ue = new UniteEnseignement("l", "l");
+        ges.ajouterEnseignementOptionnel(ue, 12);
+        UniteEnseignement ue2 = new UniteEnseignement("m", "m");
+        ges.ajouterEnseignementOptionnel(ue2, 10);
+        for (int i = 0; i < 50; i++) {
+            ges.getGestionEtudiant().connexion(i, i + "");
+            try {
+                ges.getGestionEtudiant().choisirOption(ue);
+            } catch (NonConnecteException e) {
+                e.printStackTrace();
+            }
+            try {
+                ges.getGestionEtudiant().deconnexion();
+            } catch (NonConnecteException e) {
+                e.printStackTrace();
+            }
+        }
+        ges.getGestionEtudiant().connexion(0, 0 + "");
+        try {
+            ges.getGestionEtudiant().choisirOption(ue2);
+        } catch (NonConnecteException e) {
+            e.printStackTrace();
+        }
+        try {
+            ges.getGestionEtudiant().deconnexion();
+        } catch (NonConnecteException e) {
+            e.printStackTrace();
+        }
+        try {
+            ges.sauvegarderDonnees("Testsave");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        GestionFormation ges2=new GestionFormation();
+        try {
+            ges2.chargerDonnees("Testsave");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertEquals(ges, ges2);
+    }
+    @Test
+    void testchargerDonnees(){
+        
+    }
+    @Test
+    void testcopierDepuis(){
+        
     }
 }
