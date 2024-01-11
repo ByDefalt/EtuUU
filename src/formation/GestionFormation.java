@@ -377,8 +377,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
         / this.nombreGroupesTravauxPratiques();
     int numeroGroupeTailleMin = 1;
     int numeroGroupeTailleMax = 1;
-    while (!interval(nombreEtudiantParGroupeTd, this.tds)
-        && this.getGestionEtudiant().getListeEtudiants().size() < nombreEtudiantParGroupeTd) {
+    while (!interval(nombreEtudiantParGroupeTd, this.tds)) {
       for (Map.Entry<Integer, Set<Etudiant>> entry : this.tds.entrySet()) {
         int key = entry.getKey();
         Set<Etudiant> value = entry.getValue();
@@ -391,8 +390,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
       }
       changerGroupe(this.tds.get(numeroGroupeTailleMax).stream().findFirst().orElse(null), numeroGroupeTailleMin, 0);
     }
-    while (!interval(nombreEtudiantParGroupeTp, this.tps)
-        && this.getGestionEtudiant().getListeEtudiants().size() < nombreEtudiantParGroupeTp) {
+    while (!interval(nombreEtudiantParGroupeTp, this.tps)) {
       for (Map.Entry<Integer, Set<Etudiant>> entry : this.tps.entrySet()) {
         int key = entry.getKey();
         Set<Etudiant> value = entry.getValue();
