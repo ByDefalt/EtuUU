@@ -222,6 +222,9 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
       if (!this.gestionEtudiant.getListeUE().contains(ue)) {
         ue.setOptionnel(false);
         this.gestionEtudiant.getListeUE().add(ue);
+        for(Etudiant etu : this.getGestionEtudiant().getListeEtudiants()){
+          etu.addUE(ue);
+        }
         return true;
       }
     }
