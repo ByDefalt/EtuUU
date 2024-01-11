@@ -346,6 +346,19 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Gère l'action associée au bouton de création d'une nouvelle formation.
+   * Cette méthode récupère les informations de la nouvelle formation à partir des
+   * champs de saisie,
+   * puis utilise l'objet GestionFormation (ges) pour créer la formation
+   * correspondante.
+   * Si la création réussit, les champs de saisie sont réinitialisés et certaines
+   * étiquettes et listes sont effacées.
+   * En cas d'échec, des messages d'erreur appropriés sont affichés sous forme de
+   * pop-ups.
+   *
+   * @param event L'événement déclenché par l'action du bouton.
+   */
   @FXML
   void actionBoutonCreerFormation(ActionEvent event) {
     ges.creerFormation(entreeNomFormation.getText(), entreeNomResponsableFormation.getText(),
@@ -409,6 +422,17 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Gère l'action déclenchée lorsqu'un utilisateur appuie sur le bouton pour
+   * définir la taille du groupe de travaux dirigés (TD).
+   * Si le nom de la formation est non nul, vérifie et met à jour la taille du
+   * groupe de travaux dirigés en fonction de la valeur
+   * saisie dans le champ d'entrée entreeTailleGroupeTD. Affiche des messages
+   * d'erreur appropriés en cas de champ vide
+   * ou de valeur incorrecte.
+   *
+   * @param event L'événement déclencheur de l'action.
+   */
   @FXML
   void actionBoutonSetTailleGroupeTD(ActionEvent event) {
     if (ges.getNomFormation() != null) {
@@ -644,6 +668,17 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Gère l'événement de sélection d'une Unité d'Enseignement (UE) optionnelle.
+   * Si une formation est sélectionnée, recherche l'UE correspondante dans la
+   * liste des UE optionnelles
+   * et met à jour les champs d'interface graphique avec les informations de l'UE
+   * sélectionnée, tels que
+   * le nom de l'UE, le nom du responsable de l'UE et la capacité d'accueil de
+   * l'UE.
+   *
+   * @param event L'événement de la souris déclenchant l'action.
+   */
   @FXML
   void actionSelectionUEOptionnelle(MouseEvent event) {
     if (ges.getNomFormation() != null) {
@@ -659,6 +694,14 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Gère l'événement de clic sur le bouton de création d'une nouvelle Unité
+   * d'Enseignement (UE).
+   * Vérifie si une formation est sélectionnée, puis valide et ajoute une nouvelle
+   * UE en fonction des champs saisis dans l'interface graphique.
+   *
+   * @param event L'événement déclenché par le clic sur le bouton.
+   */
   @FXML
   void actionBoutonCreerNouvelleUE(ActionEvent event) {
     if (ges.getNomFormation() != null) {
@@ -690,6 +733,17 @@ public class FormationControleur {
     }
   }
 
+  /**
+   * Affiche une boîte de dialogue (popup) avec un message spécifié et un type
+   * d'alerte donné.
+   *
+   * @param message Le message à afficher dans la boîte de dialogue.
+   * @param type    Le type d'alerte (Erreur, Information, etc.).
+   *                Utilisez les constantes de la classe AlertType, par exemple
+   *                AlertType.ERROR ou AlertType.INFORMATION.
+   * 
+   * @see javafx.scene.control.Alert.AlertType
+   */
   private void afficherPopup(String message, AlertType type) {
     Alert alert = new Alert(type);
     if (type == AlertType.ERROR) {
