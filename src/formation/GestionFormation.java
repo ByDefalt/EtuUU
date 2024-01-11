@@ -265,6 +265,9 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
   public void definirNombreOptions(int nombre) {
     if (this.NBoption == -1 && nombre >= 1) {
       this.NBoption = nombre;
+      for(Etudiant etu : this.gestionEtudiant.getListeEtudiants()){
+        etu.setNbOption(nombre);
+      }
     }
   }
 
