@@ -26,7 +26,7 @@ import java.util.regex.Matcher;
  * 
  */
 
-public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable, Cloneable {
+public class GestionFormation implements InterGestionFormation, InterSauvegarde, Serializable{
 
   /**
    * Identifiant de s�rialisation.
