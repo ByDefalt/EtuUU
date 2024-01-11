@@ -126,5 +126,6 @@ class TestMessage {
         assertEquals(monMessage.getTitre(), cloneMessage.getTitre());
         assertEquals(monMessage.getContenu(), cloneMessage.getContenu());
         assertEquals(monMessage.estLu(), cloneMessage.estLu());
+        assertEquals(monMessage, cloneMessage);
     }
 }

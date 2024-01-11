@@ -91,7 +91,7 @@ class TestInformationUniteEnseignement {
      * Teste la méthode {@link UniteEnseignement#getNbPlacesMax()}.
      */
     @Test
-    void testgetNbPlacesMax() {
+    void testsetNbPlacesMax() {
         ue.setNbPlacesMax(12);
         assertNotEquals(ue.getNbPlacesMax(), 12);
         ue.setOptionnel(true);
