@@ -1,8 +1,3 @@
-
-import java.io.IOException;
-
-import formation.*;
-
 public class MainFormation {
 
   static void test1() throws CloneNotSupportedException {
