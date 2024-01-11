@@ -222,9 +222,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
       if (!this.gestionEtudiant.getListeUE().contains(ue)) {
         ue.setOptionnel(false);
         this.gestionEtudiant.getListeUE().add(ue);
-        for(Etudiant etu : this.getGestionEtudiant().getListeEtudiants()){
-          etu.addUE(ue);
-        }
+        this.getGestionEtudiant().getListeEtudiants().forEach(etu->etu.addUE(ue));
         return true;
       }
     }
@@ -265,9 +263,7 @@ public class GestionFormation implements InterGestionFormation, InterSauvegarde,
   public void definirNombreOptions(int nombre) {
     if (this.NBoption == -1 && nombre >= 1) {
       this.NBoption = nombre;
-      for(Etudiant etu : this.gestionEtudiant.getListeEtudiants()){
-        etu.setNbOption(nombre);
-      }
+      this.gestionEtudiant.getListeEtudiants().forEach(etu->etu.setNbOption(nombre));
     }
   }
 
