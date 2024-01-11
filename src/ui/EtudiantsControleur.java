@@ -1,6 +1,5 @@
 package ui;
 
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import formation.Etudiant;
@@ -78,6 +77,15 @@ public class EtudiantsControleur {
 	@FXML
 	private TextArea zoneTexteContenuMessage;
 
+	/**
+	 * Gère l'action associée au bouton "Choisir Option".
+	 * Cette méthode est appelée lorsqu'un utilisateur clique sur le bouton pour choisir une option
+	 * parmi les Unités d'Enseignement optionnelles de la formation.
+	 * Si l'utilisateur est connecté, il peut choisir une option, et la liste des Unités d'Enseignement
+	 * suivies par l'étudiant est mise à jour.
+	 *
+	 * @param event L'événement associé au clic sur le bouton.
+	 */
 	@FXML
 	void actionBoutonChoisirOption(ActionEvent event) {
 		try {
@@ -101,6 +109,18 @@ public class EtudiantsControleur {
 		}
 	}
 
+	/**
+	 * Gère l'action associée au bouton "Connexion".
+	 * Cette méthode est appelée lorsqu'un utilisateur tente de se connecter en utilisant le numéro
+	 * d'étudiant et le mot de passe saisis. Si les champs nécessaires à la connexion sont remplis,
+	 * elle vérifie la validité de la connexion en utilisant la méthode de la gestion des étudiants.
+	 * Si la connexion réussit, les informations de l'étudiant connecté sont affichées dans l'interface,
+	 * y compris les détails personnels, les groupes TD/TP, le nombre d'options, l'état de l'inscription,
+	 * les Unités d'Enseignement suivies, les Unités d'Enseignement optionnelles disponibles, et les messages.
+	 * En cas d'échec de la connexion, un message d'erreur approprié est affiché.
+	 *
+	 * @param event L'événement associé au clic sur le bouton de connexion.
+	 */
 	@FXML
 	void actionBoutonConnexion(ActionEvent event) {
 		if (entreeNumeroEtudiant.getText().isEmpty() || entreeMotDePasseEtudiant.getText().isEmpty()) {
@@ -217,6 +237,14 @@ public class EtudiantsControleur {
 		}
 	}
 
+	/**
+	 * Gère l'action associée au bouton "Déconnexion".
+	 * Cette méthode est appelée lorsqu'un utilisateur souhaite se déconnecter. Elle appelle la méthode
+	 * de déconnexion de la gestion des étudiants. Si la déconnexion réussit, elle réinitialise les champs
+	 * d'entrée et les éléments d'interface graphique associés à l'étudiant connecté.
+	 *
+	 * @param event L'événement associé au clic sur le bouton de déconnexion.
+	 */
 	@FXML
 	void actionBoutonRafraichirListesMessages(ActionEvent event) {
 		try {
@@ -233,6 +261,13 @@ public class EtudiantsControleur {
 		}
 	}
 
+	/**
+	 * Gère l'action associée à la sélection d'un message dans la liste des messages non lus.
+	 * Cette méthode est appelée lorsqu'un utilisateur sélectionne un message dans la liste des messages non lus.
+	 * Elle affiche le contenu du message sélectionné dans la zone de texte prévue à cet effet et marque le message comme lu.
+	 *
+	 * @param event L'événement associé à la sélection d'un message dans la liste des messages non lus.
+	 */
 	@FXML
 	void actionSelectionMessageListeMessagesNonLus(MouseEvent event) {
 		try {
@@ -250,6 +285,13 @@ public class EtudiantsControleur {
 		}
 	}
 
+	/**
+	 * Gère l'action associée à la sélection d'un message dans la liste de tous les messages.
+	 * Cette méthode est appelée lorsqu'un utilisateur sélectionne un message dans la liste de tous les messages.
+	 * Elle affiche le contenu du message sélectionné dans la zone de texte prévue à cet effet et marque le message comme lu.
+	 *
+	 * @param event L'événement associé à la sélection d'un message dans la liste de tous les messages.
+	 */
 	@FXML
 	void actionSelectionMessageListeTousMessages(MouseEvent event) {
 		try {
@@ -266,6 +308,17 @@ public class EtudiantsControleur {
 		}
 	}
 
+	/**
+	 * Affiche une boîte de dialogue (popup) avec un message spécifié et un type
+	 * d'alerte donné.
+	 *
+	 * @param message Le message à afficher dans la boîte de dialogue.
+	 * @param type    Le type d'alerte (Erreur, Information, etc.).
+	 *                Utilisez les constantes de la classe AlertType, par exemple
+	 *                AlertType.ERROR ou AlertType.INFORMATION.
+	 * 
+	 * @see javafx.scene.control.Alert.AlertType
+	 */
 	private void afficherPopup(String message, AlertType type) {
 		Alert alert = new Alert(type);
 		if (type == AlertType.ERROR) {
