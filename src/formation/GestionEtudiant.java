@@ -40,8 +40,18 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
 	 * L'etudiant connecté.
 	 */
     private Etudiant etudiantConnecte = null;
+    
+    private int nbOptions;
 
-    /**
+    public int getNbOptions() {
+		return nbOptions;
+	}
+
+	public void setNbOptions(int nbOptions) {
+		this.nbOptions = nbOptions;
+	}
+
+	/**
      * Constructeur vide de la classe Etudiant.
      */
     public GestionEtudiant() {
@@ -60,7 +70,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
      */
     @Override
     public int inscription(InformationPersonnelle informationPersonnelle, String motDePasse) {
-        if (motDePasse != null || motDePasse.isEmpty() || informationPersonnelle == null) {
+        if (motDePasse == null || motDePasse.isEmpty() || informationPersonnelle == null) {
             return -1;
         }
 
@@ -231,7 +241,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
             throw new NonConnecteException();
         }
         if (ue.getnbParticipant() < ue.getNbPlacesMax() && ue.getOptionnel() 
-        	&& this.etudiantConnecte.getNbOptionListeUeSuivies() < this.etudiantConnecte.getNbOption()) {
+        	&& this.etudiantConnecte.getNbOptionListeUeSuivies() < this.etudiantConnecte.getNbOption() && ue != null) {
             boolean res = this.etudiantConnecte.addUE(ue);
             if(res) {
             	ue.setnbParticipant();
