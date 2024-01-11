@@ -41,15 +41,10 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
 	 */
     private Etudiant etudiantConnecte = null;
     
+    /**
+	 * Le nombre d'options.
+	 */
     private int nbOptions;
-
-    public int getNbOptions() {
-		return nbOptions;
-	}
-
-	public void setNbOptions(int nbOptions) {
-		this.nbOptions = nbOptions;
-	}
 
 	/**
      * Constructeur vide de la classe Etudiant.
@@ -195,6 +190,24 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     public void setListeUE(Set<UniteEnseignement> listeUE) {
         this.listeUE = listeUE;
     }
+    
+    /**
+     * Renvoie le nombre d'options que les étudiants d'une formation doivent choisir.
+     *
+     * @return nombre d'options que les étudiants d'une formation doivent choisir.
+     */
+    public int getNbOptionsGestionEtudiant() {
+		return nbOptions;
+	}
+
+    /**
+     * Ajoute le nombre d'options que les étudiants d'une formation doivent choisir.
+     *
+     * @return le nombre d'options  que les étudiants d'une formation doivent choisir
+     */
+	public void setNbOptionsGestionEtudiant(int nbOptions) {
+		this.nbOptions = nbOptions;
+	}
 
     /**
      * Retourne le nombre d'options que l'étudiant doit choisir au total.
