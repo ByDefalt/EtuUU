@@ -82,8 +82,15 @@ public class MainFormation {
     System.out.println(ges.getTds().size());
     System.out.println(ges.getTps().size());
   }
-
+  static void test2() throws IOException, NonConnecteException{
+    GestionFormation ges=new GestionFormation();
+    ges.chargerDonnees("save");
+    ges.changerGroupe(ges.getGestionEtudiant().getEtudiantConnecte(), 3, 0);
+    ges.getGestionEtudiant().getEtudiantConnecte().getMessages();
+    System.out.println(ges.getGestionEtudiant().listeMessageNonLus());
+    System.out.println(ges.getGestionEtudiant().listeTousMessages());
+  }
   public static void main(String[] args) throws NonConnecteException, IOException {
-    test1();
+    test2();
   }
 }

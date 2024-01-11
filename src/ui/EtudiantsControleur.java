@@ -1,6 +1,6 @@
 package ui;
 
-import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import formation.Etudiant;
@@ -231,10 +231,11 @@ public class EtudiantsControleur {
 			ObservableList<String> messages = FXCollections
 					.observableArrayList(this.gestionFormation.getGestionEtudiant().listeTousMessages());
 			listeTousMessages.setItems(messages);
-
 			ObservableList<String> messagesNonLus = FXCollections
 					.observableArrayList(this.gestionFormation.getGestionEtudiant().listeMessageNonLus());
 			listeMessagesNonLus.setItems(messagesNonLus);
+			zoneTexteContenuMessage.setText("");
+			listeTousMessages.getSelectionModel().clearSelection();
 		} catch (NonConnecteException e) {
 			this.afficherPopup("Vous n'êtes pas connecté", AlertType.ERROR);
 		}
@@ -242,10 +243,11 @@ public class EtudiantsControleur {
 
 	@FXML
 	void actionSelectionMessageListeMessagesNonLus(MouseEvent event) {
-
 		try {
 			String selectMessage = listeMessagesNonLus.getSelectionModel().getSelectedItem();
-			int selectIndex = listeMessagesNonLus.getSelectionModel().getSelectedIndex();
+			int selectIndex = listeMessagesNonLus.getSelectionModel().getSelectedIndex()+
+			this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages().
+			stream().filter(mes->mes.estLu()==true).collect(Collectors.toList()).size();
 			if (selectMessage != null) {
 				Message message = this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages().get(selectIndex);
 				zoneTexteContenuMessage.setText(message.getContenu());
@@ -263,10 +265,9 @@ public class EtudiantsControleur {
 			int selectIndex = listeTousMessages.getSelectionModel().getSelectedIndex();
 
 			if (selectMessage != null) {
-				Message message = this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages()
-						.get(selectIndex);
+				Message message = this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages().get(selectIndex);
 				zoneTexteContenuMessage.setText(message.getContenu());
-				message.setLu();
+				this.gestionFormation.getGestionEtudiant().getEtudiantConnecte().getMessages().get(selectIndex).setLu();
 			}
 		} catch (NonConnecteException e) {
 			this.afficherPopup("Vous n'êtes pas connecté", AlertType.ERROR);
