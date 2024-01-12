@@ -218,6 +218,13 @@ public class EtudiantsControleur {
     }
   }
   
+  /**
+   * Méthode appelée lorsqu'un utilisateur clique sur le bouton de déconnexion.
+   * Elle gère la déconnexion de l'étudiant, réinitialise les champs d'entrée et les listes,
+   * et affiche une alerte en cas d'échec de déconnexion.
+   *
+   * @param event L'événement déclenché par le clic sur le bouton de déconnexion.
+   */
   @FXML
   void actionBoutonDeconnexion(ActionEvent event) {
     try {
@@ -243,6 +250,14 @@ public class EtudiantsControleur {
     }
   }
   
+  /**
+   * Méthode appelée lorsqu'un utilisateur clique sur le bouton d'inscription.
+   * Elle vérifie que les champs nécessaires à l'inscription sont tous remplis,
+   * puis tente de réaliser l'inscription en utilisant les informations fournies.
+   * En cas de succès, elle met à jour le champ d'entrée du numéro d'étudiant avec la valeur attribuée.
+   *
+   * @param event L'événement déclenché par le clic sur le bouton d'inscription.
+   */
   @FXML
   void actionBoutonInscription(ActionEvent event) {
     if (!entreeNomEtudiant.getText().isEmpty()
