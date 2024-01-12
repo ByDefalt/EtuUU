@@ -290,13 +290,11 @@ public class EtudiantsControleur {
   }
   
   /**
-   * Gère l'action associée au bouton "Déconnexion". Cette méthode est appelée
-   * lorsqu'un utilisateur souhaite se déconnecter. Elle appelle la méthode de
-   * déconnexion de la gestion des étudiants. Si la déconnexion réussit, elle
-   * réinitialise les champs d'entrée et les éléments d'interface graphique
-   * associés à l'étudiant connecté.
+   * Rafraîchit les listes de messages dans l'interface utilisateur en réponse à
+   * l'événement de clic sur le bouton de rafraîchissement.
    *
-   * @param event L'événement associé au clic sur le bouton de déconnexion.
+   * @param event L'événement associé au clic sur le bouton de rafraîchissement.
+   *
    */
   @FXML
   void actionBoutonRafraichirListesMessages(ActionEvent event) {
