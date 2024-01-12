@@ -338,13 +338,15 @@ public class EtudiantsControleur {
     try {
       String selectMessage =
           listeMessagesNonLus.getSelectionModel().getSelectedItem();
-      int a = listeMessagesNonLus.getSelectionModel().getSelectedIndex();
-      int selectIndex = map.get(a);
-      if (selectMessage != null) {
-        Message message = this.gestionFormation.getGestionEtudiant()
-            .getEtudiantConnecte().getMessages().get(selectIndex);
-        zoneTexteContenuMessage.setText(message.getContenu());
-        message.setLu();
+      if(selectMessage != null) {
+    	  int a = listeMessagesNonLus.getSelectionModel().getSelectedIndex();
+          int selectIndex = map.get(a);
+          if (selectMessage != null) {
+            Message message = this.gestionFormation.getGestionEtudiant()
+                .getEtudiantConnecte().getMessages().get(selectIndex);
+            zoneTexteContenuMessage.setText(message.getContenu());
+            message.setLu();
+          }  
       }
     } catch (NonConnecteException e) {
       this.afficherPopup("Vous n'êtes pas connecté", AlertType.ERROR);
