@@ -111,8 +111,8 @@ class TestEtudiant {
   
   /**
    * Test de la méthode {@link Etudiant#setNbOption(int)} et
-   * {@link Etudiant#getNbOption()}. Vérifie que l'on peut positionner le nombre
-   * d'options à 2.
+   * {@link Etudiant#getNbOption()}. Vérifie que l'on peut positionner le
+   * nombre d'options à 2.
    */
   @Test
   void testNbOption() {
@@ -122,8 +122,8 @@ class TestEtudiant {
   
   /**
    * Test de la méthode {@link Etudiant#setNumeroTp(int)} et
-   * {@link Etudiant#getNumeroTp()}. Vérifie que l'on peut positionner le numero
-   * de Tp à 1.
+   * {@link Etudiant#getNumeroTp()}. Vérifie que l'on peut positionner le
+   * numero de Tp à 1.
    */
   @Test
   void testNumeroTp() {
@@ -133,8 +133,8 @@ class TestEtudiant {
   
   /**
    * Test de la méthode {@link Etudiant#setNumeroTd(int)} et
-   * {@link Etudiant#getNumeroTd()}. Vérifie que l'on peut positionner le numero
-   * de Td à 3.
+   * {@link Etudiant#getNumeroTd()}. Vérifie que l'on peut positionner le
+   * numero de Td à 3.
    */
   @Test
   void testNumeroTd() {

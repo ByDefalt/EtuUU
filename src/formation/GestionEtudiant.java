@@ -51,9 +51,9 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
   public GestionEtudiant() {}
   
   /**
-   * Cr�e le compte d'un �tudiant � partir de ses informations personnelles et
-   * de son mot de passe puis retourne son num�ro d'�tudiant g�n�r�
-   * automatiquement.
+   * Cr�e le compte d'un �tudiant � partir de ses informations
+   * personnelles et de son mot de passe puis retourne son num�ro d'�tudiant
+   * g�n�r� automatiquement.
    *
    * @param informationPersonnelle les informations personnelles de l'�tudiant
    * @param motDePasse le mot de passe de l'�tudiant pour se connecter (la
@@ -86,8 +86,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
    * @param numero le num�ro de l'�tudiant
    * @param motDePasse le mot de passe de l'�tudiant
    * @return <code>true</code> si le couple num�ro/mot de passe est correct
-   *         (l'�tudiant est alors consid�r� comme connect� au syst�me),
-   *         <code>false</code> si le couple est incorrect
+   *         (l'�tudiant est alors consid�r� comme connect� au
+   *         syst�me), <code>false</code> si le couple est incorrect
    */
   @Override
   public boolean connexion(int numero, String motDePasse) {
@@ -138,7 +138,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
   }
   
   /**
-   * L'ensemble des unités d'enseignement obligatoires de l'année de formation.
+   * L'ensemble des unités d'enseignement obligatoires de l'année de
+   * formation.
    *
    * @return l'ensemble des UE obligatoires
    */
@@ -156,7 +157,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
   }
   
   /**
-   * L'ensemble des unités d'enseignement optionnelles de l'année de formation.
+   * L'ensemble des unités d'enseignement optionnelles de l'année de
+   * formation.
    *
    * @return l'ensemble des UE optionnelles
    */
@@ -195,7 +197,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
    * Renvoie le nombre d'options que les étudiants d'une formation doivent
    * choisir.
    *
-   * @return nombre d'options que les étudiants d'une formation doivent choisir.
+   * @return nombre d'options que les étudiants d'une formation doivent
+   *         choisir.
    */
   public int getNbOptionsGestionEtudiant() {
     return nbOptions;
@@ -215,10 +218,10 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
   /**
    * Retourne le nombre d'options que l'étudiant doit choisir au total.
    *
-   * @return le nombre d'options que l'�tudiant doit choisir ou -1 si ce nombre
-   *         n'a pas �t� encore d�fini.
-   * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
-   *         n'est pas connect�
+   * @return le nombre d'options que l'�tudiant doit choisir ou -1 si ce
+   *         nombre n'a pas �t� encore d�fini.
+   * @throws NonConnecteException si la m�thode est appel�e alors que
+   *         l'�tudiant n'est pas connect�
    */
   @Override
   public int nombreOptions() throws NonConnecteException {
@@ -248,8 +251,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
    * @return <code>true</code> si l'�tudiant a �t� inscrit � l'UE,
    *         <code>false</code> si l'inscription n'a pas pu se faire (manque de
    *         places dans l'UE ou l'UE n'est pas une option)
-   * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
-   *         n'est pas connect�
+   * @throws NonConnecteException si la m�thode est appel�e alors que
+   *         l'�tudiant n'est pas connect�
    */
   @Override
   public boolean choisirOption(UniteEnseignement ue)
@@ -275,8 +278,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
    * Renvoie le nombre d'options choisi par l'étudiant.
    *
    * @return le nombre d'options choisi par l'étudiant
-   * @throws NonConnecteException si la méthode est appelée alors que l'�tudiant
-   *         n'est pas connect�
+   * @throws NonConnecteException si la méthode est appelée alors que
+   *         l'�tudiant n'est pas connect�
    */
   public int nombresOptionsChoisi() throws NonConnecteException {
     if (this.etudiantConnecte == null) {
@@ -293,10 +296,10 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
   /**
    * Renvoie le numéro de groupe de TD de l'étudiant s'il a été défini.
    *
-   * @return le num�ro de groupe de TD s'il a �t� d�fini ou -1 si �a n'est pas
-   *         encore le cas
-   * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
-   *         n'est pas connect�
+   * @return le num�ro de groupe de TD s'il a �t� d�fini ou -1 si �a
+   *         n'est pas encore le cas
+   * @throws NonConnecteException si la m�thode est appel�e alors que
+   *         l'�tudiant n'est pas connect�
    */
   @Override
   public int getNumeroGroupeTravauxDiriges() throws NonConnecteException {
@@ -320,12 +323,13 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
   }
   
   /**
-   * Renvoie le num�ro de groupe de TP de l'�tudiant s'il a �t� d�fini.
+   * Renvoie le num�ro de groupe de TP de l'�tudiant s'il a �t�
+   * d�fini.
    *
-   * @return le num�ro de groupe de TP s'il a �t� d�fini ou -1 si �a n'est pas
-   *         encore le cas
-   * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
-   *         n'est pas connect�
+   * @return le num�ro de groupe de TP s'il a �t� d�fini ou -1 si �a
+   *         n'est pas encore le cas
+   * @throws NonConnecteException si la m�thode est appel�e alors que
+   *         l'�tudiant n'est pas connect�
    */
   @Override
   public int getNumeroGroupeTravauxPratiques() throws NonConnecteException {
@@ -353,8 +357,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
    * obligatoires ainsi que les UE optionnelles o� il est inscrit.
    *
    * @return l'ensemble des UE suivies par l'�tudiant
-   * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
-   *         n'est pas connect�
+   * @throws NonConnecteException si la m�thode est appel�e alors que
+   *         l'�tudiant n'est pas connect�
    */
   @Override
   public Set<UniteEnseignement> enseignementsSuivis()
@@ -371,8 +375,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
    * lus), dans l'ordre o� ils ont �t� re�us.
    *
    * @return tous les messages de l'�tudiant
-   * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
-   *         n'est pas connect�
+   * @throws NonConnecteException si la m�thode est appel�e alors que
+   *         l'�tudiant n'est pas connect�
    */
   @Override
   public List<String> listeTousMessages() throws NonConnecteException {
@@ -388,12 +392,12 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
   }
   
   /**
-   * Renvoie la liste des messages non lus par l'�tudiant, dans l'ordre o� ils
-   * ont �t� re�us.
+   * Renvoie la liste des messages non lus par l'�tudiant, dans l'ordre o�
+   * ils ont �t� re�us.
    *
    * @return les messages non lus de l'�tudiant
-   * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
-   *         n'est pas connect�
+   * @throws NonConnecteException si la m�thode est appel�e alors que
+   *         l'�tudiant n'est pas connect�
    */
   @Override
   public List<String> listeMessageNonLus() throws NonConnecteException {
@@ -423,8 +427,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
    *
    * @return <code>true</code> si l'inscription de l'�tudiant est finalis�e,
    *         <code>false</code> sinon
-   * @throws NonConnecteException si la m�thode est appel�e alors que l'�tudiant
-   *         n'est pas connect�
+   * @throws NonConnecteException si la m�thode est appel�e alors que
+   *         l'�tudiant n'est pas connect�
    */
   @Override
   public boolean inscriptionFinalisee() throws NonConnecteException {
@@ -496,8 +500,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
   }
   
   /**
-   * Renvoie une représentation sous forme de chaîne de caractères de l'instance
-   * courante.
+   * Renvoie une représentation sous forme de chaîne de caractères de
+   * l'instance courante.
    * 
    * @return retourne une représentation graphique de l'instance courante.
    */

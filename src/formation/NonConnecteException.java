@@ -1,8 +1,8 @@
 package formation;
 
 /**
- * Exception lev�e quand l'�tudiant essaye d'acc�der � des services alors qu'il
- * n'est pas connect�.
+ * Exception lev�e quand l'�tudiant essaye d'acc�der � des services
+ * alors qu'il n'est pas connect�.
  *
  * @author Eric Cariou
  */

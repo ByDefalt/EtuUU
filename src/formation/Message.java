@@ -3,29 +3,32 @@ package formation;
 import java.io.Serializable;
 
 /**
- * Cette classe représente un message avec un titre, un contenu, et un statut de
- * lecture. Les fonctionnalités offertes pour un message incluent la
+ * Cette classe représente un message avec un titre, un contenu, et un statut
+ * de lecture. Les fonctionnalités offertes pour un message incluent la
  * récupération du titre et du contenu, ainsi que la vérification et la
  * modification du statut de lecture.
  *
  * <p>
  * Exemple d'utilisation :
  * 
- * <pre>{@code
- * // Création d'un message
- * Message monMessage =
- *     new Message("Nouvelle notification", "Vous avez un nouveau message.");
- * 
- * // Obtention du titre et du contenu
- * String titre = monMessage.getTitre();
- * String contenu = monMessage.getContenu();
- * 
- * // Vérification du statut de lecture
- * boolean estLu = monMessage.estLu();
- * 
- * // Marquer le message comme lu
- * monMessage.setLu();
- * }</pre>
+ * <pre>
+ * {
+ *   &#64;code
+ *   // Création d'un message
+ *   Message monMessage =
+ *       new Message("Nouvelle notification", "Vous avez un nouveau message.");
+ *   
+ *   // Obtention du titre et du contenu
+ *   String titre = monMessage.getTitre();
+ *   String contenu = monMessage.getContenu();
+ *   
+ *   // Vérification du statut de lecture
+ *   boolean estLu = monMessage.estLu();
+ *   
+ *   // Marquer le message comme lu
+ *   monMessage.setLu();
+ * }
+ * </pre>
  * </p>
  *
  * @author LE BRAS Erwan
@@ -119,8 +122,8 @@ public class Message implements Serializable, Cloneable {
    * Compare cet objet {@code Message} avec un autre objet pour déterminer
    * l'égalité.
    * 
-   * Deux objets {@code Message} sont considérés comme égaux si ils ont la même
-   * valeur pour les attributs : titre, contenu et lu.
+   * Deux objets {@code Message} sont considérés comme égaux si ils ont la
+   * même valeur pour les attributs : titre, contenu et lu.
    * 
    * @param obj L'objet à comparer pour déterminer l'égalité.
    * @return {@code true} si les objets sont égaux, {@code false} sinon.
@@ -155,7 +158,8 @@ public class Message implements Serializable, Cloneable {
    * 
    * La représentation inclut les valeurs des attributs : titre, contenu et lu.
    * 
-   * @return Une chaîne de caractères représentant cet objet avec ses attributs.
+   * @return Une chaîne de caractères représentant cet objet avec ses
+   *         attributs.
    * @see Object#toString()
    */
   @Override

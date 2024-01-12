@@ -134,11 +134,11 @@ public class FormationControleur {
   private RadioButton radioBoutonOptionnelle;
   
   /**
-   * Réagit au clic sur le bouton d'affectation automatique en vérifiant d'abord
-   * si une formation est sélectionnée. Si une formation est sélectionnée et que
-   * les tailles de groupe dirigé et pratique sont spécifiées, la méthode
-   * attribue automatiquement les groupes de travaux dirigés et pratiques via
-   * l'appel de la méthode
+   * Réagit au clic sur le bouton d'affectation automatique en vérifiant
+   * d'abord si une formation est sélectionnée. Si une formation est
+   * sélectionnée et que les tailles de groupe dirigé et pratique sont
+   * spécifiées, la méthode attribue automatiquement les groupes de travaux
+   * dirigés et pratiques via l'appel de la méthode
    * {@link GestionFormation#attribuerAutomatiquementGroupes()}. Ensuite, met à
    * jour les labels affichant le nombre de groupes de travaux dirigés et
    * pratiques affectés. En cas d'absence de formation, affiche une alerte
@@ -168,12 +168,12 @@ public class FormationControleur {
   }
   
   /**
-   * Gère l'action déclenchée lorsqu'un bouton d'affectation manuelle de groupes
-   * est activé. Vérifie si une formation est sélectionnée, puis tente de
-   * déplacer un étudiant vers un nouveau groupe de travaux dirigés (TD) et
-   * travaux pratiques (TP) en fonction des valeurs saisies dans les champs de
-   * texte. Affiche une alerte d'erreur en fonction du résultat du changement de
-   * groupe.
+   * Gère l'action déclenchée lorsqu'un bouton d'affectation manuelle de
+   * groupes est activé. Vérifie si une formation est sélectionnée, puis
+   * tente de déplacer un étudiant vers un nouveau groupe de travaux dirigés
+   * (TD) et travaux pratiques (TP) en fonction des valeurs saisies dans les
+   * champs de texte. Affiche une alerte d'erreur en fonction du résultat du
+   * changement de groupe.
    *
    * @param event L'événement déclencheur de l'action.
    */
@@ -215,10 +215,10 @@ public class FormationControleur {
   }
   
   /**
-   * Gère l'action associée au bouton d'affichage des étudiants d'un groupe de
-   * Travaux Dirigés (TD). Affiche la liste des étudiants appartenant au groupe
-   * de TD spécifié. Affiche une alerte d'erreur en fonction des diférentes
-   * erreurs.
+   * Gère l'action associée au bouton d'affichage des étudiants d'un groupe
+   * de Travaux Dirigés (TD). Affiche la liste des étudiants appartenant au
+   * groupe de TD spécifié. Affiche une alerte d'erreur en fonction des
+   * diférentes erreurs.
    *
    * @param event L'événement déclenché par l'utilisateur.
    */
@@ -256,8 +256,8 @@ public class FormationControleur {
   }
   
   /**
-   * Gère l'action associée au bouton d'affichage des étudiants d'un groupe de
-   * Travaux Pratiques (TP). Affiche la liste des étudiants appartenant au
+   * Gère l'action associée au bouton d'affichage des étudiants d'un groupe
+   * de Travaux Pratiques (TP). Affiche la liste des étudiants appartenant au
    * groupe de TP spécifié. Affiche une alerte d'erreur en fonction des
    * diférentes erreurs.
    *
@@ -297,8 +297,8 @@ public class FormationControleur {
   
   /**
    * Gère l'action associée au bouton permettant d'afficher les étudiants
-   * inscrits à une Unité d'Enseignement (UE) optionnelle sélectionnée. Affiche
-   * une alerte d'erreur en fonction des diférentes erreurs.
+   * inscrits à une Unité d'Enseignement (UE) optionnelle sélectionnée.
+   * Affiche une alerte d'erreur en fonction des diférentes erreurs.
    *
    * @param event L'événement déclencheur de l'action.
    */
@@ -337,8 +337,8 @@ public class FormationControleur {
    * Gère l'action liée au bouton d'affichage de tous les étudiants de la
    * formation. Si le nom de la formation n'est pas nul et s'il y a des
    * étudiants dans la formation, cette méthode crée une liste observable des
-   * numéros d'étudiants et l'assigne à un composant graphique ListView. Sinon,
-   * elle affiche un message d'erreur approprié.
+   * numéros d'étudiants et l'assigne à un composant graphique ListView.
+   * Sinon, elle affiche un message d'erreur approprié.
    *
    * @param event L'événement déclenché par l'action du bouton.
    */
@@ -364,12 +364,12 @@ public class FormationControleur {
   
   /**
    * Gère l'action associée au bouton de création d'une nouvelle formation.
-   * Cette méthode récupère les informations de la nouvelle formation à partir
-   * des champs de saisie, puis utilise l'objet GestionFormation (ges) pour
-   * créer la formation correspondante. Si la création réussit, les champs de
-   * saisie sont réinitialisés et certaines étiquettes et listes sont effacées.
-   * En cas d'échec, des messages d'erreur appropriés sont affichés sous forme
-   * de pop-ups.
+   * Cette méthode récupère les informations de la nouvelle formation à
+   * partir des champs de saisie, puis utilise l'objet GestionFormation (ges)
+   * pour créer la formation correspondante. Si la création réussit, les
+   * champs de saisie sont réinitialisés et certaines étiquettes et listes
+   * sont effacées. En cas d'échec, des messages d'erreur appropriés sont
+   * affichés sous forme de pop-ups.
    *
    * @param event L'événement déclenché par l'action du bouton.
    */
@@ -409,15 +409,15 @@ public class FormationControleur {
   }
   
   /**
-   * Répond à l'événement déclenché par l'action sur le bouton de création de
-   * formation. Cette méthode utilise les informations fournies dans les champs
-   * de saisie pour créer une nouvelle formation via l'objet GestionFormation
-   * (ges). Si la création de la formation est réussie, les champs de saisie et
-   * les éléments associés sont réinitialisés. Sinon, des messages d'erreur
-   * appropriés sont affichés.
+   * Répond à l'événement déclenché par l'action sur le bouton de
+   * création de formation. Cette méthode utilise les informations fournies
+   * dans les champs de saisie pour créer une nouvelle formation via l'objet
+   * GestionFormation (ges). Si la création de la formation est réussie, les
+   * champs de saisie et les éléments associés sont réinitialisés. Sinon,
+   * des messages d'erreur appropriés sont affichés.
    *
-   * @param event L'événement déclenché par l'action sur le bouton de création
-   *        de formation.
+   * @param event L'événement déclenché par l'action sur le bouton de
+   *        création de formation.
    */
   @FXML
   void actionBoutonNombreChoixOptions(ActionEvent event) {
@@ -443,8 +443,8 @@ public class FormationControleur {
   /**
    * Gère l'action déclenchée lorsqu'un utilisateur appuie sur le bouton pour
    * définir la taille du groupe de travaux dirigés (TD). Si le nom de la
-   * formation est non nul, vérifie et met à jour la taille du groupe de travaux
-   * dirigés en fonction de la valeur saisie dans le champ d'entrée
+   * formation est non nul, vérifie et met à jour la taille du groupe de
+   * travaux dirigés en fonction de la valeur saisie dans le champ d'entrée
    * entreeTailleGroupeTD. Affiche des messages d'erreur appropriés en cas de
    * champ vide ou de valeur incorrecte.
    *
@@ -499,12 +499,12 @@ public class FormationControleur {
   }
   
   /**
-   * Gère l'action associée à l'ouverture d'une nouvelle fenêtre affichant des
-   * informations à propos des auteurs du programme.
+   * Gère l'action associée à l'ouverture d'une nouvelle fenêtre affichant
+   * des informations à propos des auteurs du programme.
    *
-   * Cette méthode crée une nouvelle fenêtre avec un titre spécifique, affiche
-   * les noms des auteurs dans un Label centré en haut, et fournit un bouton
-   * permettant de fermer la fenêtre.
+   * Cette méthode crée une nouvelle fenêtre avec un titre spécifique,
+   * affiche les noms des auteurs dans un Label centré en haut, et fournit un
+   * bouton permettant de fermer la fenêtre.
    *
    * @param event L'événement déclencheur, généralement lié à une action
    *        utilisateur (ex. clic sur un menu).
@@ -525,13 +525,14 @@ public class FormationControleur {
   }
   
   /**
-   * Gère l'événement de chargement de données lorsqu'une action est déclenchée
-   * par le menu. La méthode charge les données à partir d'un fichier de
-   * sauvegarde, puis réinitialise les champs de l'interface graphique en vidant
-   * et remplissant les éléments correspondants avec les informations chargées.
+   * Gère l'événement de chargement de données lorsqu'une action est
+   * déclenchée par le menu. La méthode charge les données à partir d'un
+   * fichier de sauvegarde, puis réinitialise les champs de l'interface
+   * graphique en vidant et remplissant les éléments correspondants avec les
+   * informations chargées.
    *
-   * @param event L'événement déclencheur, généralement associé à un clic sur le
-   *        menu de chargement.
+   * @param event L'événement déclencheur, généralement associé à un clic
+   *        sur le menu de chargement.
    */
   @FXML
   void actionMenuCharger(ActionEvent event) {
@@ -611,9 +612,10 @@ public class FormationControleur {
   }
   
   /**
-   * Gère l'événement déclenché lorsqu'une action de sauvegarde est déclenchée
-   * depuis le menu. Cette méthode appelle la méthode de sauvegarde des données
-   * de l'objet ges (Gestionnaire) avec le nom de fichier spécifié.
+   * Gère l'événement déclenché lorsqu'une action de sauvegarde est
+   * déclenchée depuis le menu. Cette méthode appelle la méthode de
+   * sauvegarde des données de l'objet ges (Gestionnaire) avec le nom de
+   * fichier spécifié.
    *
    * @param event L'événement de type ActionEvent déclenché par l'action de
    *        sauvegarde du menu.
@@ -630,14 +632,15 @@ public class FormationControleur {
   }
   
   /**
-   * Gère l'événement de sélection d'un étudiant dans la liste des étudiants.
-   * Met à jour les champs d'entrée avec les informations personnelles de
-   * l'étudiant sélectionné, y compris le nom, le prénom, l'adresse, l'âge, et
-   * les groupes de travaux dirigés et pratiques. Active la case à cocher
-   * d'inscription finalisée si toutes les conditions nécessaires sont remplies.
+   * Gère l'événement de sélection d'un étudiant dans la liste des
+   * étudiants. Met à jour les champs d'entrée avec les informations
+   * personnelles de l'étudiant sélectionné, y compris le nom, le prénom,
+   * l'adresse, l'âge, et les groupes de travaux dirigés et pratiques. Active
+   * la case à cocher d'inscription finalisée si toutes les conditions
+   * nécessaires sont remplies.
    *
-   * @param event L'événement de la souris déclenché lors de la sélection d'un
-   *        étudiant.
+   * @param event L'événement de la souris déclenché lors de la sélection
+   *        d'un étudiant.
    */
   @FXML
   void actionSelectionEtudiant(MouseEvent event) {
@@ -663,7 +666,7 @@ public class FormationControleur {
                 .filter(UniteEnseignement::getOptionnel)
                 .count() == ges.getNBoption()) {
           checkInscriptionFinalisee.setSelected(true);
-        }else{
+        } else {
           checkInscriptionFinalisee.setSelected(false);
         }
       }
@@ -672,13 +675,14 @@ public class FormationControleur {
   
   /**
    * Gère l'action de sélection d'une Unité d'Enseignement (UE) obligatoire.
-   * Cette méthode est déclenchée en réponse à un événement de clic de souris
-   * sur un élément de la liste des UE obligatoires. Si une formation est
-   * définie, elle récupère les détails de l'UE sélectionnée, tels que le nom,
-   * le responsable et la capacité d'accueil, et les affiche dans les champs
-   * correspondants.
+   * Cette méthode est déclenchée en réponse à un événement de clic de
+   * souris sur un élément de la liste des UE obligatoires. Si une formation
+   * est définie, elle récupère les détails de l'UE sélectionnée, tels que
+   * le nom, le responsable et la capacité d'accueil, et les affiche dans les
+   * champs correspondants.
    *
-   * @param event L'événement de clic de souris qui a déclenché cette action.
+   * @param event L'événement de clic de souris qui a déclenché cette
+   *        action.
    */
   @FXML
   void actionSelectionUEObligatoire(MouseEvent event) {
@@ -696,11 +700,12 @@ public class FormationControleur {
   }
   
   /**
-   * Gère l'événement de sélection d'une Unité d'Enseignement (UE) optionnelle.
-   * Si une formation est sélectionnée, recherche l'UE correspondante dans la
-   * liste des UE optionnelles et met à jour les champs d'interface graphique
-   * avec les informations de l'UE sélectionnée, tels que le nom de l'UE, le nom
-   * du responsable de l'UE et la capacité d'accueil de l'UE.
+   * Gère l'événement de sélection d'une Unité d'Enseignement (UE)
+   * optionnelle. Si une formation est sélectionnée, recherche l'UE
+   * correspondante dans la liste des UE optionnelles et met à jour les champs
+   * d'interface graphique avec les informations de l'UE sélectionnée, tels
+   * que le nom de l'UE, le nom du responsable de l'UE et la capacité d'accueil
+   * de l'UE.
    *
    * @param event L'événement de la souris déclenchant l'action.
    */
@@ -720,10 +725,10 @@ public class FormationControleur {
   }
   
   /**
-   * Gère l'événement de clic sur le bouton de création d'une nouvelle Unité
-   * d'Enseignement (UE). Vérifie si une formation est sélectionnée, puis valide
-   * et ajoute une nouvelle UE en fonction des champs saisis dans l'interface
-   * graphique.
+   * Gère l'événement de clic sur le bouton de création d'une nouvelle
+   * Unité d'Enseignement (UE). Vérifie si une formation est sélectionnée,
+   * puis valide et ajoute une nouvelle UE en fonction des champs saisis dans
+   * l'interface graphique.
    *
    * @param event L'événement déclenché par le clic sur le bouton.
    */
@@ -764,8 +769,8 @@ public class FormationControleur {
   }
   
   /**
-   * Affiche une boîte de dialogue (popup) avec un message spécifié et un type
-   * d'alerte donné.
+   * Affiche une boîte de dialogue (popup) avec un message spécifié et un
+   * type d'alerte donné.
    *
    * @param message Le message à afficher dans la boîte de dialogue.
    * @param type Le type d'alerte (Erreur, Information, etc.). Utilisez les

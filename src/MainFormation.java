@@ -12,7 +12,8 @@ public class MainFormation {
     GestionFormation ges = new GestionFormation();
     ges.creerFormation("L3 informatique", "Dark Vador",
         "dark.vador@empire.com");
-    UniteEnseignement ue1 = new UniteEnseignement("Java 2", "Mickaël Kerboeuf");
+    UniteEnseignement ue1 =
+        new UniteEnseignement("Java 2", "Mickaël Kerboeuf");
     UniteEnseignement ue2 =
         new UniteEnseignement("Conception d'applications", "Eric Cariou");
     UniteEnseignement ue3 =

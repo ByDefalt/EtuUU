@@ -42,7 +42,8 @@ public final class MainInterfaceUtilisateur extends Application {
       stage.show();
       
     } catch (IOException e) {
-      System.err.println("Erreur au chargement de la fen�tre �tudiants : " + e);
+      System.err
+          .println("Erreur au chargement de la fen�tre �tudiants : " + e);
     }
   }
   
@@ -69,7 +70,8 @@ public final class MainInterfaceUtilisateur extends Application {
       primaryStage.show();
       
     } catch (IOException e) {
-      System.err.println("Erreur au chargement de la fen�tre formation : " + e);
+      System.err
+          .println("Erreur au chargement de la fen�tre formation : " + e);
     }
   }
   

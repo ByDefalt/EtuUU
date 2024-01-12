@@ -12,34 +12,37 @@ import java.util.Objects;
  * <p>
  * Exemple d'utilisation :
  * 
- * <pre>{@code
- * // Création d'une Unité d'Enseignement obligatoire
- * UniteEnseignement ueObligatoire =
- *     new UniteEnseignement("Mathématiques", "Professeur A.");
- * 
- * // Affichage des informations de l'UE obligatoire
- * System.out.println("UE Obligatoire : " + ueObligatoire.getNomUE());
- * System.out.println("Enseignant : " + ueObligatoire.getNomEnseignant());
- * System.out
- *     .println("Nombre de participants : " + ueObligatoire.getnbParticipant());
- * 
- * // Création d'une Unité d'Enseignement facultative
- * UniteEnseignement ueFacultative =
- *     new UniteEnseignement("Informatique", "Professeur B.");
- * 
- * // Activation de l'option facultative et définition du nombre de places
- * // maximales
- * ueFacultative.setOptionnel(true);
- * ueFacultative.setNbPlacesMax(30);
- * 
- * // Affichage des informations de l'UE facultative
- * System.out.println("\nUE Facultative : " + ueFacultative.getNomUE());
- * System.out.println("Enseignant : " + ueFacultative.getNomEnseignant());
- * System.out
- *     .println("Nombre de participants : " + ueFacultative.getnbParticipant());
- * System.out.println(
- *     "Nombre de places maximales : " + ueFacultative.getNbPlacesMax());
- * }</pre>
+ * <pre>
+ * {
+ *   &#64;code
+ *   // Création d'une Unité d'Enseignement obligatoire
+ *   UniteEnseignement ueObligatoire =
+ *       new UniteEnseignement("Mathématiques", "Professeur A.");
+ *   
+ *   // Affichage des informations de l'UE obligatoire
+ *   System.out.println("UE Obligatoire : " + ueObligatoire.getNomUE());
+ *   System.out.println("Enseignant : " + ueObligatoire.getNomEnseignant());
+ *   System.out.println(
+ *       "Nombre de participants : " + ueObligatoire.getnbParticipant());
+ *   
+ *   // Création d'une Unité d'Enseignement facultative
+ *   UniteEnseignement ueFacultative =
+ *       new UniteEnseignement("Informatique", "Professeur B.");
+ *   
+ *   // Activation de l'option facultative et définition du nombre de places
+ *   // maximales
+ *   ueFacultative.setOptionnel(true);
+ *   ueFacultative.setNbPlacesMax(30);
+ *   
+ *   // Affichage des informations de l'UE facultative
+ *   System.out.println("\nUE Facultative : " + ueFacultative.getNomUE());
+ *   System.out.println("Enseignant : " + ueFacultative.getNomEnseignant());
+ *   System.out.println(
+ *       "Nombre de participants : " + ueFacultative.getnbParticipant());
+ *   System.out.println(
+ *       "Nombre de places maximales : " + ueFacultative.getNbPlacesMax());
+ * }
+ * </pre>
  * </p>
  * 
  */
@@ -173,8 +176,8 @@ public class UniteEnseignement implements Serializable, Cloneable {
   }
   
   /**
-   * Incrémente le nombre de participants si l'UE est facultative. Si l'UE n'est
-   * pas facultative, le nombre de participants reste inchangé.
+   * Incrémente le nombre de participants si l'UE est facultative. Si l'UE
+   * n'est pas facultative, le nombre de participants reste inchangé.
    *
    * @see #setOptionnel(boolean)
    * @see #getnbParticipant()
@@ -203,8 +206,8 @@ public class UniteEnseignement implements Serializable, Cloneable {
   /**
    * Compare cette instance d'UniteEnseignement avec un autre objet pour
    * déterminer leur égalité. Deux instances d'UniteEnseignement sont
-   * considérées comme égales si elles ont le même nom d'unité d'enseignement
-   * (nomUE).
+   * considérées comme égales si elles ont le même nom d'unité
+   * d'enseignement (nomUE).
    *
    * @param o L'objet avec lequel comparer cette instance d'UniteEnseignement.
    * @return True si les deux objets sont égaux, False sinon.
@@ -225,9 +228,9 @@ public class UniteEnseignement implements Serializable, Cloneable {
    * 
    * Cette méthode implémente l'interface {@code Cloneable}. La copie est
    * superficielle, ce qui signifie que les objets internes ne sont pas clonés,
-   * mais simplement référencés par la nouvelle instance. Si une copie profonde
-   * est nécessaire, il peut être nécessaire d'implémenter une méthode de
-   * clonage personnalisée.
+   * mais simplement référencés par la nouvelle instance. Si une copie
+   * profonde est nécessaire, il peut être nécessaire d'implémenter une
+   * méthode de clonage personnalisée.
    * 
    * @return Une copie de cet objet {@code UniteEnseignement}.
    * @throws CloneNotSupportedException Si la clonage n'est pas pris en charge
@@ -240,8 +243,8 @@ public class UniteEnseignement implements Serializable, Cloneable {
   }
   
   /**
-   * Retourne une représentation sous forme de chaîne de caractères de cet objet
-   * {@code UniteEnseignement}.
+   * Retourne une représentation sous forme de chaîne de caractères de cet
+   * objet {@code UniteEnseignement}.
    * 
    * @return Une chaîne de caractères représentant l'objet, avec les détails
    *         tels que le nom de l'UE, le nom de l'enseignant, le nombre de

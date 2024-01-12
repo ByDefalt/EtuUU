@@ -51,7 +51,8 @@ class TestGestionFormation {
   /**
    * Teste le constructeur de la classe {@link GestionFormation} en créant une
    * formation avec un nom nul. Vérifie que le nom de la formation est
-   * correctement initialisé à null, et que les autres attributs ne le sont pas.
+   * correctement initialisé à null, et que les autres attributs ne le sont
+   * pas.
    * 
    * @see GestionFormation#creerFormation(String, String, String)
    */
@@ -68,7 +69,8 @@ class TestGestionFormation {
   /**
    * Teste le constructeur de la classe {@link GestionFormation} en créant une
    * formation avec un nom vide. Vérifie que le nom de la formation est
-   * correctement initialisé à null, et que les autres attributs ne le sont pas.
+   * correctement initialisé à null, et que les autres attributs ne le sont
+   * pas.
    * 
    * @see GestionFormation#creerFormation(String, String, String)
    */
@@ -121,7 +123,8 @@ class TestGestionFormation {
   /**
    * Teste le constructeur de la classe {@link GestionFormation} en créant une
    * formation avec un email vide. Vérifie que le nom de la formation est
-   * correctement initialisé à null, et que les autres attributs ne le sont pas.
+   * correctement initialisé à null, et que les autres attributs ne le sont
+   * pas.
    * 
    * @see GestionFormation#creerFormation(String, String, String)
    */
@@ -138,7 +141,8 @@ class TestGestionFormation {
   /**
    * Teste le constructeur de la classe {@link GestionFormation} en créant une
    * formation avec un email nul. Vérifie que le nom de la formation est
-   * correctement initialisé à null, et que les autres attributs ne le sont pas.
+   * correctement initialisé à null, et que les autres attributs ne le sont
+   * pas.
    * 
    * @see GestionFormation#creerFormation(String, String, String)
    */
@@ -208,9 +212,9 @@ class TestGestionFormation {
   }
   
   /**
-   * Teste la méthode {@link GestionFormation#getNBoption()} après avoir défini
-   * le nombre d'options. Vérifie que le nombre d'options est correctement
-   * récupéré.
+   * Teste la méthode {@link GestionFormation#getNBoption()} après avoir
+   * défini le nombre d'options. Vérifie que le nombre d'options est
+   * correctement récupéré.
    * 
    * @see GestionFormation#definirNombreOptions(int)
    * @see GestionFormation#getNBoption()
@@ -262,8 +266,8 @@ class TestGestionFormation {
   }
   
   /**
-   * Teste la méthode {@link GestionFormation#getEmailResponsableFormation()} en
-   * s'assurant que l'email du responsable de formation est correctement
+   * Teste la méthode {@link GestionFormation#getEmailResponsableFormation()}
+   * en s'assurant que l'email du responsable de formation est correctement
    * récupéré après la création d'une formation.
    * 
    * @see GestionFormation#creerFormation(String, String, String)
@@ -277,8 +281,8 @@ class TestGestionFormation {
   
   /**
    * Teste la méthode {@link GestionFormation#getNomResponsableFormation()} en
-   * s'assurant que le nom du responsable de formation est correctement récupéré
-   * après la création d'une formation.
+   * s'assurant que le nom du responsable de formation est correctement
+   * récupéré après la création d'une formation.
    * 
    * @see GestionFormation#creerFormation(String, String, String)
    * @see GestionFormation#getNomResponsableFormation()
@@ -306,8 +310,8 @@ class TestGestionFormation {
   /**
    * Teste la méthode
    * {@link GestionFormation#ajouterEnseignementObligatoire(UniteEnseignement)}
-   * en ajoutant une UE obligatoire. Vérifie que l'opération réussit et que l'UE
-   * est correctement ajoutée à la liste des UE obligatoires.
+   * en ajoutant une UE obligatoire. Vérifie que l'opération réussit et que
+   * l'UE est correctement ajoutée à la liste des UE obligatoires.
    *
    * @see GestionFormation#ajouterEnseignementObligatoire(UniteEnseignement)
    */
@@ -320,8 +324,8 @@ class TestGestionFormation {
   /**
    * Teste la méthode
    * {@link GestionFormation#ajouterEnseignementObligatoire(UniteEnseignement)}
-   * en fournissant une UE nulle. Vérifie que l'opération échoue et qu'aucune UE
-   * n'est ajoutée à la liste des UE obligatoires.
+   * en fournissant une UE nulle. Vérifie que l'opération échoue et qu'aucune
+   * UE n'est ajoutée à la liste des UE obligatoires.
    *
    * @see GestionFormation#ajouterEnseignementObligatoire(UniteEnseignement)
    */
@@ -333,9 +337,9 @@ class TestGestionFormation {
   /**
    * Teste la méthode
    * {@link GestionFormation#ajouterEnseignementOptionnel(UniteEnseignement, int)}
-   * en ajoutant une UE optionnelle. Vérifie que l'opération réussit et que l'UE
-   * est correctement ajoutée à la liste des UE optionnelles avec le nombre de
-   * places spécifié.
+   * en ajoutant une UE optionnelle. Vérifie que l'opération réussit et que
+   * l'UE est correctement ajoutée à la liste des UE optionnelles avec le
+   * nombre de places spécifié.
    *
    * @see GestionFormation#ajouterEnseignementOptionnel(UniteEnseignement, int)
    */
@@ -348,8 +352,8 @@ class TestGestionFormation {
   /**
    * Teste la méthode
    * {@link GestionFormation#ajouterEnseignementOptionnel(UniteEnseignement, int)}
-   * en fournissant une UE nulle. Vérifie que l'opération échoue et qu'aucune UE
-   * n'est ajoutée à la liste des UE optionnelles.
+   * en fournissant une UE nulle. Vérifie que l'opération échoue et qu'aucune
+   * UE n'est ajoutée à la liste des UE optionnelles.
    *
    * @see GestionFormation#ajouterEnseignementOptionnel(UniteEnseignement, int)
    */
@@ -361,8 +365,8 @@ class TestGestionFormation {
   /**
    * Teste la méthode
    * {@link GestionFormation#ajouterEnseignementOptionnel(UniteEnseignement, int)}
-   * en fournissant un nombre de places négatif. Vérifie que l'opération échoue
-   * et qu'aucune UE n'est ajoutée à la liste des UE optionnelles.
+   * en fournissant un nombre de places négatif. Vérifie que l'opération
+   * échoue et qu'aucune UE n'est ajoutée à la liste des UE optionnelles.
    *
    * @see GestionFormation#ajouterEnseignementOptionnel(UniteEnseignement, int)
    */
@@ -374,8 +378,8 @@ class TestGestionFormation {
   
   /**
    * Teste la méthode {@link GestionFormation#definirNombreOptions(int)} en
-   * définissant un nombre d'options positif. Vérifie que l'opération réussit et
-   * que le nombre d'options est correctement défini.
+   * définissant un nombre d'options positif. Vérifie que l'opération
+   * réussit et que le nombre d'options est correctement défini.
    *
    * @see GestionFormation#definirNombreOptions(int)
    */
@@ -387,8 +391,9 @@ class TestGestionFormation {
   
   /**
    * Teste la méthode {@link GestionFormation#definirNombreOptions(int)} en
-   * définissant un nombre d'options négatif. Vérifie que l'opération échoue et
-   * que le nombre d'options n'est pas défini à une valeur négative.
+   * définissant un nombre d'options négatif. Vérifie que l'opération
+   * échoue et que le nombre d'options n'est pas défini à une valeur
+   * négative.
    *
    * @see GestionFormation#definirNombreOptions(int)
    */
@@ -400,8 +405,9 @@ class TestGestionFormation {
   
   /**
    * Teste la méthode {@link GestionFormation#setTailleGroupeDirige(int)} en
-   * définissant une taille de groupe dirigé positive. Vérifie que l'opération
-   * réussit et que la taille de groupe dirigé est correctement définie.
+   * définissant une taille de groupe dirigé positive. Vérifie que
+   * l'opération réussit et que la taille de groupe dirigé est correctement
+   * définie.
    *
    * @see GestionFormation#setTailleGroupeDirige(int)
    */
@@ -413,9 +419,9 @@ class TestGestionFormation {
   
   /**
    * Teste la méthode {@link GestionFormation#setTailleGroupeDirige(int)} en
-   * définissant une taille de groupe dirigé négative. Vérifie que l'opération
-   * échoue et que la taille de groupe dirigé n'est pas définie à une valeur
-   * négative.
+   * définissant une taille de groupe dirigé négative. Vérifie que
+   * l'opération échoue et que la taille de groupe dirigé n'est pas définie
+   * à une valeur négative.
    *
    * @see GestionFormation#setTailleGroupeDirige(int)
    */
@@ -427,8 +433,9 @@ class TestGestionFormation {
   
   /**
    * Teste la méthode {@link GestionFormation#setTailleGroupePratique(int)} en
-   * définissant une taille de groupe pratique positive. Vérifie que l'opération
-   * réussit et que la taille de groupe pratique est correctement définie.
+   * définissant une taille de groupe pratique positive. Vérifie que
+   * l'opération réussit et que la taille de groupe pratique est correctement
+   * définie.
    *
    * @see GestionFormation#setTailleGroupePratique(int)
    */
@@ -440,9 +447,9 @@ class TestGestionFormation {
   
   /**
    * Teste la méthode {@link GestionFormation#setTailleGroupePratique(int)} en
-   * définissant une taille de groupe pratique négative. Vérifie que l'opération
-   * échoue et que la taille de groupe pratique n'est pas définie à une valeur
-   * négative.
+   * définissant une taille de groupe pratique négative. Vérifie que
+   * l'opération échoue et que la taille de groupe pratique n'est pas définie
+   * à une valeur négative.
    *
    * @see GestionFormation#setTailleGroupePratique(int)
    */
@@ -481,11 +488,12 @@ class TestGestionFormation {
   /**
    * Teste la méthode
    * {@link GestionFormation#attribuerAutomatiquementGroupes()}. Vérifie si les
-   * groupes sont attribués correctement en fonction des tailles spécifiées pour
-   * les groupes. Pour cela, des étudiants sont inscrits automatiquement dans la
-   * gestion des étudiants, puis les groupes sont attribués automatiquement en
-   * respectant les tailles spécifiées. Enfin, les groupes sont vérifiés pour
-   * s'assurer qu'ils respectent bien les tailles spécifiées.
+   * groupes sont attribués correctement en fonction des tailles spécifiées
+   * pour les groupes. Pour cela, des étudiants sont inscrits automatiquement
+   * dans la gestion des étudiants, puis les groupes sont attribués
+   * automatiquement en respectant les tailles spécifiées. Enfin, les groupes
+   * sont vérifiés pour s'assurer qu'ils respectent bien les tailles
+   * spécifiées.
    * 
    * @see GestionFormation#attribuerAutomatiquementGroupes()
    * @see GestionFormation#interval(int, Map)
@@ -509,7 +517,8 @@ class TestGestionFormation {
     ges.attribuerAutomatiquementGroupes();
     // 101 etudiant / 10 le nombre max d'étudiant par goupe et +1 si résultat
     // non
-    // entier donc 101/10+1=9.181818 étudiant par groupe donc 9 ou 10 par groupe
+    // entier donc 101/10+1=9.181818 étudiant par groupe donc 9 ou 10 par
+    // groupe
     assertTrue(ges.interval(9, ges.getTds()));
     assertTrue(ges.interval(9, ges.getTps()));
   }
@@ -660,7 +669,8 @@ class TestGestionFormation {
   
   /**
    * Teste la méthode {@link GestionGroupes#nombreGroupesTravauxDiriges()}.
-   * Vérifie si le nombre de groupes de travaux dirigés attribués est correct.
+   * Vérifie si le nombre de groupes de travaux dirigés attribués est
+   * correct.
    */
   @Test
   void testnombreGroupesTravauxDiriges() {
@@ -676,7 +686,8 @@ class TestGestionFormation {
   
   /**
    * Teste la méthode {@link GestionGroupes#nombreGroupesTravauxPratiques()}.
-   * Vérifie si le nombre de groupes de travaux pratiques attribués est correct.
+   * Vérifie si le nombre de groupes de travaux pratiques attribués est
+   * correct.
    */
   @Test
   void testnombreGroupesTravauxPratiques() {
@@ -692,7 +703,8 @@ class TestGestionFormation {
   
   /**
    * Teste la méthode {@link GestionGroupes#listeEtudiantsGroupeDirige(int)}.
-   * Vérifie si la liste d'étudiants pour un groupe dirigé donné est correcte.
+   * Vérifie si la liste d'étudiants pour un groupe dirigé donné est
+   * correcte.
    */
   @Test
   void testlisteEtudiantsGroupeDirige() {
@@ -708,7 +720,8 @@ class TestGestionFormation {
   
   /**
    * Teste la méthode {@link GestionGroupes#listeEtudiantsGroupePratique(int)}.
-   * Vérifie si la liste d'étudiants pour un groupe pratique donné est correcte.
+   * Vérifie si la liste d'étudiants pour un groupe pratique donné est
+   * correcte.
    */
   @Test
   void testlisteEtudiantsGroupePratique() {
@@ -782,8 +795,8 @@ class TestGestionFormation {
   /**
    * Teste la méthode
    * {@link GestionGroupes#listeEtudiantsOption(UniteEnseignement)}. Vérifie le
-   * comportement lorsque l'UE optionnelle spécifiée n'est pas présente dans la
-   * liste des options.
+   * comportement lorsque l'UE optionnelle spécifiée n'est pas présente dans
+   * la liste des options.
    */
   @Test
   void testlisteEtudiantsOptionNotInList() {

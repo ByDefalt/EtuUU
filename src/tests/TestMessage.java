@@ -29,7 +29,8 @@ class TestMessage {
    */
   @BeforeEach
   void setUp() throws Exception {
-    // Ajoutez les initialisations nécessaires avant chaque test si nécessaire.
+    // Ajoutez les initialisations nécessaires avant chaque test si
+    // nécessaire.
   }
   
   /**

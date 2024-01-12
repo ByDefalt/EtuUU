@@ -95,8 +95,8 @@ class TestGestionEtudiant {
     this.gestionEtudiant = new GestionEtudiant();
     
     this.infoPerso1 = new InformationPersonnelle("Skywalker", "Luke");
-    this.infoPerso2 =
-        new InformationPersonnelle("Skywalker", "Luke", "Planète Tatooine", 20);
+    this.infoPerso2 = new InformationPersonnelle("Skywalker", "Luke",
+        "Planète Tatooine", 20);
     
     // Initialisation des unités enseignements
     this.ue1 = new UniteEnseignement("UE1", "Enseignant1");
@@ -178,8 +178,9 @@ class TestGestionEtudiant {
   }
   
   /**
-   * Test de la méthode connexion {@link GestionEtudiant#connexion(int, String)}
-   * avec des valeurs basiques. Vérifie que la méthode renvoie bien true.
+   * Test de la méthode connexion
+   * {@link GestionEtudiant#connexion(int, String)} avec des valeurs basiques.
+   * Vérifie que la méthode renvoie bien true.
    * 
    * @see GestionEtudiant#connexion(int, String)
    */
@@ -190,8 +191,9 @@ class TestGestionEtudiant {
   }
   
   /**
-   * Test de la méthode connexion {@link GestionEtudiant#connexion(int, String)}
-   * avec un mot de passe incorrect. Vérifie que la méthode renvoie bien false.
+   * Test de la méthode connexion
+   * {@link GestionEtudiant#connexion(int, String)} avec un mot de passe
+   * incorrect. Vérifie que la méthode renvoie bien false.
    * 
    * @see GestionEtudiant#connexion(int, String)
    */
@@ -202,8 +204,9 @@ class TestGestionEtudiant {
   }
   
   /**
-   * Test de la méthode connexion {@link GestionEtudiant#connexion(int, String)}
-   * avec un numero incorrect. Vérifie que la méthode renvoie bien false.
+   * Test de la méthode connexion
+   * {@link GestionEtudiant#connexion(int, String)} avec un numero incorrect.
+   * Vérifie que la méthode renvoie bien false.
    * 
    * @see GestionEtudiant#connexion(int, String)
    */
@@ -250,8 +253,8 @@ class TestGestionEtudiant {
   
   /**
    * Test de la méthode getEtudiantConnecte
-   * {@link GestionEtudiant#getEtudiantConnecte()} avec un utilisateur connecté.
-   * Vérifie que la méthode renvoie bien l'etudiant.
+   * {@link GestionEtudiant#getEtudiantConnecte()} avec un utilisateur
+   * connecté. Vérifie que la méthode renvoie bien l'etudiant.
    * 
    * @see GestionEtudiant#getEtudiantConnecte()
    */
@@ -358,8 +361,8 @@ class TestGestionEtudiant {
   /**
    * Test de la méthode setNbOption {@link GestionEtudiant#setNbOption()} avec
    * une valeur de 2 et la méthode nombreOptions
-   * {@link GestionEtudiant#nombreOptions()}. Vérifie que la méthode setNbOption
-   * définis bien 2 et que nombreOptions renvoie 2.
+   * {@link GestionEtudiant#nombreOptions()}. Vérifie que la méthode
+   * setNbOption définis bien 2 et que nombreOptions renvoie 2.
    * 
    * @see GestionEtudiant#setNbOption()
    * @see GestionEtudiant#nombreOptions()
@@ -570,8 +573,8 @@ class TestGestionEtudiant {
   
   /**
    * Test basique méthode listeTousMessages
-   * {@link GestionEtudiant#listeTousMessages()}. Vérifie que la méthode renvoie
-   * bien la liste des messages.
+   * {@link GestionEtudiant#listeTousMessages()}. Vérifie que la méthode
+   * renvoie bien la liste des messages.
    * 
    * @see GestionEtudiant#listeTousMessages()
    */
@@ -599,9 +602,10 @@ class TestGestionEtudiant {
   }
   
   /**
-   * Test méthode listeTousMessages {@link GestionEtudiant#listeTousMessages()},
-   * suppression d'un element. Vérifie que la méthode renvoie une liste
-   * différente de celle qui n'as pas été modifié.
+   * Test méthode listeTousMessages
+   * {@link GestionEtudiant#listeTousMessages()}, suppression d'un element.
+   * Vérifie que la méthode renvoie une liste différente de celle qui n'as
+   * pas été modifié.
    * 
    * @see GestionEtudiant#listeTousMessages()
    */
@@ -726,8 +730,8 @@ class TestGestionEtudiant {
   
   /**
    * Test d'inscriptionFinalisee {@link GestionEtudiant#inscriptionFinalisee()},
-   * finalisation d'un etudiant sans le nombre d'options. Vérifie que la méthode
-   * renvoie false.
+   * finalisation d'un etudiant sans le nombre d'options. Vérifie que la
+   * méthode renvoie false.
    * 
    * @see GestionEtudiant#inscriptionFinalisee()
    */
@@ -748,8 +752,8 @@ class TestGestionEtudiant {
   
   /**
    * Test d'inscriptionFinalisee {@link GestionEtudiant#inscriptionFinalisee()},
-   * finalisation d'un etudiant avec le numéro de td pas défini. Vérifie que la
-   * méthode renvoie false.
+   * finalisation d'un etudiant avec le numéro de td pas défini. Vérifie que
+   * la méthode renvoie false.
    * 
    * @see GestionEtudiant#inscriptionFinalisee()
    */
@@ -770,8 +774,8 @@ class TestGestionEtudiant {
   
   /**
    * Test d'inscriptionFinalisee {@link GestionEtudiant#inscriptionFinalisee()},
-   * finalisation d'un etudiant avec le numéro de tp pas défini. Vérifie que la
-   * méthode renvoie false.
+   * finalisation d'un etudiant avec le numéro de tp pas défini. Vérifie que
+   * la méthode renvoie false.
    * 
    * @see GestionEtudiant#inscriptionFinalisee()
    */
@@ -792,8 +796,8 @@ class TestGestionEtudiant {
   
   /**
    * Test d'inscriptionFinalisee {@link GestionEtudiant#inscriptionFinalisee()},
-   * finalisation d'un etudiant qui n'as pas choisie toutes ses options. Vérifie
-   * que la méthode renvoie false.
+   * finalisation d'un etudiant qui n'as pas choisie toutes ses options.
+   * Vérifie que la méthode renvoie false.
    * 
    * @see GestionEtudiant#inscriptionFinalisee()
    */

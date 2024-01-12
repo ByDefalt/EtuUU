@@ -15,8 +15,8 @@ import formation.UniteEnseignement;
  * fonctionnement des fonctionnalités de la classe {@link UniteEnseignement}.
  * 
  * Le test porte sur la construction de l'objet {@link UniteEnseignement}, la
- * gestion de l'optionnalité, la récupération et modification des attributs (nom
- * de l'UE, nombre de places maximum, nom de l'enseignant, nombre de
+ * gestion de l'optionnalité, la récupération et modification des attributs
+ * (nom de l'UE, nombre de places maximum, nom de l'enseignant, nombre de
  * participants), et les méthodes hashCode et equals.
  * 
  * @author ROUSVAL ROMAIN

@@ -4,25 +4,30 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Cette classe représente les informations personnelles d'un étudiant, incluant
- * son identité (nom et prénom), son âge et son adresse.
+ * Cette classe représente les informations personnelles d'un étudiant,
+ * incluant son identité (nom et prénom), son âge et son adresse.
  *
  * <p>
- * La classe est immuable, ce qui signifie que les propriétés nom, prénom, âge
- * et adresse ne peuvent pas être modifiées après la création de l'objet.
+ * La classe est immuable, ce qui signifie que les propriétés nom, prénom,
+ * âge et adresse ne peuvent pas être modifiées après la création de
+ * l'objet.
  * </p>
  *
  * <p>
  * Exemple d'utilisation :
  * 
- * <pre>{@code
- * // Création d'une instance avec les informations obligatoires
- * InformationPersonnelle personne1 = new InformationPersonnelle("Doe", "John");
- * 
- * // Création d'une instance avec toutes les informations
- * InformationPersonnelle personne2 =
- *     new InformationPersonnelle("Smith", "Alice", "123 Main St", 25);
- * }</pre>
+ * <pre>
+ * {
+ *   &#64;code
+ *   // Création d'une instance avec les informations obligatoires
+ *   InformationPersonnelle personne1 =
+ *       new InformationPersonnelle("Doe", "John");
+ *   
+ *   // Création d'une instance avec toutes les informations
+ *   InformationPersonnelle personne2 =
+ *       new InformationPersonnelle("Smith", "Alice", "123 Main St", 25);
+ * }
+ * </pre>
  * </p>
  *
  * @author Eric Cariou
@@ -140,7 +145,8 @@ public final class InformationPersonnelle implements Serializable, Cloneable {
       this.adresse = adresse;
       this.age = age;
     } else {
-      throw new IllegalArgumentException("Les paramètres ne sont pas valides.");
+      throw new IllegalArgumentException(
+          "Les paramètres ne sont pas valides.");
     }
   }
   

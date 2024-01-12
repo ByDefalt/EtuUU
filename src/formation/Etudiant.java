@@ -171,7 +171,8 @@ public class Etudiant implements Serializable, Cloneable {
   }
   
   /**
-   * Ajoute une unité d'enseignement à la liste des UE suivies par l'étudiant.
+   * Ajoute une unité d'enseignement à la liste des UE suivies par
+   * l'étudiant.
    *
    * @param ue L'unité d'enseignement à ajouter.
    * 
@@ -264,8 +265,8 @@ public class Etudiant implements Serializable, Cloneable {
   }
   
   /**
-   * Renvoie une représentation sous forme de chaîne de caractères de l'instance
-   * courante.
+   * Renvoie une représentation sous forme de chaîne de caractères de
+   * l'instance courante.
    * 
    * @return retourne une représentation graphique de l'instance courante.
    */

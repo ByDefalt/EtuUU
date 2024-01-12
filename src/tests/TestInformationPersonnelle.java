@@ -35,8 +35,8 @@ class TestInformationPersonnelle {
   @BeforeEach
   void setUp() throws Exception {
     infoBasique = new InformationPersonnelle("Skywalker", "Luke");
-    infoComplete =
-        new InformationPersonnelle("Skywalker", "Luke", "Plan�te Tatooine", 20);
+    infoComplete = new InformationPersonnelle("Skywalker", "Luke",
+        "Plan�te Tatooine", 20);
   }
   
   /**
@@ -57,8 +57,8 @@ class TestInformationPersonnelle {
   }
   
   /**
-   * V�rifie qu'on ne peut pas positionner un age n�gatif sur une information
-   * basique.
+   * V�rifie qu'on ne peut pas positionner un age n�gatif sur une
+   * information basique.
    */
   @Test
   void testAgeNegatifBasique() {
@@ -67,8 +67,8 @@ class TestInformationPersonnelle {
   }
   
   /**
-   * V�rifie qu'on ne peut pas positionner un age n�gatif sur une information
-   * compl�te : l'�ge reste le m�me qu'avant.
+   * V�rifie qu'on ne peut pas positionner un age n�gatif sur une
+   * information compl�te : l'�ge reste le m�me qu'avant.
    */
   @Test
   void testAgeNegatifComplet() {
@@ -88,8 +88,8 @@ class TestInformationPersonnelle {
   }
   
   /**
-   * V�rifie qu'on ne peut pas positionner une adresse null sur une information
-   * existante.
+   * V�rifie qu'on ne peut pas positionner une adresse null sur une
+   * information existante.
    */
   @Test
   void testSetterAdresseNull() {
@@ -98,7 +98,8 @@ class TestInformationPersonnelle {
   }
   
   /**
-   * V�rifie que les param�tres des constructeurs sont correctement g�r�s.
+   * V�rifie que les param�tres des constructeurs sont correctement
+   * g�r�s.
    */
   @Test
   void testConstructeur() {
@@ -116,8 +117,8 @@ class TestInformationPersonnelle {
    * <p>
    * Crée deux instances distinctes de {@code InformationPersonnelle}, puis
    * tente de cloner l'une d'entre elles en utilisant la méthode
-   * {@code clone()}. Vérifie ensuite si les deux objets sont égaux en utilisant
-   * la méthode {@code equals()}.
+   * {@code clone()}. Vérifie ensuite si les deux objets sont égaux en
+   * utilisant la méthode {@code equals()}.
    * </p>
    * 
    * @throws CloneNotSupportedException Si le clonage n'est pas pris en charge
