@@ -43,7 +43,7 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
   /**
    * Le nombre d'options.
    */
-  private int nbOptions;
+  private int nbOptions = -1;
   
   /**
    * Constructeur vide de la classe Etudiant.
@@ -73,7 +73,9 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     this.nbEtudiant++;
     this.listeEtudiants.add(etudiant);
     this.enseignementsObligatoires().forEach(ue -> etudiant.addUE(ue));
-    this.listeEtudiants.forEach(etu -> etu.setNbOption(nbOptions));
+    if(nbOptions != -1) {
+    	etudiant.setNbOption(this.nbOptions);
+    }
     
     return etudiant.getNumero();
   }
