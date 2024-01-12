@@ -663,6 +663,8 @@ public class FormationControleur {
                 .filter(UniteEnseignement::getOptionnel)
                 .count() == ges.getNBoption()) {
           checkInscriptionFinalisee.setSelected(true);
+        }else{
+          checkInscriptionFinalisee.setSelected(false);
         }
       }
     }
