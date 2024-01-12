@@ -406,7 +406,11 @@ class TestGestionEtudiant {
   void testChoisirOptionBasique() {
     try {
       this.gestionEtudiant.connexion(this.numero, "Sk1525mlds");
-      boolean res = this.gestionEtudiant.choisirOption(this.ue1);
+      this.gestionEtudiant.getEtudiantConnecte().setNbOption(8);
+      UniteEnseignement ue = new UniteEnseignement("UDQD", "Enseignant5");
+      ue.setOptionnel(true);
+      ue.setNbPlacesMax(20);
+      boolean res = this.gestionEtudiant.choisirOption(ue);
       assertTrue(res);
     } catch (NonConnecteException e) {
       fail("La méthode choisirOption ne devrait pas lever d'exception ici.");
@@ -423,6 +427,7 @@ class TestGestionEtudiant {
   void testChoisirOptionUeObligatoire() {
     try {
       this.gestionEtudiant.connexion(this.numero, "Sk1525mlds");
+      this.gestionEtudiant.getEtudiantConnecte().setNbOption(8);
       boolean res = this.gestionEtudiant.choisirOption(this.ue4);
       assertFalse(res);
     } catch (NonConnecteException e) {
@@ -440,6 +445,7 @@ class TestGestionEtudiant {
   void testChoisirOptionDejaPresente() {
     try {
       this.gestionEtudiant.connexion(this.numero, "Sk1525mlds");
+      this.gestionEtudiant.getEtudiantConnecte().setNbOption(8);
       this.gestionEtudiant.choisirOption(this.ue1);
       boolean res = this.gestionEtudiant.choisirOption(this.ue1);
       assertFalse(res);
@@ -541,6 +547,7 @@ class TestGestionEtudiant {
   void testEnseignementsSuivisBasique() {
     try {
       this.gestionEtudiant.connexion(1, "azerty");
+      this.gestionEtudiant.getEtudiantConnecte().setNbOption(8);
       this.gestionEtudiant.choisirOption(this.ue1);
       this.gestionEtudiant.choisirOption(this.ue2);
       this.gestionEtudiant.getEtudiantConnecte().addUE(this.ue3);
@@ -563,6 +570,7 @@ class TestGestionEtudiant {
   void testEnseignementsSuivisVide() {
     try {
       this.gestionEtudiant.connexion(1, "azerty");
+      this.gestionEtudiant.getEtudiantConnecte().getListeUEsuivies().clear();
       Set<UniteEnseignement> ue = this.gestionEtudiant.enseignementsSuivis();
       assertEquals(new HashSet<UniteEnseignement>(), ue);
     } catch (NonConnecteException e) {

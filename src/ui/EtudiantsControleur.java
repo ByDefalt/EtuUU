@@ -120,13 +120,12 @@ public class EtudiantsControleur {
    * lorsqu'un utilisateur tente de se connecter en utilisant le numéro
    * d'étudiant et le mot de passe saisis. Si les champs nécessaires à la
    * connexion sont remplis, elle vérifie la validité de la connexion en
-   * utilisant la méthode de la gestion des étudiants. Si la connexion
-   * réussit, les informations de l'étudiant connecté sont affichées dans
-   * l'interface, y compris les détails personnels, les groupes TD/TP, le
-   * nombre d'options, l'état de l'inscription, les Unités d'Enseignement
-   * suivies, les Unités d'Enseignement optionnelles disponibles, et les
-   * messages. En cas d'échec de la connexion, un message d'erreur approprié
-   * est affiché.
+   * utilisant la méthode de la gestion des étudiants. Si la connexion réussit,
+   * les informations de l'étudiant connecté sont affichées dans l'interface, y
+   * compris les détails personnels, les groupes TD/TP, le nombre d'options,
+   * l'état de l'inscription, les Unités d'Enseignement suivies, les Unités
+   * d'Enseignement optionnelles disponibles, et les messages. En cas d'échec de
+   * la connexion, un message d'erreur approprié est affiché.
    *
    * @param event L'événement associé au clic sur le bouton de connexion.
    */
@@ -220,13 +219,11 @@ public class EtudiantsControleur {
   }
   
   /**
-   * Méthode appelée lorsqu'un utilisateur clique sur le bouton de
-   * déconnexion. Elle gère la déconnexion de l'étudiant, réinitialise les
-   * champs d'entrée et les listes, et affiche une alerte en cas d'échec de
-   * déconnexion.
+   * Méthode appelée lorsqu'un utilisateur clique sur le bouton de déconnexion.
+   * Elle gère la déconnexion de l'étudiant, réinitialise les champs d'entrée et les listes,
+   * et affiche une alerte en cas d'échec de déconnexion.
    *
-   * @param event L'événement déclenché par le clic sur le bouton de
-   *        déconnexion.
+   * @param event L'événement déclenché par le clic sur le bouton de déconnexion.
    */
   @FXML
   void actionBoutonDeconnexion(ActionEvent event) {
@@ -255,13 +252,11 @@ public class EtudiantsControleur {
   
   /**
    * Méthode appelée lorsqu'un utilisateur clique sur le bouton d'inscription.
-   * Elle vérifie que les champs nécessaires à l'inscription sont tous
-   * remplis, puis tente de réaliser l'inscription en utilisant les
-   * informations fournies. En cas de succès, elle met à jour le champ
-   * d'entrée du numéro d'étudiant avec la valeur attribuée.
+   * Elle vérifie que les champs nécessaires à l'inscription sont tous remplis,
+   * puis tente de réaliser l'inscription en utilisant les informations fournies.
+   * En cas de succès, elle met à jour le champ d'entrée du numéro d'étudiant avec la valeur attribuée.
    *
-   * @param event L'événement déclenché par le clic sur le bouton
-   *        d'inscription.
+   * @param event L'événement déclenché par le clic sur le bouton d'inscription.
    */
   @FXML
   void actionBoutonInscription(ActionEvent event) {
@@ -295,11 +290,10 @@ public class EtudiantsControleur {
   }
   
   /**
-   * Rafraîchit les listes de messages dans l'interface utilisateur en réponse
-   * à l'événement de clic sur le bouton de rafraîchissement.
+   * Rafraîchit les listes de messages dans l'interface utilisateur en réponse à
+   * l'événement de clic sur le bouton de rafraîchissement.
    *
-   * @param event L'événement associé au clic sur le bouton de
-   *        rafraîchissement.
+   * @param event L'événement associé au clic sur le bouton de rafraîchissement.
    *
    */
   @FXML
@@ -333,24 +327,26 @@ public class EtudiantsControleur {
    * Gère l'action associée à la sélection d'un message dans la liste des
    * messages non lus. Cette méthode est appelée lorsqu'un utilisateur
    * sélectionne un message dans la liste des messages non lus. Elle affiche le
-   * contenu du message sélectionné dans la zone de texte prévue à cet effet
-   * et marque le message comme lu.
+   * contenu du message sélectionné dans la zone de texte prévue à cet effet et
+   * marque le message comme lu.
    *
-   * @param event L'événement associé à la sélection d'un message dans la
-   *        liste des messages non lus.
+   * @param event L'événement associé à la sélection d'un message dans la liste
+   *        des messages non lus.
    */
   @FXML
   void actionSelectionMessageListeMessagesNonLus(MouseEvent event) {
     try {
       String selectMessage =
           listeMessagesNonLus.getSelectionModel().getSelectedItem();
-      if (selectMessage != null) {
-        int a = listeMessagesNonLus.getSelectionModel().getSelectedIndex();
-        int selectIndex = map.get(a);
-        Message message = this.gestionFormation.getGestionEtudiant()
-            .getEtudiantConnecte().getMessages().get(selectIndex);
-        zoneTexteContenuMessage.setText(message.getContenu());
-        message.setLu();
+      if(selectMessage != null) {
+    	  int a = listeMessagesNonLus.getSelectionModel().getSelectedIndex();
+          int selectIndex = map.get(a);
+          if (selectMessage != null) {
+            Message message = this.gestionFormation.getGestionEtudiant()
+                .getEtudiantConnecte().getMessages().get(selectIndex);
+            zoneTexteContenuMessage.setText(message.getContenu());
+            message.setLu();
+          }  
       }
     } catch (NonConnecteException e) {
       this.afficherPopup("Vous n'êtes pas connecté", AlertType.ERROR);
@@ -358,14 +354,14 @@ public class EtudiantsControleur {
   }
   
   /**
-   * Gère l'action associée à la sélection d'un message dans la liste de
-   * tous les messages. Cette méthode est appelée lorsqu'un utilisateur
-   * sélectionne un message dans la liste de tous les messages. Elle affiche le
-   * contenu du message sélectionné dans la zone de texte prévue à cet effet
-   * et marque le message comme lu.
+   * Gère l'action associée à la sélection d'un message dans la liste de tous
+   * les messages. Cette méthode est appelée lorsqu'un utilisateur sélectionne
+   * un message dans la liste de tous les messages. Elle affiche le contenu du
+   * message sélectionné dans la zone de texte prévue à cet effet et marque le
+   * message comme lu.
    *
-   * @param event L'événement associé à la sélection d'un message dans la
-   *        liste de tous les messages.
+   * @param event L'événement associé à la sélection d'un message dans la liste
+   *        de tous les messages.
    */
   @FXML
   void actionSelectionMessageListeTousMessages(MouseEvent event) {
@@ -388,8 +384,8 @@ public class EtudiantsControleur {
   }
   
   /**
-   * Affiche une boîte de dialogue (popup) avec un message spécifié et un
-   * type d'alerte donné.
+   * Affiche une boîte de dialogue (popup) avec un message spécifié et un type
+   * d'alerte donné.
    *
    * @param message Le message à afficher dans la boîte de dialogue.
    * @param type Le type d'alerte (Erreur, Information, etc.). Utilisez les
