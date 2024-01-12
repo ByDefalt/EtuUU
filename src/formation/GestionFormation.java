@@ -627,7 +627,7 @@ public class GestionFormation
   public void sauvegarderDonnees(String nomFichier) throws IOException {
     try (
         FileOutputStream fileOut =
-            new FileOutputStream("save" + File.separator + nomFichier);
+            new FileOutputStream(nomFichier);
         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
       objectOut.writeObject(this);
     } catch (IOException e) {
