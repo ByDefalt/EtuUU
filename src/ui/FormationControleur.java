@@ -39,100 +39,100 @@ public class FormationControleur {
   private GestionFormation ges;
   private Stage fenetreEtudiants;
   private Stage FenetreFormation;
-
+  
   public void setFenetreFormation(Stage FenetreFormation) {
     this.FenetreFormation = FenetreFormation;
   }
-
+  
   public void setFenetreEtudiants(Stage fenetreEtudiants) {
     this.fenetreEtudiants = fenetreEtudiants;
   }
-
+  
   public void setGes(GestionFormation ges) {
     this.ges = ges;
   }
-
+  
   @FXML
   private ResourceBundle resources;
-
+  
   @FXML
   private URL location;
-
+  
   @FXML
   private CheckBox checkInscriptionFinalisee;
-
+  
   @FXML
   private TextField entreeAdresseEtudiant;
-
+  
   @FXML
   private TextField entreeAgeEtudiant;
-
+  
   @FXML
   private TextField entreeCapaciteAccueil;
-
+  
   @FXML
   private TextField entreeEmailResponsableFormation;
-
+  
   @FXML
   private TextField entreeGroupeTDEtudiant;
-
+  
   @FXML
   private TextField entreeGroupeTPEtudiant;
-
+  
   @FXML
   private TextField entreeNomEtudiant;
-
+  
   @FXML
   private TextField entreeNomFormation;
-
+  
   @FXML
   private TextField entreeNomResponsableFormation;
-
+  
   @FXML
   private TextField entreeNomResponsableUE;
-
+  
   @FXML
   private TextField entreeNomUE;
-
+  
   @FXML
   private TextField entreeNombreChoixOptions;
-
+  
   @FXML
   private TextField entreePrenomEtudiant;
-
+  
   @FXML
   private TextField entreeTailleGroupeTD;
-
+  
   @FXML
   private TextField entreeTailleGroupeTP;
-
+  
   @FXML
   private Label labelListeEtudiants;
-
+  
   @FXML
   private Label labelNbGroupesTD;
-
+  
   @FXML
   private Label labelNbGroupesTP;
-
+  
   @FXML
   private ListView<String> listeEtudiants;
-
+  
   @FXML
   private ListView<String> listeUEObligatoires;
-
+  
   @FXML
   private ListView<String> listeUEOptionnelles;
-
+  
   @FXML
   private ToggleGroup obligation;
-
+  
   @FXML
   private RadioButton radioBoutonObligatoire;
-
+  
   @FXML
   private RadioButton radioBoutonOptionnelle;
-
+  
   /**
    * Réagit au clic sur le bouton d'affectation automatique en vérifiant d'abord
    * si une formation est sélectionnée. Si une formation est sélectionnée et que
@@ -166,7 +166,7 @@ public class FormationControleur {
       this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
-
+  
   /**
    * Gère l'action déclenchée lorsqu'un bouton d'affectation manuelle de groupes
    * est activé. Vérifie si une formation est sélectionnée, puis tente de
@@ -188,7 +188,7 @@ public class FormationControleur {
       int resultat = ges.changerGroupe(etu,
           Integer.parseInt(entreeGroupeTDEtudiant.getText()),
           Integer.parseInt(entreeGroupeTPEtudiant.getText()));
-
+      
       switch (resultat) {
         case 0:
           break;
@@ -213,7 +213,7 @@ public class FormationControleur {
       this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
-
+  
   /**
    * Gère l'action associée au bouton d'affichage des étudiants d'un groupe de
    * Travaux Dirigés (TD). Affiche la liste des étudiants appartenant au groupe
@@ -230,13 +230,14 @@ public class FormationControleur {
         try {
           int a = Integer.parseInt(entreeGroupeTDEtudiant.getText());
           if (a > 0 && a <= ges.nombreGroupesTravauxDiriges()) {
-            ObservableList<String> observableEtudiants = FXCollections.observableArrayList(Optional
-                .ofNullable(ges.listeEtudiantsGroupeDirige(
-                    Integer.parseInt(entreeGroupeTDEtudiant.getText())))
-                .map(liste -> liste.stream()
-                    .map(etudiant -> Integer.toString(etudiant.getNumero()))
-                    .collect(Collectors.toList()))
-                .orElse(Collections.emptyList()));
+            ObservableList<String> observableEtudiants =
+                FXCollections.observableArrayList(Optional
+                    .ofNullable(ges.listeEtudiantsGroupeDirige(
+                        Integer.parseInt(entreeGroupeTDEtudiant.getText())))
+                    .map(liste -> liste.stream()
+                        .map(etudiant -> Integer.toString(etudiant.getNumero()))
+                        .collect(Collectors.toList()))
+                    .orElse(Collections.emptyList()));
             listeEtudiants.setItems(observableEtudiants);
             labelListeEtudiants.setText("Les étudiants du groupe de TD "
                 + entreeGroupeTDEtudiant.getText());
@@ -253,7 +254,7 @@ public class FormationControleur {
       this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
-
+  
   /**
    * Gère l'action associée au bouton d'affichage des étudiants d'un groupe de
    * Travaux Pratiques (TP). Affiche la liste des étudiants appartenant au
@@ -270,12 +271,13 @@ public class FormationControleur {
         try {
           int a = Integer.parseInt(entreeGroupeTPEtudiant.getText());
           if (a > 0 && a <= ges.nombreGroupesTravauxPratiques()) {
-            ObservableList<String> observableEtudiants = FXCollections.observableArrayList(Optional
-                .ofNullable(ges.listeEtudiantsGroupePratique(a))
-                .map(liste -> liste.stream()
-                    .map(etudiant -> Integer.toString(etudiant.getNumero()))
-                    .collect(Collectors.toList()))
-                .orElse(Collections.emptyList()));
+            ObservableList<String> observableEtudiants =
+                FXCollections.observableArrayList(Optional
+                    .ofNullable(ges.listeEtudiantsGroupePratique(a))
+                    .map(liste -> liste.stream()
+                        .map(etudiant -> Integer.toString(etudiant.getNumero()))
+                        .collect(Collectors.toList()))
+                    .orElse(Collections.emptyList()));
             listeEtudiants.setItems(observableEtudiants);
             labelListeEtudiants.setText("Les étudiants du groupe de TP "
                 + entreeGroupeTPEtudiant.getText());
@@ -292,7 +294,7 @@ public class FormationControleur {
       this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
-
+  
   /**
    * Gère l'action associée au bouton permettant d'afficher les étudiants
    * inscrits à une Unité d'Enseignement (UE) optionnelle sélectionnée. Affiche
@@ -304,16 +306,17 @@ public class FormationControleur {
   void actionBoutonAfficherEtudiantsUEOptionnelle(ActionEvent event) {
     if (ges.getNomFormation() != null) {
       try {
-        ObservableList<String> observableEtudiants = FXCollections.observableArrayList(ges
-            .listeEtudiantsOption(
-                ges.getGestionEtudiant().getListeUE().stream()
-                    .filter(ue -> ue.getNomUE()
-                        .equals(listeUEOptionnelles.getSelectionModel()
-                            .getSelectedItem()))
-                    .findFirst().orElse(null))
-            .stream()
-            .map(etudiant -> Integer.toString(etudiant.getNumero()))
-            .collect(Collectors.toSet()));
+        ObservableList<String> observableEtudiants =
+            FXCollections.observableArrayList(ges
+                .listeEtudiantsOption(
+                    ges.getGestionEtudiant().getListeUE().stream()
+                        .filter(ue -> ue.getNomUE()
+                            .equals(listeUEOptionnelles.getSelectionModel()
+                                .getSelectedItem()))
+                        .findFirst().orElse(null))
+                .stream()
+                .map(etudiant -> Integer.toString(etudiant.getNumero()))
+                .collect(Collectors.toSet()));
         if (observableEtudiants.size() != 0) {
           listeEtudiants.setItems(observableEtudiants);
           labelListeEtudiants.setText("Les étudiants inscrits à "
@@ -329,7 +332,7 @@ public class FormationControleur {
       this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
-
+  
   /**
    * Gère l'action liée au bouton d'affichage de tous les étudiants de la
    * formation. Si le nom de la formation n'est pas nul et s'il y a des
@@ -343,10 +346,11 @@ public class FormationControleur {
   void actionBoutonAfficherTousEtudiants(ActionEvent event) {
     if (ges.getNomFormation() != null) {
       if (ges.getGestionEtudiant().getListeEtudiants().size() != 0) {
-        ObservableList<String> observableEtudiants = FXCollections.observableArrayList(
-            ges.getGestionEtudiant().getListeEtudiants().stream()
-                .map(etudiant -> Integer.toString(etudiant.getNumero()))
-                .collect(Collectors.toList()));
+        ObservableList<String> observableEtudiants =
+            FXCollections.observableArrayList(
+                ges.getGestionEtudiant().getListeEtudiants().stream()
+                    .map(etudiant -> Integer.toString(etudiant.getNumero()))
+                    .collect(Collectors.toList()));
         listeEtudiants.setItems(observableEtudiants);
         labelListeEtudiants.setText("Tous les étudiants de la formation");
       } else {
@@ -357,7 +361,7 @@ public class FormationControleur {
       this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
-
+  
   /**
    * Gère l'action associée au bouton de création d'une nouvelle formation.
    * Cette méthode récupère les informations de la nouvelle formation à partir
@@ -403,7 +407,7 @@ public class FormationControleur {
       }
     }
   }
-
+  
   /**
    * Répond à l'événement déclenché par l'action sur le bouton de création de
    * formation. Cette méthode utilise les informations fournies dans les champs
@@ -413,7 +417,7 @@ public class FormationControleur {
    * appropriés sont affichés.
    *
    * @param event L'événement déclenché par l'action sur le bouton de création
-   *              de formation.
+   *        de formation.
    */
   @FXML
   void actionBoutonNombreChoixOptions(ActionEvent event) {
@@ -435,7 +439,7 @@ public class FormationControleur {
       this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
-
+  
   /**
    * Gère l'action déclenchée lorsqu'un utilisateur appuie sur le bouton pour
    * définir la taille du groupe de travaux dirigés (TD). Si le nom de la
@@ -464,7 +468,7 @@ public class FormationControleur {
       this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
-
+  
   /**
    * Réagit au clic sur le bouton de définition de la taille du groupe de
    * travaux dirigés (TD). Vérifie si une formation est sélectionnée, si le
@@ -493,7 +497,7 @@ public class FormationControleur {
       this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
-
+  
   /**
    * Gère l'action associée à l'ouverture d'une nouvelle fenêtre affichant des
    * informations à propos des auteurs du programme.
@@ -503,7 +507,7 @@ public class FormationControleur {
    * permettant de fermer la fenêtre.
    *
    * @param event L'événement déclencheur, généralement lié à une action
-   *              utilisateur (ex. clic sur un menu).
+   *        utilisateur (ex. clic sur un menu).
    */
   @FXML
   void actionMenuApropos(ActionEvent event) {
@@ -519,7 +523,7 @@ public class FormationControleur {
     nouvelleFenetre.setScene(scene);
     nouvelleFenetre.show();
   }
-
+  
   /**
    * Gère l'événement de chargement de données lorsqu'une action est déclenchée
    * par le menu. La méthode charge les données à partir d'un fichier de
@@ -527,7 +531,7 @@ public class FormationControleur {
    * et remplissant les éléments correspondants avec les informations chargées.
    *
    * @param event L'événement déclencheur, généralement associé à un clic sur le
-   *              menu de chargement.
+   *        menu de chargement.
    */
   @FXML
   void actionMenuCharger(ActionEvent event) {
@@ -556,7 +560,8 @@ public class FormationControleur {
       if (ges.getNomFormation() != null) {
         entreeNomFormation.setText(ges.getNomFormation());
         entreeNomResponsableFormation.setText(ges.getNomResponsableFormation());
-        entreeEmailResponsableFormation.setText(ges.getEmailResponsableFormation());
+        entreeEmailResponsableFormation
+            .setText(ges.getEmailResponsableFormation());
       }
       if (ges.nombreGroupesTravauxDiriges() != -1) {
         labelNbGroupesTD
@@ -590,30 +595,30 @@ public class FormationControleur {
       e.printStackTrace();
     }
   }
-
+  
   /**
    * Gère l'événement déclenché lorsqu'un utilisateur choisit de quitter
    * l'application depuis le menu. Cette méthode ferme les fenêtres associées
    * aux étudiants et aux formations.
    *
    * @param event L'événement associé au déclenchement de l'action du menu
-   *              quitter.
+   *        quitter.
    */
   @FXML
   void actionMenuQuitter(ActionEvent event) {
     fenetreEtudiants.close();
     FenetreFormation.close();
   }
-
+  
   /**
    * Gère l'événement déclenché lorsqu'une action de sauvegarde est déclenchée
    * depuis le menu. Cette méthode appelle la méthode de sauvegarde des données
    * de l'objet ges (Gestionnaire) avec le nom de fichier spécifié.
    *
    * @param event L'événement de type ActionEvent déclenché par l'action de
-   *              sauvegarde du menu.
+   *        sauvegarde du menu.
    * @throws IOException Si une exception d'entrée/sortie survient lors de la
-   *                     sauvegarde des données.
+   *         sauvegarde des données.
    */
   @FXML
   void actionMenuSauvegarder(ActionEvent event) {
@@ -623,7 +628,7 @@ public class FormationControleur {
       e.printStackTrace();
     }
   }
-
+  
   /**
    * Gère l'événement de sélection d'un étudiant dans la liste des étudiants.
    * Met à jour les champs d'entrée avec les informations personnelles de
@@ -632,7 +637,7 @@ public class FormationControleur {
    * d'inscription finalisée si toutes les conditions nécessaires sont remplies.
    *
    * @param event L'événement de la souris déclenché lors de la sélection d'un
-   *              étudiant.
+   *        étudiant.
    */
   @FXML
   void actionSelectionEtudiant(MouseEvent event) {
@@ -662,7 +667,7 @@ public class FormationControleur {
       }
     }
   }
-
+  
   /**
    * Gère l'action de sélection d'une Unité d'Enseignement (UE) obligatoire.
    * Cette méthode est déclenchée en réponse à un événement de clic de souris
@@ -687,7 +692,7 @@ public class FormationControleur {
       }
     }
   }
-
+  
   /**
    * Gère l'événement de sélection d'une Unité d'Enseignement (UE) optionnelle.
    * Si une formation est sélectionnée, recherche l'UE correspondante dans la
@@ -711,7 +716,7 @@ public class FormationControleur {
       }
     }
   }
-
+  
   /**
    * Gère l'événement de clic sur le bouton de création d'une nouvelle Unité
    * d'Enseignement (UE). Vérifie si une formation est sélectionnée, puis valide
@@ -734,7 +739,8 @@ public class FormationControleur {
               listeUEObligatoires.getItems().add(ue.getNomUE());
             }
           } else if (radioBoutonOptionnelle.isSelected()) {
-            int capaciteAccueil = Integer.parseInt(entreeCapaciteAccueil.getText());
+            int capaciteAccueil =
+                Integer.parseInt(entreeCapaciteAccueil.getText());
             if (ges.ajouterEnseignementOptionnel(ue, capaciteAccueil)) {
               listeUEOptionnelles.getItems().add(ue.getNomUE());
             }
@@ -754,16 +760,15 @@ public class FormationControleur {
       this.afficherPopup("Aucune Formation", AlertType.ERROR);
     }
   }
-
+  
   /**
    * Affiche une boîte de dialogue (popup) avec un message spécifié et un type
    * d'alerte donné.
    *
    * @param message Le message à afficher dans la boîte de dialogue.
-   * @param type    Le type d'alerte (Erreur, Information, etc.). Utilisez les
-   *                constantes de la classe AlertType, par exemple AlertType.ERROR
-   *                ou
-   *                AlertType.INFORMATION.
+   * @param type Le type d'alerte (Erreur, Information, etc.). Utilisez les
+   *        constantes de la classe AlertType, par exemple AlertType.ERROR ou
+   *        AlertType.INFORMATION.
    * 
    * @see javafx.scene.control.Alert.AlertType
    */
@@ -779,10 +784,10 @@ public class FormationControleur {
     alert.setResizable(true);
     alert.showAndWait();
   }
-
+  
   // this.afficherPopup("Aucune Formation", AlertType.ERROR);
   @FXML
   void initialize() {
-
+    
   }
 }

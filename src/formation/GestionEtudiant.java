@@ -73,8 +73,8 @@ public class GestionEtudiant implements InterEtudiant, Serializable, Cloneable {
     this.nbEtudiant++;
     this.listeEtudiants.add(etudiant);
     this.enseignementsObligatoires().forEach(ue -> etudiant.addUE(ue));
-    if(nbOptions != -1) {
-    	etudiant.setNbOption(this.nbOptions);
+    if (nbOptions != -1) {
+      etudiant.setNbOption(this.nbOptions);
     }
     
     return etudiant.getNumero();
