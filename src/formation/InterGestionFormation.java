@@ -20,7 +20,7 @@ public interface InterGestionFormation {
    * @param email l'email du responsable (adresse email valide)
    */
   void creerFormation(String nomFormation, String nomResponsable, String email);
-
+  
   /**
    * Renvoie le nom du responsable de formation.
    *

@@ -9,8 +9,7 @@ import java.util.Objects;
  *
  * <p>
  * La classe est immuable, ce qui signifie que les propriétés nom, prénom, âge
- * et
- * adresse ne peuvent pas être modifiées après la création de l'objet.
+ * et adresse ne peuvent pas être modifiées après la création de l'objet.
  * </p>
  *
  * <p>
@@ -21,40 +20,41 @@ import java.util.Objects;
  * InformationPersonnelle personne1 = new InformationPersonnelle("Doe", "John");
  * 
  * // Création d'une instance avec toutes les informations
- * InformationPersonnelle personne2 = new InformationPersonnelle("Smith", "Alice", "123 Main St", 25);
+ * InformationPersonnelle personne2 =
+ *     new InformationPersonnelle("Smith", "Alice", "123 Main St", 25);
  * }</pre>
  * </p>
  *
  * @author Eric Cariou
  */
 public final class InformationPersonnelle implements Serializable, Cloneable {
-
+  
   /**
    * Identifiant de s�rialisation.
    */
   private static final long serialVersionUID = 4026408353251835506L;
-
+  
   /**
    * Le nom de la personne (ne peut pas �tre modifi�).
    */
   private final String nom;
-
+  
   /**
    * Le pr�nom de la personne (ne peut pas �tre modifi�).
    */
   private final String prenom;
-
+  
   /**
    * L'�ge de la personne (la valeur 0 correspond � un �ge non d�fini).
    */
   private int age;
-
+  
   /**
    * L'adresse de la personne (une chaine vide "" correspond � une adresse non
    * d�finie).
    */
   private String adresse;
-
+  
   /**
    * Renvoie le nom de la personne.
    *
@@ -63,7 +63,7 @@ public final class InformationPersonnelle implements Serializable, Cloneable {
   public String getNom() {
     return nom;
   }
-
+  
   /**
    * Renvoie le pr�nom de la personne.
    *
@@ -72,7 +72,7 @@ public final class InformationPersonnelle implements Serializable, Cloneable {
   public String getPrenom() {
     return prenom;
   }
-
+  
   /**
    * Renvoie l'�ge de la personne.
    *
@@ -81,7 +81,7 @@ public final class InformationPersonnelle implements Serializable, Cloneable {
   public int getAge() {
     return age;
   }
-
+  
   /**
    * Modifie l'�ge de la personne.
    *
@@ -92,7 +92,7 @@ public final class InformationPersonnelle implements Serializable, Cloneable {
       this.age = age;
     }
   }
-
+  
   /**
    * Renvoie l'adresse de la personne.
    *
@@ -101,7 +101,7 @@ public final class InformationPersonnelle implements Serializable, Cloneable {
   public String getAdresse() {
     return adresse;
   }
-
+  
   /**
    * Modifie l'adresse de la personne.
    *
@@ -112,28 +112,29 @@ public final class InformationPersonnelle implements Serializable, Cloneable {
       this.adresse = adresse;
     }
   }
-
+  
   /**
    * Cr�e une personne avec ses informations obligatoires.
    *
-   * @param nom    le nom de la personne
+   * @param nom le nom de la personne
    * @param prenom le pr�nom de la personne
    */
   public InformationPersonnelle(String nom, String prenom) {
     this(nom, prenom, "", 0);
   }
-
+  
   /**
    * Cr�e une personne avec toutes ses informations.
    *
-   * @param nom     le nom de la personne
-   * @param prenom  le pr�nom de la personne
+   * @param nom le nom de la personne
+   * @param prenom le pr�nom de la personne
    * @param adresse l'adresse de la personne
-   * @param age     l'age de la personne
+   * @param age l'age de la personne
    */
-  public InformationPersonnelle(String nom, String prenom, String adresse, int age) {
-    if (nom != null && !nom.isEmpty() && prenom != null && !prenom.isEmpty() && adresse != null
-        && age >= 0) {
+  public InformationPersonnelle(String nom, String prenom, String adresse,
+      int age) {
+    if (nom != null && !nom.isEmpty() && prenom != null && !prenom.isEmpty()
+        && adresse != null && age >= 0) {
       this.nom = nom;
       this.prenom = prenom;
       this.adresse = adresse;
@@ -142,7 +143,7 @@ public final class InformationPersonnelle implements Serializable, Cloneable {
       throw new IllegalArgumentException("Les paramètres ne sont pas valides.");
     }
   }
-
+  
   /**
    * Retourne le hashcode de l'objet en prenant en compte ses propriétés.
    *
@@ -152,7 +153,7 @@ public final class InformationPersonnelle implements Serializable, Cloneable {
   public int hashCode() {
     return Objects.hash(adresse, age, nom, prenom);
   }
-
+  
   /**
    * Compare l'objet actuel avec un autre objet pour l'égalité.
    *
@@ -175,7 +176,7 @@ public final class InformationPersonnelle implements Serializable, Cloneable {
         && Objects.equals(nom, other.nom)
         && Objects.equals(prenom, other.prenom);
   }
-
+  
   /**
    * Retourne une représentation textuelle de l'objet.
    *
@@ -185,22 +186,22 @@ public final class InformationPersonnelle implements Serializable, Cloneable {
   public String toString() {
     return prenom + " " + nom + " d'age " + age + " ans, habite " + adresse;
   }
-
+  
   /**
    * Crée et renvoie une copie de cet objet {@code InformationPersonnelle}.
    * 
    * La méthode {@code clone} crée un nouvel objet avec les mêmes valeurs que
-   * l'objet
-   * actuel pour les attributs : nom, prénom, adresse et âge.
+   * l'objet actuel pour les attributs : nom, prénom, adresse et âge.
    * 
    * @return Une nouvelle instance de {@code InformationPersonnelle} avec les
    *         mêmes valeurs que l'objet courant.
    * @throws CloneNotSupportedException Si la clonage n'est pas supporté pour
-   *                                    cette classe.
+   *         cette classe.
    * @see Object#clone()
    */
   @Override
   public Object clone() throws CloneNotSupportedException {
-    return new InformationPersonnelle(this.nom, this.prenom, this.adresse, this.age);
+    return new InformationPersonnelle(this.nom, this.prenom, this.adresse,
+        this.age);
   }
 }

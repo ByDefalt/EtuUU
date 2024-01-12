@@ -17,9 +17,10 @@ import javafx.stage.Stage;
  */
 public final class MainInterfaceUtilisateur extends Application {
   
-    GestionFormation ges = new GestionFormation();
-    private Stage fenetreEtudiants;
-    private Stage fenetreFormation;
+  GestionFormation ges = new GestionFormation();
+  private Stage fenetreEtudiants;
+  private Stage fenetreFormation;
+  
   /**
    * Affiche la fen�tre de gestion des �tudiants.
    */
@@ -31,25 +32,25 @@ public final class MainInterfaceUtilisateur extends Application {
       EtudiantsControleur etudiantsControleur = fxmlLoader.getController();
       etudiantsControleur.setGes(ges);
       Scene scene = new Scene(root, 920, 500);
-
+      
       Stage stage = new Stage();
-      fenetreEtudiants=stage;
+      fenetreEtudiants = stage;
       stage.setResizable(true);
       stage.setTitle("Gestion des étudiants");
-
+      
       stage.setScene(scene);
       stage.show();
-
+      
     } catch (IOException e) {
       System.err.println("Erreur au chargement de la fen�tre �tudiants : " + e);
     }
   }
-
+  
   /**
    * Affiche la fen�tre de gestion de formation.
    *
    * @param primaryStage le param�tre pass� par JavaFX pour la fen�tre
-   *                     principale
+   *        principale
    */
   public void startFenetreFormation(Stage primaryStage) {
     try {
@@ -59,30 +60,30 @@ public final class MainInterfaceUtilisateur extends Application {
       FormationControleur formationControleur = fxmlLoader.getController();
       formationControleur.setGes(ges);
       Scene scene = new Scene(root, 930, 590);
-      fenetreFormation=primaryStage;
+      fenetreFormation = primaryStage;
       formationControleur.setFenetreEtudiants(fenetreEtudiants);
       formationControleur.setFenetreFormation(fenetreFormation);
       primaryStage.setScene(scene);
       primaryStage.setResizable(true);
       primaryStage.setTitle("Gestion de formation");
       primaryStage.show();
-
+      
     } catch (IOException e) {
       System.err.println("Erreur au chargement de la fen�tre formation : " + e);
     }
   }
-
+  
   @Override
   public void start(Stage primaryStage) {
-
+    
     // Lancement des 2 fen�tres de l'application
     this.startFenetreEtudiants();
     this.startFenetreFormation(primaryStage);
-
+    
     // RAJOUTER ICI OU AVANT LE CODE POUR INSTANCIER
     // LES CLASSES DE VOTRE CODE
   }
-
+  
   public static void main(String[] args) {
     launch(args);
   }
