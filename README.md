@@ -2,7 +2,7 @@
 
 Dans ce projet, une personne peut créer une année universitaire ainsi que des UE (matières) optionnelles ou non, avec un nombre de places limité ou non. Elle peut également affecter des groupes de TD/TP aux étudiants.
 Les étudiants peuvent s'inscrire et se connecter pour consulter leurs messages, choisir leurs options et voir leur affectation de groupe.
-
+Il est possible de sauvegarder les données dans un fichier.
 
 
 ### Installation des dépendances :
