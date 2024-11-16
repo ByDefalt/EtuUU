@@ -10,9 +10,6 @@ Il est possible de sauvegarder les données dans un fichier.
 - **JavaFx**  
   - Bibliotheque fournie avec le projet dans lib
 
-- **Junit**  
-  - Déja dans le projet
-
 ### Exemple : 
 
 <img src="markdown_doc/sreen1.png" alt="Exemple d'utilisation" width="700"/>
