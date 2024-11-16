@@ -6,17 +6,17 @@
   - Bibliotheque fournie avec le projet dans lib
 
 - **Junit**  
-  - Deja dans le projet
+  - Déja dans le projet
 
 ### Exemple : 
 
-<img src="markdown_doc/screen1.png" alt="Exemple d'utilisation" width="700"/>
+<img src="markdown_doc/sreen1.png" alt="Exemple d'utilisation" width="700"/>
 
-<img src="markdown_doc/screen2.png" alt="Exemple d'utilisation" width="700"/>
+<img src="markdown_doc/sreen2.png" alt="Exemple d'utilisation" width="700"/>
 
-<img src="markdown_doc/screen3.png" alt="Exemple d'utilisation" width="700"/>
+<img src="markdown_doc/sreen3.png" alt="Exemple d'utilisation" width="700"/>
 
-<img src="markdown_doc/screen4.png" alt="Exemple d'utilisation" width="700"/>
+<img src="markdown_doc/sreen4.png" alt="Exemple d'utilisation" width="700"/>
 
 
 ### Acquis :
