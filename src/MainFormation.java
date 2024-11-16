@@ -109,8 +109,7 @@ public class MainFormation {
     System.out.println(ges.getGestionEtudiant().listeTousMessages());
   }
   
-  public static void main(String[] args)
-      throws NonConnecteException, IOException {
+  public static void main(String[] args) throws NonConnecteException, IOException {
     test2();
   }
 }
